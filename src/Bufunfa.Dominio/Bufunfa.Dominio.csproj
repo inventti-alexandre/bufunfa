@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>JNogueira.Bufunfa.Dominio</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Comandos\Entrada\" />
+    <Folder Include="Comandos\Saida\" />
+    <Folder Include="Entidades\" />
+    <Folder Include="Interfaces\Dados\" />
+    <Folder Include="Interfaces\Servicos\" />
+    <Folder Include="Servicos\" />
+  </ItemGroup>
+
+</Project>

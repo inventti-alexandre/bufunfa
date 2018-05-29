@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>JNogueira.Bufunfa.Infraestrutura.Dados</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DataContexts\" />
+    <Folder Include="Repositorios\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>
