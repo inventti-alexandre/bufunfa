@@ -6,12 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Comandos\Entrada\" />
-    <Folder Include="Comandos\Saida\" />
-    <Folder Include="Entidades\" />
-    <Folder Include="Interfaces\Dados\" />
-    <Folder Include="Interfaces\Servicos\" />
-    <Folder Include="Servicos\" />
+    <PackageReference Include="NETCore.Encrypt" Version="2.0.7" />
+    <PackageReference Include="NotifiqueMe" Version="1.0.31" />
   </ItemGroup>
 
 </Project>

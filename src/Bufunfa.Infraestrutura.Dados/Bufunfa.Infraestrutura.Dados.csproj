@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataContexts\" />
-    <Folder Include="Repositorios\" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="MySql.Data" Version="8.0.11" />
   </ItemGroup>
 
   <ItemGroup>
