@@ -2,12 +2,12 @@
 using JNogueira.Infraestrutura.NotifiqueMe;
 using NETCore.Encrypt.Extensions;
 
-namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada.Usuario
+namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
     /// Comando utilizado na autenticação de um usuário
     /// </summary>
-    public class AutenticarUsuarioComando : Notificavel, IComandoEntrada
+    public class AutenticarUsuarioEntrada : Notificavel, IComandoEntrada
     {
         public string Email { get; set; }
 

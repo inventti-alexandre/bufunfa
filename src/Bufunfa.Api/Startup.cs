@@ -31,15 +31,22 @@ namespace Bufunfa.Api
 
             Configuration = builder.Build();
 
-            var tokenParams = new TokenParametros();
+            // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
+            // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
 
-            new ConfigureFromConfigurationOptions<TokenParametros>(Configuration.GetSection("TokenParametros"))
-                .Configure(tokenParams);
+            var tokenConfig = new TokenJwtConfig();
 
-            services.AddSingleton(tokenParams);
+            // Extrai as informações do arquivo appsettings.json, criando um instância da classe "TokenJwtConfig"
+            new ConfigureFromConfigurationOptions<TokenJwtConfig>(Configuration.GetSection("TokenJwtConfig"))
+                .Configure(tokenConfig);
+
+            // AddSingleton: instância configurada de forma que uma única referência das mesmas seja empregada durante todo o tempo em que a aplicação permanecer em execução
+            services.AddSingleton(tokenConfig);
 
             services
+                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                // AddJwtBearer: definidas configurações como a chave e o algoritmo de criptografia utilizados, a necessidade de analisar se um token ainda é válido e o tempo de tolerância para expiração de um token
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -48,9 +55,9 @@ namespace Bufunfa.Api
                         ValidateIssuerSigningKey = true,
                         // Verifica se um token recebido ainda é válido
                         ValidateLifetime = true,
-                        ValidIssuer = tokenParams.Issuer,
-                        ValidAudience = tokenParams.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenParams.SecretKey)),
+                        ValidIssuer = tokenConfig.Issuer,
+                        ValidAudience = tokenConfig.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenConfig.SecretKey)),
                         // Tempo de tolerância para a expiração de um token (utilizado
                         // caso haja problemas de sincronismo de horário entre diferentes
                         // computadores envolvidos no processo de comunicação)
@@ -58,12 +65,14 @@ namespace Bufunfa.Api
                     };
                 });
 
-            // Ativa o uso do token como forma de autorizar o acesso a recursos deste projeto
-            services.AddAuthorization(auth =>
+            // AddAuthorization: ativará o uso de tokens com o intuito de autorizar ou não o acesso a recursos da aplicação
+            services.AddAuthorization(options =>
             {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser().Build());
+                options.AddPolicy("Bearer", 
+                    new AuthorizationPolicyBuilder()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                        .RequireAuthenticatedUser()
+                        .Build());
             });
 
             services.AddMvc(config =>
@@ -72,6 +81,8 @@ namespace Bufunfa.Api
             });
 
             services.AddScoped<BufunfaDataContext, BufunfaDataContext>(x => new BufunfaDataContext(Configuration["BufunfaConnectionString"]));
+
+            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();

@@ -6,7 +6,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     /// <summary>
     /// Comando utilizado na alteração de senha de um usuário
     /// </summary>
-    public class AlterarSenhaUsuarioComando : Notificavel, IComandoEntrada
+    public class AlterarSenhaUsuarioEntrada : Notificavel, IComandoEntrada
     {
         public string Email { get; set; }
         

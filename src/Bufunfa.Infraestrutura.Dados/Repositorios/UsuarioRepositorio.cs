@@ -15,9 +15,17 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _dbContext = dbContext;
         }
 
-        public void AlterarSenhaUsuario(AlterarSenhaUsuarioComando entrada)
+        public void AlterarSenhaUsuario(AlterarSenhaUsuarioEntrada entrada)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Usuario ObterPorEmail(string email)
+        {
+            return _dbContext
+                .Connection
+                .Query<Usuario>("SELECT IdUsuario, Nome, Email, Ativo FROM usuario WHERE Email = @email", new { email })
+                .FirstOrDefault();
         }
 
         public Usuario ObterPorEmailSenha(string email, string senha)

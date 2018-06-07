@@ -1,4 +1,4 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada.Usuario;
+﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
@@ -17,13 +17,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public IComandoSaida Autenticar(AutenticarUsuarioComando autenticacaoComando)
+        public IComandoSaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
         {
             // Verifica se o e-mail e a senha do usuário foi informado.
-            if (!autenticacaoComando.Valido())
-                return new ComandoSaida(false, autenticacaoComando.Notificacoes.Select(x => x.Mensagem), null);
+            if (!autenticacaoEntrada.Valido())
+                return new ComandoSaida(false, autenticacaoEntrada.Notificacoes.Select(x => x.Mensagem), null);
 
-            var usuario = _usuarioRepositorio.ObterPorEmailSenha(autenticacaoComando.Email, autenticacaoComando.CriarHashSenha());
+            var usuario = _usuarioRepositorio.ObterPorEmailSenha(autenticacaoEntrada.Email, autenticacaoEntrada.CriarHashSenha());
 
             // Verifica se o usuário com o e-mail e a senha (hash) foi encontrado no banco
             this.NotificarSeNulo(usuario, "Usuário não encontrado. Favor verificar o login e senha informados.");
@@ -37,7 +37,26 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
-            return new ComandoSaida(true, new[] { "Usuário autenticado com sucesso. "}, usuario);
+            return new ComandoSaida(true, new[] { "Usuário autenticado com sucesso."}, usuario);
+        }
+
+        public IComandoSaida ObterUsuarioPorEmail(string email)
+        {
+            // Verifica se um e-mail válido foi informado.
+            this.NotificarSeEmailInvalido(email, "O e-mail informado é inválido.");
+
+            if (this.Invalido)
+                return new ComandoSaida(false, this.Mensagens, null);
+
+            var usuario = _usuarioRepositorio.ObterPorEmail(email);
+
+            // Verifica se o usuário com o e-mail foi encontrado no banco
+            this.NotificarSeNulo(usuario, $"Usuário não encontrado com o e-mail {email}.");
+
+            if (this.Invalido)
+                return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+
+            return new ComandoSaida(true, new[] { $"Usuário com o e-mail {email} encontrado." }, usuario);
         }
     }
 }

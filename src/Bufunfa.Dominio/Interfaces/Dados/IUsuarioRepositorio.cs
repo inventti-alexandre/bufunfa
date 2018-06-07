@@ -6,6 +6,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
     public interface IUsuarioRepositorio
     {
         /// <summary>
+        /// Obtém um usuário a partir do seu e-mail
+        /// </summary>
+        Usuario ObterPorEmail(string email);
+
+        /// <summary>
         /// Obtém um usuário a partir do seu e-mail e senha
         /// </summary>
         Usuario ObterPorEmailSenha(string email, string senha);
@@ -13,6 +18,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Realiza a alteração da senha de um usuário
         /// </summary>
-        void AlterarSenhaUsuario(AlterarSenhaUsuarioComando entrada);
+        void AlterarSenhaUsuario(AlterarSenhaUsuarioEntrada entrada);
     }
 }
