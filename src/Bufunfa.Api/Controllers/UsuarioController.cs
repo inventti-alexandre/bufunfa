@@ -1,4 +1,4 @@
-﻿using JNogueira.Bufunfa.Api;
+﻿using JNogueira.Bufunfa.Api.Seguranca;
 using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Security.Principal;
 
 namespace Bufunfa.Api.Controllers
@@ -58,28 +57,17 @@ namespace Bufunfa.Api.Controllers
                     // Geração de claims. No contexto desse sistema, claims não precisaram ser criadas.
                     new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.NameId, usuario.IdUsuario.ToString()),
-                        new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
                         new Claim(JwtRegisteredClaimNames.UniqueName, usuario.Email)
                     }
                 );
 
             var jwtHandler = new JwtSecurityTokenHandler();
 
-            SigningCredentials signingCredentials;
-
-            using (var provider = new RSACryptoServiceProvider(2048))
-            {
-                var key = new RsaSecurityKey(provider.ExportParameters(true));
-
-                signingCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256Signature);
-            }
-
             var securityToken = jwtHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = tokenConfig.Issuer,
                 Audience = tokenConfig.Audience,
-                SigningCredentials = signingCredentials,
+                SigningCredentials = tokenConfig.SigningCredentials,
                 Subject = identity,
                 NotBefore = dataCriacaoToken,
                 Expires = dataExpiracaoToken,

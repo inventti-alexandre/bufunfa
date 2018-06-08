@@ -1,5 +1,6 @@
-﻿using JNogueira.Bufunfa.Api;
-using JNogueira.Bufunfa.Api.Filters;
+﻿using JNogueira.Bufunfa.Api.Filters;
+using JNogueira.Bufunfa.Api.Seguranca;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Servicos;
@@ -9,13 +10,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Text;
+using System.Net;
 
 namespace Bufunfa.Api
 {
@@ -25,6 +27,13 @@ namespace Bufunfa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<BufunfaDataContext, BufunfaDataContext>(x => new BufunfaDataContext(Configuration["BufunfaConnectionString"]));
+
+            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
+            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+
+            services.AddTransient<IUsuarioServico, UsuarioServico>();
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
@@ -44,48 +53,43 @@ namespace Bufunfa.Api
             services.AddSingleton(tokenConfig);
 
             services
-                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 // AddJwtBearer: definidas configurações como a chave e o algoritmo de criptografia utilizados, a necessidade de analisar se um token ainda é válido e o tempo de tolerância para expiração de um token
                 .AddJwtBearer(options =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        // Valida a assinatura de um token recebido
-                        ValidateIssuerSigningKey = true,
-                        // Verifica se um token recebido ainda é válido
-                        ValidateLifetime = true,
-                        ValidIssuer = tokenConfig.Issuer,
-                        ValidAudience = tokenConfig.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenConfig.SecretKey)),
-                        // Tempo de tolerância para a expiração de um token (utilizado
-                        // caso haja problemas de sincronismo de horário entre diferentes
-                        // computadores envolvidos no processo de comunicação)
-                        ClockSkew = TimeSpan.Zero
-                    };
+                    var paramsValidation = options.TokenValidationParameters;
+                    paramsValidation.IssuerSigningKey = tokenConfig.Key;
+                    paramsValidation.ValidAudience = tokenConfig.Audience;
+                    paramsValidation.ValidIssuer = tokenConfig.Issuer;
+
+                    // Valida a assinatura de um token recebido
+                    paramsValidation.ValidateIssuerSigningKey = true;
+
+                    // Verifica se um token recebido ainda é válido
+                    paramsValidation.ValidateLifetime = true;
+
+                    // Tempo de tolerância para a expiração de um token (utilizado
+                    // caso haja problemas de sincronismo de horário entre diferentes
+                    // computadores envolvidos no processo de comunicação)
+                    paramsValidation.ClockSkew = TimeSpan.Zero;
                 });
 
             // AddAuthorization: ativará o uso de tokens com o intuito de autorizar ou não o acesso a recursos da aplicação
-            services.AddAuthorization(options =>
+            services.AddAuthorization(auth =>
             {
-                options.AddPolicy("Bearer", 
+                auth.AddPolicy("Bearer", 
                     new AuthorizationPolicyBuilder()
                         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                         .RequireAuthenticatedUser()
                         .Build());
             });
 
-            services.AddMvc(config =>
-            {
-                config.Filters.Add(typeof(CustomExceptionFilter));
-            });
-
-            services.AddScoped<BufunfaDataContext, BufunfaDataContext>(x => new BufunfaDataContext(Configuration["BufunfaConnectionString"]));
-
-            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
-            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
-
-            services.AddTransient<IUsuarioServico, UsuarioServico>();
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -94,7 +98,20 @@ namespace Bufunfa.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseCustomExceptionHandler();
+
+            //app.UseExceptionHandler();
+
+            app.UseStatusCodePages(async context =>
+            {
+                if (context.HttpContext.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+                {
+                    context.HttpContext.Response.ContentType = "application/json";
+                    await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ComandoSaida(false, new[] { "Acesso negado. Certifique-se que você foi autenticado." }, null)));
+                }
+            });
+
             app.UseMvc();
         }
     }
