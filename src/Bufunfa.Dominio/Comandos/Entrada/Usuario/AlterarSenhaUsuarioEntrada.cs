@@ -4,7 +4,7 @@ using JNogueira.Infraestrutura.NotifiqueMe;
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Comando utilizado na alteração de senha de um usuário
+    /// Comando utilizado na alteração da senha de um usuário
     /// </summary>
     public class AlterarSenhaUsuarioEntrada : Notificavel, IComandoEntrada
     {

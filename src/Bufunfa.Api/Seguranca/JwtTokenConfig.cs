@@ -6,7 +6,7 @@ namespace JNogueira.Bufunfa.Api.Seguranca
     /// <summary>
     /// Classe que armazena as configurações do token JWT
     /// </summary>
-    public class TokenJwtConfig
+    public class JwtTokenConfig
     {
         public string Audience { get; set; }
         public string Issuer { get; set; }
@@ -20,7 +20,7 @@ namespace JNogueira.Bufunfa.Api.Seguranca
         // Esta referência conterá a chave de criptografia e o algoritmo de segurança empregados na geração de assinaturas digitais para tokens
         public SigningCredentials SigningCredentials { get; }
 
-        public TokenJwtConfig()
+        public JwtTokenConfig()
         {
             using (var provider = new RSACryptoServiceProvider(2048))
             {

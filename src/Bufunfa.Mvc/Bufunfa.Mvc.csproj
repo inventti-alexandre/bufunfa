@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RootNamespace>JNogueira.Bufunfa.Api</RootNamespace>
-    <UserSecretsId>07e2e69f-caa7-469b-833e-ba93972744d6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,13 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0" />
-    <PackageReference Include="NotifiqueMe" Version="1.0.32" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="RestSharp" Version="106.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
-    <ProjectReference Include="..\Bufunfa.Infraestrutura.Dados\Bufunfa.Infraestrutura.Dados.csproj" />
   </ItemGroup>
 
 </Project>

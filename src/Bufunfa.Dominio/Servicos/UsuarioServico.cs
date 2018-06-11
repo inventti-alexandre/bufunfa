@@ -37,6 +37,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
+            // Define as permissões de acesso (aqui, de forma estática, porém essas permissões poderiam ser obtidas do banco de dados).
+            usuario.PermissoesAcesso = new[]
+            {
+                PermissaoAcesso.CadastrarUsuario,
+                PermissaoAcesso.ConsultarUsuario
+            };
+
             return new ComandoSaida(true, new[] { "Usuário autenticado com sucesso."}, usuario);
         }
 
@@ -56,7 +63,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
-            return new ComandoSaida(true, new[] { $"Usuário com o e-mail {email} encontrado." }, usuario);
+            return new ComandoSaida(true, new[] { $"Usuário com o e-mail {email} encontrado." }, new UsuarioSaida(usuario));
         }
     }
 }

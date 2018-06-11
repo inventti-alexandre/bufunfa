@@ -24,7 +24,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         {
             return _dbContext
                 .Connection
-                .Query<Usuario>("SELECT IdUsuario, Nome, Email, Ativo FROM usuario WHERE Email = @email", new { email })
+                .Query<Usuario>("SELECT IdUsuario Id, Nome, Email, Ativo FROM usuario WHERE Email = @email", new { email })
                 .FirstOrDefault();
         }
 
@@ -32,7 +32,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         {
             return _dbContext
                 .Connection
-                .Query<Usuario>("SELECT IdUsuario, Nome, Email, Ativo FROM usuario WHERE Email = @email AND Senha = @senha", new { email, senha })
+                .Query<Usuario>("SELECT IdUsuario Id, Nome, Email, Ativo FROM usuario WHERE Email = @email AND Senha = @senha", new { email, senha })
                 .FirstOrDefault();
         }
     }

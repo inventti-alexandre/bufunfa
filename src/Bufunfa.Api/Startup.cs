@@ -1,23 +1,19 @@
-﻿using JNogueira.Bufunfa.Api.Filters;
+﻿using JNogueira.Bufunfa.Api.Middlewares;
 using JNogueira.Bufunfa.Api.Seguranca;
-using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Servicos;
 using JNogueira.Bufunfa.Infraestrutura.Dados;
 using JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net;
 
 namespace Bufunfa.Api
 {
@@ -43,10 +39,10 @@ namespace Bufunfa.Api
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
 
-            var tokenConfig = new TokenJwtConfig();
+            var tokenConfig = new JwtTokenConfig();
 
             // Extrai as informações do arquivo appsettings.json, criando um instância da classe "TokenJwtConfig"
-            new ConfigureFromConfigurationOptions<TokenJwtConfig>(Configuration.GetSection("TokenJwtConfig"))
+            new ConfigureFromConfigurationOptions<JwtTokenConfig>(Configuration.GetSection("JwtTokenConfig"))
                 .Configure(tokenConfig);
 
             // AddSingleton: instância configurada de forma que uma única referência das mesmas seja empregada durante todo o tempo em que a aplicação permanecer em execução
@@ -80,13 +76,10 @@ namespace Bufunfa.Api
                 });
 
             // AddAuthorization: ativará o uso de tokens com o intuito de autorizar ou não o acesso a recursos da aplicação
-            services.AddAuthorization(auth =>
+            services.AddAuthorization(options =>
             {
-                auth.AddPolicy("Bearer", 
-                    new AuthorizationPolicyBuilder()
-                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                        .RequireAuthenticatedUser()
-                        .Build());
+                // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
+                options.AddPolicy(PermissaoAcesso.ConsultarUsuario, policy => policy.RequireClaim(PermissaoAcesso.ConsultarUsuario).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services.AddMvc();
@@ -94,23 +87,13 @@ namespace Bufunfa.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
+            // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
             app.UseCustomExceptionHandler();
-
-            //app.UseExceptionHandler();
-
-            app.UseStatusCodePages(async context =>
-            {
-                if (context.HttpContext.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
-                {
-                    context.HttpContext.Response.ContentType = "application/json";
-                    await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ComandoSaida(false, new[] { "Acesso negado. Certifique-se que você foi autenticado." }, null)));
-                }
-            });
 
             app.UseMvc();
         }
