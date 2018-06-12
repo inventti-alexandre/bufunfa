@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bufunfa.Infraestrutura.Dado
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Frontend", "1 - Frontend", "{FF69E9C0-24EE-47EE-874F-C783EFE836C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bufunfa.Mvc", "Bufunfa.Mvc\Bufunfa.Mvc.csproj", "{F3355A40-F272-47B1-91F5-5FEC85F01F1A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{64DFE2CE-3357-4086-BF42-0F41FBCCE4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64DFE2CE-3357-4086-BF42-0F41FBCCE4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64DFE2CE-3357-4086-BF42-0F41FBCCE4FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3355A40-F272-47B1-91F5-5FEC85F01F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3355A40-F272-47B1-91F5-5FEC85F01F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3355A40-F272-47B1-91F5-5FEC85F01F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3355A40-F272-47B1-91F5-5FEC85F01F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,7 +39,6 @@ Global
 		{CDF072DA-316A-41AB-A31E-7E6446D0F01B} = {4D5672EA-C139-4881-AD31-1664B78654F9}
 		{C070D343-8624-4AFA-87E3-795546148497} = {4D5672EA-C139-4881-AD31-1664B78654F9}
 		{64DFE2CE-3357-4086-BF42-0F41FBCCE4FE} = {4D5672EA-C139-4881-AD31-1664B78654F9}
-		{F3355A40-F272-47B1-91F5-5FEC85F01F1A} = {FF69E9C0-24EE-47EE-874F-C783EFE836C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83B52613-069C-44FD-B3DE-741BE1FF2411}

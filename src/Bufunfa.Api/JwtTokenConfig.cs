@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 
-namespace JNogueira.Bufunfa.Api.Seguranca
+namespace JNogueira.Bufunfa.Api
 {
     /// <summary>
     /// Classe que armazena as configurações do token JWT

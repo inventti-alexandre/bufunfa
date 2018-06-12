@@ -1,4 +1,5 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+﻿using JNogueira.Bufunfa.Api.ViewModels;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -56,7 +57,7 @@ namespace JNogueira.Bufunfa.Api.Middlewares
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var comandoSaida = new ComandoSaida(false, new[] { exception.Message }, new
+            var comandoSaida = new ComandoSaida(false, new[] { exception.Message }, new ExceptionSaida
             {
                 Exception = exception.Message,
                 BaseException = exception.GetBaseException().Message,

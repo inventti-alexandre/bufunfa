@@ -1,4 +1,5 @@
-﻿using JNogueira.Bufunfa.Api.Seguranca;
+﻿using JNogueira.Bufunfa.Api;
+using JNogueira.Bufunfa.Api.Swagger.Responses;
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
@@ -8,14 +9,17 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
 
 namespace Bufunfa.Api.Controllers
 {
+    [Produces("application/json")]
     public class UsuarioController : Controller
     {
         private readonly IUsuarioServico _usuarioServico;
@@ -25,12 +29,20 @@ namespace Bufunfa.Api.Controllers
             _usuarioServico = usuarioServico;
         }
 
+        /// <summary>
+        /// Rota para autenticação do usuário. Caso a autenticação ocorra com sucesso, um token JWT é gerado e retornado.
+        /// </summary>
+        /// <param name="email">E-mail do usuário</param>
+        /// <param name="senha">Senha do usuário</param>
+        /// <response code="500">Erro inesperado encontrado ao atender a requisição.</response>
         [AllowAnonymous]
         [HttpPost]
         [Route("v1/usuarios/autenticar")]
-        public IComandoSaida Autenticar([FromBody] AutenticarUsuarioEntrada autenticarComando /*FromBody: resolvidos a partir do body do request.*/,
-                                        [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
+        [ProducesResponseType(typeof(ResponseInternalServerError), (int)HttpStatusCode.InternalServerError)]
+        public IComandoSaida Autenticar(string email, string senha, [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
+            var autenticarComando = new AutenticarUsuarioEntrada { Email = email, Senha = senha };
+
             var comandoSaida = _usuarioServico.Autenticar(autenticarComando);
 
             if (!comandoSaida.Sucesso)
