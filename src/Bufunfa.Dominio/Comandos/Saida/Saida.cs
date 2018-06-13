@@ -6,14 +6,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
     /// <summary>
     /// Comando para padronização das saídas do domínio
     /// </summary>
-    public class ComandoSaida : IComandoSaida
+    public class Saida : ISaida
     {
-        public ComandoSaida()
+        public Saida()
         {
 
         }
 
-        public ComandoSaida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+        public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
         {
             this.Sucesso = sucesso;
             this.Mensagens = mensagens;

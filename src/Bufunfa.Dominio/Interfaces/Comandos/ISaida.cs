@@ -2,7 +2,7 @@
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Comandos
 {
-    public interface IComandoSaida
+    public interface ISaida
     {
         bool Sucesso { get; set; }
 

@@ -11,11 +11,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// <summary>
         /// Realiza a autenticação de um usuário
         /// </summary>
-        IComandoSaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
+        ISaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
 
         /// <summary>
         /// Obtém um usuário a partir do seu e-mail
         /// </summary>
-        IComandoSaida ObterUsuarioPorEmail(string email);
+        ISaida ObterUsuarioPorEmail(string email);
     }
 }

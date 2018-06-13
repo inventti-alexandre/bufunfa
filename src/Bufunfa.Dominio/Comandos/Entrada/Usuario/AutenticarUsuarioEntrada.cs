@@ -7,7 +7,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     /// <summary>
     /// Comando utilizado na autenticação de um usuário
     /// </summary>
-    public class AutenticarUsuarioEntrada : Notificavel, IComandoEntrada
+    public class AutenticarUsuarioEntrada : Notificavel, IEntrada
     {
         public string Email { get; set; }
 

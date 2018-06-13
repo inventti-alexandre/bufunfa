@@ -1,6 +1,5 @@
 ﻿using JNogueira.Bufunfa.Api;
 using JNogueira.Bufunfa.Api.Middlewares;
-using JNogueira.Bufunfa.Api.Swagger;
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
@@ -14,9 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Bufunfa.Api
@@ -102,28 +101,26 @@ namespace Bufunfa.Api
                     }
                 });
 
-                options.SchemaFilter<CustomSchemaFilter>();
+                //options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                //{
+                //    Name = "Authorization",
+                //    In = "header"
+                //});
+
+                //options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                //{
+                //    { "Bearer", new string[] { } }
+                //});
+
+                options.OperationFilter<ExamplesOperationFilter>(); // Permite a exibição de exemplos para o request e response.
+                options.OperationFilter<DescriptionOperationFilter>(); // Permite a documentação das propriedades das classes de exemplos com o atributo [Description]
+                //options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>(); // Adds "(Auth)" to the summary so that you can see which endpoints have Authorization
 
                 string caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
                 string nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
                 string caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
 
                 options.IncludeXmlComments(caminhoXmlDoc);
-                
-                var security = new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Bearer", new string[] { }},
-                };
-
-                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
-                });
-
-                options.AddSecurityRequirement(security);
             });
 
             services.AddMvc();
@@ -136,6 +133,8 @@ namespace Bufunfa.Api
             //    app.UseDeveloperExceptionPage();
             //}
 
+            app.UseStaticFiles();
+
             // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
             app.UseCustomExceptionHandler();
 
@@ -145,9 +144,12 @@ namespace Bufunfa.Api
             // Middleware para utilização do Swagger UI (HTML, JS, CSS, etc.)
             app.UseSwaggerUI(options =>
             {
-                options.RoutePrefix = "docs";
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1.0.0");
+                options.RoutePrefix = "docs"; // Define a documentação no endereço http://localhost/docs/
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.DefaultModelsExpandDepth(-1); // Oculta a sessão "Models"
                 options.DocExpansion(DocExpansion.List);
+                options.InjectStylesheet("/swagger-ui/custom.css");
+                options.DocumentTitle = "Bufunfa API v1";
             });
 
             app.UseMvc();

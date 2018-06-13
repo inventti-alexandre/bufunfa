@@ -17,11 +17,11 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public IComandoSaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
+        public ISaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
         {
             // Verifica se o e-mail e a senha do usuário foi informado.
             if (!autenticacaoEntrada.Valido())
-                return new ComandoSaida(false, autenticacaoEntrada.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, autenticacaoEntrada.Notificacoes.Select(x => x.Mensagem), null);
 
             var usuario = _usuarioRepositorio.ObterPorEmailSenha(autenticacaoEntrada.Email, autenticacaoEntrada.CriarHashSenha());
 
@@ -29,13 +29,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             this.NotificarSeNulo(usuario, "Usuário não encontrado. Favor verificar o login e senha informados.");
 
             if (this.Invalido)
-                return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
             // Verifica se o usuário está ativo
             this.NotificarSeFalso(usuario.Ativo, "Usuário inativo. Não é possível acessar o sistema.");
 
             if (this.Invalido)
-                return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
             // Define as permissões de acesso (aqui, de forma estática, porém essas permissões poderiam ser obtidas do banco de dados).
             usuario.PermissoesAcesso = new[]
@@ -44,16 +44,16 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 PermissaoAcesso.ConsultarUsuario
             };
 
-            return new ComandoSaida(true, new[] { "Usuário autenticado com sucesso."}, usuario);
+            return new Saida(true, new[] { "Usuário autenticado com sucesso."}, usuario);
         }
 
-        public IComandoSaida ObterUsuarioPorEmail(string email)
+        public ISaida ObterUsuarioPorEmail(string email)
         {
             // Verifica se um e-mail válido foi informado.
             this.NotificarSeEmailInvalido(email, "O e-mail informado é inválido.");
 
             if (this.Invalido)
-                return new ComandoSaida(false, this.Mensagens, null);
+                return new Saida(false, this.Mensagens, null);
 
             var usuario = _usuarioRepositorio.ObterPorEmail(email);
 
@@ -61,9 +61,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             this.NotificarSeNulo(usuario, $"Usuário não encontrado com o e-mail {email}.");
 
             if (this.Invalido)
-                return new ComandoSaida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, this.Notificacoes.Select(x => x.Mensagem), null);
 
-            return new ComandoSaida(true, new[] { $"Usuário com o e-mail {email} encontrado." }, new UsuarioSaida(usuario));
+            return new Saida(true, new[] { $"Usuário com o e-mail {email} encontrado." }, new UsuarioSaida(usuario));
         }
     }
 }
