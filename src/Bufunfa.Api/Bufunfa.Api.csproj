@@ -16,6 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\swagger-ui\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Swagger\UI\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModels\" />
   </ItemGroup>
 

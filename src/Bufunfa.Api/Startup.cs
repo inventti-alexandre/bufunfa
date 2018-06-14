@@ -16,7 +16,9 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace Bufunfa.Api
 {
@@ -88,33 +90,24 @@ namespace Bufunfa.Api
             // Configuração do Swagger para documentação da API
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new Info());
+
+
+                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
-                    Version = "v1",
-                    Title = "Bufunfa API",
-                    Description = "API que expõe as funcionalidades do sistema.",
-                    Contact = new Contact
-                    {
-                        Name = "Jorge Nogueira",
-                        Email = "jlnpinheiro@gmail.com",
-                        Url = "http://www.github.com/jlnpinheiro"
-                    }
+                    Name = "Authorization",
+                    Description = "Digite \"Bearer \" e cole seu token no campo abaixo.",
+                    In = "header"
                 });
 
-                //options.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                //{
-                //    Name = "Authorization",
-                //    In = "header"
-                //});
-
-                //options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                //{
-                //    { "Bearer", new string[] { } }
-                //});
+                options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Bearer", new string[] { } }
+                });
 
                 options.OperationFilter<ExamplesOperationFilter>(); // Permite a exibição de exemplos para o request e response.
                 options.OperationFilter<DescriptionOperationFilter>(); // Permite a documentação das propriedades das classes de exemplos com o atributo [Description]
-                //options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>(); // Adds "(Auth)" to the summary so that you can see which endpoints have Authorization
+                options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>(); // Adds "(Auth)" to the summary so that you can see which endpoints have Authorization
 
                 string caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
                 string nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
@@ -139,17 +132,21 @@ namespace Bufunfa.Api
             app.UseCustomExceptionHandler();
 
             // Middleware para utilização do Swagger.
-            app.UseSwagger();
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "docs/{documentName}/swagger.json";
+            });
 
             // Middleware para utilização do Swagger UI (HTML, JS, CSS, etc.)
             app.UseSwaggerUI(options =>
             {
                 options.RoutePrefix = "docs"; // Define a documentação no endereço http://localhost/docs/
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.SwaggerEndpoint("/docs/v1/swagger.json", "v1");
                 options.DefaultModelsExpandDepth(-1); // Oculta a sessão "Models"
                 options.DocExpansion(DocExpansion.List);
                 options.InjectStylesheet("/swagger-ui/custom.css");
                 options.DocumentTitle = "Bufunfa API v1";
+                options.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("JNogueira.Bufunfa.Api.Swagger.UI.index.html"); // Permite a utilização de um index.html customizado
             });
 
             app.UseMvc();
