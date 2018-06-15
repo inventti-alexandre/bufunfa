@@ -8,7 +8,7 @@
         /// <summary>
         /// Id do usuário
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; internal set; }
 
         /// <summary>
         /// Nome do usuário
