@@ -21,7 +21,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         {
             // Verifica se o e-mail e a senha do usuário foi informado.
             if (!autenticacaoEntrada.Valido())
-                return new Saida(false, autenticacaoEntrada.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, autenticacaoEntrada.Mensagens, null);
 
             var usuario = _usuarioRepositorio.ObterPorEmailSenha(autenticacaoEntrada.Email, autenticacaoEntrada.CriarHashSenha());
 
@@ -29,19 +29,19 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             this.NotificarSeNulo(usuario, "Usuário não encontrado. Favor verificar o login e senha informados.");
 
             if (this.Invalido)
-                return new Saida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, this.Mensagens, null);
 
             // Verifica se o usuário está ativo
             this.NotificarSeFalso(usuario.Ativo, "Usuário inativo. Não é possível acessar o sistema.");
 
             if (this.Invalido)
-                return new Saida(false, this.Notificacoes.Select(x => x.Mensagem), null);
+                return new Saida(false, this.Mensagens, null);
 
             // Define as permissões de acesso (aqui, de forma estática, porém essas permissões poderiam ser obtidas do banco de dados).
             usuario.PermissoesAcesso = new[]
             {
-                PermissaoAcesso.CadastrarUsuario,
-                PermissaoAcesso.ConsultarUsuario
+                PermissaoAcesso.Usuarios,
+                PermissaoAcesso.Contas
             };
 
             return new Saida(true, new[] { "Usuário autenticado com sucesso."}, usuario);

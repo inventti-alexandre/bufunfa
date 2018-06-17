@@ -7,12 +7,24 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
     /// </summary>
     public class UsuarioSaida
     {
+        /// <summary>
+        /// Id do usuário
+        /// </summary>
         public int Id { get; }
 
+        /// <summary>
+        /// Nome do usuário
+        /// </summary>
         public string Nome { get; }
 
+        /// <summary>
+        /// E-mail do usuário
+        /// </summary>
         public string Email { get; }
 
+        /// <summary>
+        /// Indica se o usuário está ativo
+        /// </summary>
         public bool Ativo { get; }
 
         public UsuarioSaida(Usuario usuario)

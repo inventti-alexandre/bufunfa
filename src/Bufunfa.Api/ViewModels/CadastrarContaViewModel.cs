@@ -1,23 +1,20 @@
-﻿namespace JNogueira.Bufunfa.Dominio.Entidades
-{
-    /// <summary>
-    /// Classe que representa uma conta (conta corrente, conta poupança, título público, etc)
-    /// </summary>
-    public class Conta
-    {
-        /// <summary>
-        /// Id da conta
-        /// </summary>
-        public int Id { get; internal set; }
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace JNogueira.Bufunfa.Api.ViewModels
+{
+    // View model utilizado para o cadastro de uma conta
+    public class CadastrarContaViewModel
+    {
         /// <summary>
         /// Id do usuário proprietário da conta
         /// </summary>
-        public int IdUsuario { get; private set; }
+        [Required]
+        public int IdUsuario { get; set; }
 
         /// <summary>
         /// Nome da conta
         /// </summary>
+        [Required]
         public string Nome { get; set; }
 
         /// <summary>
@@ -39,22 +36,5 @@
         /// Número da conta
         /// </summary>
         public string Numero { get; set; }
-
-        private Conta()
-        {
-
-        }
-
-        public Conta(int idUsuario, string nome)
-            : this()
-        {
-            this.IdUsuario = idUsuario;
-            this.Nome = nome;
-        }
-
-        public override string ToString()
-        {
-            return this.Nome;
-        }
     }
 }

@@ -13,12 +13,17 @@
         /// <summary>
         /// Nome do usuário
         /// </summary>
-        public string Nome { get; }
+        public string Nome { get; private set; }
 
         /// <summary>
         /// E-mail do usuário
         /// </summary>
-        public string Email { get; }
+        public string Email { get; private set; }
+
+        /// <summary>
+        /// Senha do usuário
+        /// </summary>
+        public string Senha { get; internal set; }
 
         /// <summary>
         /// Indica se o usuário está ativo
@@ -32,10 +37,11 @@
 
         private Usuario()
         {
-
+            
         }
 
         public Usuario(string nome, string email)
+            : this()
         {
             this.Nome = nome;
             this.Email = email;

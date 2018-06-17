@@ -6,13 +6,13 @@
     public static class PermissaoAcesso
     {
         /// <summary>
-        /// Permite realizar o cadastramento de outros usuários.
+        /// Permite realizar o cadastramento de usuários.
         /// </summary>
-        public const string CadastrarUsuario = "cadastrar-usuario";
+        public const string Usuarios = "usuarios";
 
         /// <summary>
-        /// Permite consultar as informaçõe de um usuário.
+        /// Permite realizar o cadastramento de contas.
         /// </summary>
-        public const string ConsultarUsuario = "consultar-usuario";
+        public const string Contas = "contas";
     }
 }

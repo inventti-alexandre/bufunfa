@@ -9,6 +9,7 @@ using JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -28,12 +29,15 @@ namespace Bufunfa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<BufunfaDataContext, BufunfaDataContext>(x => new BufunfaDataContext(Configuration["BufunfaConnectionString"]));
+            services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["BufunfaConnectionString"]));
+            services.AddScoped<IUow, Uow>();
 
             // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddTransient<IContaRepositorio, ContaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
+            services.AddTransient<IContaServico, ContaServico>();
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -84,7 +88,8 @@ namespace Bufunfa.Api
             services.AddAuthorization(options =>
             {
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
-                options.AddPolicy(PermissaoAcesso.ConsultarUsuario, policy => policy.RequireClaim(PermissaoAcesso.ConsultarUsuario).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Usuarios, policy => policy.RequireClaim(PermissaoAcesso.Usuarios).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Contas, policy => policy.RequireClaim(PermissaoAcesso.Contas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API
@@ -150,6 +155,8 @@ namespace Bufunfa.Api
             });
 
             app.UseMvc();
+
+            app.Map("/v1", appBuilder => appBuilder.Run(async context => await context.Response.WriteAsync("Bufunfa API v1")));
         }
     }
 }

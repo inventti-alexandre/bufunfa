@@ -4,7 +4,7 @@ using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class AutenticarUsuarioApiResponse : IExamplesProvider
+    public class AutenticarUsuarioResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -22,7 +22,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
-    public class ObterUsuarioPorEmailApiResponse : IExamplesProvider
+    public class ObterUsuarioPorEmailResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
         {

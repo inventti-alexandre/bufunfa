@@ -1,38 +1,34 @@
-﻿using Dapper;
-using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
-using JNogueira.Bufunfa.Dominio.Entidades;
+﻿using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
-        private readonly BufunfaDataContext _dbContext;
+        private readonly EfDataContext _efContext;
 
-        public UsuarioRepositorio(BufunfaDataContext dbContext)
+        public UsuarioRepositorio(EfDataContext efContext)
         {
-            _dbContext = dbContext;
-        }
-
-        public void AlterarSenhaUsuario(AlterarSenhaUsuarioEntrada entrada)
-        {
-            throw new System.NotImplementedException();
+            _efContext = efContext;
         }
 
         public Usuario ObterPorEmail(string email)
         {
-            return _dbContext
-                .Connection
-                .Query<Usuario>("SELECT IdUsuario Id, Nome, Email, Ativo FROM usuario WHERE Email = @email", new { email })
+            return _efContext
+                .Usuarios
+                .Where(x => x.Email == email)
+                .AsNoTracking()
                 .FirstOrDefault();
         }
 
         public Usuario ObterPorEmailSenha(string email, string senha)
         {
-            return _dbContext
-                .Connection
-                .Query<Usuario>("SELECT IdUsuario Id, Nome, Email, Ativo FROM usuario WHERE Email = @email AND Senha = @senha", new { email, senha })
+            return _efContext
+                .Usuarios
+                .Where(x => x.Email == email && x.Senha == senha)
+                .AsNoTracking()
                 .FirstOrDefault();
         }
     }

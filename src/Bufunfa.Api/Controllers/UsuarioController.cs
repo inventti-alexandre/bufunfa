@@ -36,7 +36,7 @@ namespace Bufunfa.Api.Controllers
         }
 
         /// <summary>
-        /// Rota para autenticação do usuário. Caso a autenticação ocorra com sucesso, um token JWT é gerado e retornado.
+        /// Realiza a autenticação do usuário. Caso a autenticação ocorra com sucesso, um token JWT é gerado e retornado.
         /// </summary>
         /// <param name="email">E-mail do usuário</param>
         /// <param name="senha">Senha do usuário</param>
@@ -44,7 +44,7 @@ namespace Bufunfa.Api.Controllers
         [HttpPost]
         [Route("v1/usuarios/autenticar")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Caso o usuário seja autenticado com sucesso, o token JWT é retornado.")]
-        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AutenticarUsuarioApiResponse))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AutenticarUsuarioResponseExemplo))]
         public ISaida Autenticar(string email, string senha, [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
             var autenticarComando = new AutenticarUsuarioEntrada { Email = email, Senha = senha };
@@ -66,11 +66,11 @@ namespace Bufunfa.Api.Controllers
         /// Obtém as informações do usuário, a partir do seu e-mail
         /// </summary>
         /// <param name="email">E-mail do usuário.</param>
-        [Authorize(PermissaoAcesso.ConsultarUsuario)]
+        [Authorize(PermissaoAcesso.Usuarios)]
         [HttpGet]
         [Route("v1/usuarios/obter-por-email/{email}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Informações do usuário encontrado.")]
-        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterUsuarioPorEmailApiResponse))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterUsuarioPorEmailResponseExemplo))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, typeof(Response), "Acesso negado. Token de autenticação não encontrado. (Unauthorized)")]
         [SwaggerResponseExample((int)HttpStatusCode.Unauthorized, typeof(UnauthorizedApiResponse))]
         [SwaggerResponse((int)HttpStatusCode.Forbidden, typeof(Response), "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)")]
@@ -87,7 +87,8 @@ namespace Bufunfa.Api.Controllers
                     // Geração de claims. No contexto desse sistema, claims não precisaram ser criadas.
                     new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, usuario.Email)
+                        new Claim(JwtRegisteredClaimNames.UniqueName, usuario.Email),
+                        new Claim("IdUsuario", usuario.Id.ToString())
                     }
                     // Adiciona as perissões de acesso do usuário
                     .Union(usuario.PermissoesAcesso.Select(x => new Claim(x, x)))

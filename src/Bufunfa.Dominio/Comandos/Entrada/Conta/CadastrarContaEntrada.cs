@@ -1,24 +1,22 @@
-﻿namespace JNogueira.Bufunfa.Dominio.Entidades
+﻿using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using JNogueira.Infraestrutura.NotifiqueMe;
+
+namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Classe que representa uma conta (conta corrente, conta poupança, título público, etc)
+    /// Comando utilizado para o cadastro de uma nova conta
     /// </summary>
-    public class Conta
+    public class CadastrarContaEntrada : Notificavel, IEntrada
     {
-        /// <summary>
-        /// Id da conta
-        /// </summary>
-        public int Id { get; internal set; }
-
         /// <summary>
         /// Id do usuário proprietário da conta
         /// </summary>
-        public int IdUsuario { get; private set; }
+        public int IdUsuario { get; }
 
         /// <summary>
         /// Nome da conta
         /// </summary>
-        public string Nome { get; set; }
+        public string Nome { get; }
 
         /// <summary>
         /// Valor inicial do saldo da conta
@@ -40,21 +38,19 @@
         /// </summary>
         public string Numero { get; set; }
 
-        private Conta()
-        {
-
-        }
-
-        public Conta(int idUsuario, string nome)
-            : this()
+        public CadastrarContaEntrada(int idUsuario, string nome)
         {
             this.IdUsuario = idUsuario;
             this.Nome = nome;
         }
 
-        public override string ToString()
+        public bool Valido()
         {
-            return this.Nome;
+            this
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, $"O ID do usuário informado ({this.IdUsuario}) é inválido.")
+                .NotificarSeNuloOuVazio(this.Nome, "O nome é obrigatório e não foi informado.");
+
+            return !this.Invalido;
         }
     }
 }
