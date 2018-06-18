@@ -41,7 +41,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             usuario.PermissoesAcesso = new[]
             {
                 PermissaoAcesso.Usuarios,
-                PermissaoAcesso.Contas
+                PermissaoAcesso.Contas,
+                PermissaoAcesso.Periodos
             };
 
             return new Saida(true, new[] { "Usuário autenticado com sucesso."}, usuario);

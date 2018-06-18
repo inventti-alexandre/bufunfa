@@ -32,11 +32,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext.Add(conta);
         }
 
-        public bool VerificarExistenciaContaPorNome(int idUsuario, string nome)
+        public bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null)
         {
-            return _efContext
-                   .Contas
-                   .Any(x => x.Nome.IndexOf(nome, System.StringComparison.InvariantCultureIgnoreCase) >= 0);
+            return idConta.HasValue
+                ? _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase) && x.Id != idConta)
+                : _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         public IEnumerable<Conta> ObterPorUsuario(int idUsuario)

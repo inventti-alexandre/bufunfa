@@ -66,7 +66,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se o usuário já possui alguma conta com o nome informado
-            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaContaPorNome(cadastroEntrada.IdUsuario, cadastroEntrada.Nome), $"Você já possui uma conta cadastrada com o nome \"{cadastroEntrada.Nome}\". Informe um nome diferente para a conta.");
+            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(cadastroEntrada.IdUsuario, cadastroEntrada.Nome), $"Você já possui uma conta cadastrada com o nome \"{cadastroEntrada.Nome}\". Informe um nome diferente para a conta.");
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -91,6 +91,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se as informações para alteração foram informadas corretamente
             if (!alterarEntrada.Valido())
                 return new Saida(false, alterarEntrada.Mensagens, null);
+
+            // Verifica se o usuário já possui alguma conta com o nome informado
+            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdConta), $"Você já possui uma conta cadastrada com o nome \"{alterarEntrada.Nome}\". Informe um nome diferente para a conta.");
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
 
             var conta = _contaRepositorio.ObterPorId(alterarEntrada.IdConta, true);
 

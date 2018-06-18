@@ -9,7 +9,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     public class AlterarContaEntrada : Notificavel, IEntrada
     {
         /// <summary>
-        /// Id do usuário proprietário da conta
+        /// Id do usuário proprietário
         /// </summary>
         public int IdUsuario { get; }
 

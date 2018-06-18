@@ -8,10 +8,10 @@
         /// <summary>
         /// Id da conta
         /// </summary>
-        public int Id { get; internal set; }
+        public int Id { get; private set; }
 
         /// <summary>
-        /// Id do usuário proprietário da conta
+        /// Id do usuário proprietário
         /// </summary>
         public int IdUsuario { get; private set; }
 

@@ -32,7 +32,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Verifica se um determinado usuário possui uma conta com o nome informado
         /// </summary>
-        bool VerificarExistenciaContaPorNome(int idUsuario, string nome);
+        bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null);
 
         /// <summary>
         /// Obtém as contas de um usuário.

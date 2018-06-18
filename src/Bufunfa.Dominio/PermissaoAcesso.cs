@@ -14,5 +14,10 @@
         /// Permite realizar o cadastramento de contas.
         /// </summary>
         public const string Contas = "contas";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de períodos.
+        /// </summary>
+        public const string Periodos = "periodos";
     }
 }

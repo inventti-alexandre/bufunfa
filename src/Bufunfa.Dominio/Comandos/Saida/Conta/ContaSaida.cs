@@ -13,7 +13,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
-        /// Id do usuário proprietário da conta
+        /// Id do usuário proprietário
         /// </summary>
         public int IdUsuario { get; }
 

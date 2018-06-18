@@ -13,7 +13,6 @@ using System.Net;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
-
     [Consumes("application/json")]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]

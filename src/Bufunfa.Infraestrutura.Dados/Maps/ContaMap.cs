@@ -11,6 +11,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.ToTable("conta");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("IdConta");
+            builder.Property(x => x.IdUsuario);
+            builder.Property(x => x.Nome);
             builder.Property(x => x.ValorSaldoInicial).HasColumnName("SaldoInicial");
             builder.Property(x => x.NomeInstituicao);
             builder.Property(x => x.NumeroAgencia);

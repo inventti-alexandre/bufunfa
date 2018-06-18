@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Api;
+using JNogueira.Bufunfa.Api.Attributes;
 using JNogueira.Bufunfa.Api.Middlewares;
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
@@ -35,9 +36,11 @@ namespace Bufunfa.Api
             // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IContaRepositorio, ContaRepositorio>();
+            services.AddTransient<IPeriodoRepositorio, PeriodoRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
+            services.AddTransient<IPeriodoServico, PeriodoServico>();
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -90,6 +93,7 @@ namespace Bufunfa.Api
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
                 options.AddPolicy(PermissaoAcesso.Usuarios, policy => policy.RequireClaim(PermissaoAcesso.Usuarios).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Contas, policy => policy.RequireClaim(PermissaoAcesso.Contas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Periodos, policy => policy.RequireClaim(PermissaoAcesso.Periodos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API
@@ -121,16 +125,14 @@ namespace Bufunfa.Api
                 options.IncludeXmlComments(caminhoXmlDoc);
             });
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomModelStateValidationFilter));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-
             app.UseStaticFiles();
 
             // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
@@ -155,8 +157,6 @@ namespace Bufunfa.Api
             });
 
             app.UseMvc();
-
-            app.Map("/v1", appBuilder => appBuilder.Run(async context => await context.Response.WriteAsync("Bufunfa API v1")));
         }
     }
 }

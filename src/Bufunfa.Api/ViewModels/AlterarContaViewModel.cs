@@ -8,13 +8,13 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Id da conta
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "O ID da conta é obrigatório e não foi informado.")]
         public int IdConta { get; set; }
 
         /// <summary>
         /// Nome da conta
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "O nome da conta é obrigatório e não foi informado.")]
         public string Nome { get; set; }
 
         /// <summary>
