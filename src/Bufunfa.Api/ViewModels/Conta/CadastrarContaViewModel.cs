@@ -6,12 +6,6 @@ namespace JNogueira.Bufunfa.Api.ViewModels
     public class CadastrarContaViewModel
     {
         /// <summary>
-        /// Id do usuário proprietário da conta
-        /// </summary>
-        [Required(ErrorMessage = "O ID do usuário é obrigatório e não foi informado.")]
-        public int IdUsuario { get; set; }
-
-        /// <summary>
         /// Nome da conta
         /// </summary>
         [Required(ErrorMessage = "O nome da conta é obrigatório e não foi informado.")]

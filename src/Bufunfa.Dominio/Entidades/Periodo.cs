@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using System;
 
 namespace JNogueira.Bufunfa.Dominio.Entidades
 {
@@ -15,33 +16,47 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        public int IdUsuario { get; set; }
+        public int IdUsuario { get; private set; }
 
         /// <summary>
         /// Nome da período
         /// </summary>
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
 
         /// <summary>
         /// Data início do período
         /// </summary>
-        public DateTime DataInicio { get; set; }
+        public DateTime DataInicio { get; private set; }
 
         /// <summary>
         /// Data fim do período
         /// </summary>
-        public DateTime DataFim { get; set; }
+        public DateTime DataFim { get; private set; }
+        public int MyProperty { get; private set; }
 
         private Periodo()
         {
         }
 
-        public Periodo(int idUsuario, string nome, DateTime dataInicio, DateTime dataFim)
+        public Periodo(CadastrarPeriodoEntrada cadastrarEntrada)
         {
-            this.IdUsuario = idUsuario;
-            this.Nome = nome;
-            this.DataInicio = dataInicio;
-            this.DataFim = dataFim;
+            if (!cadastrarEntrada.Valido())
+                return;
+
+            this.IdUsuario  = cadastrarEntrada.IdUsuario;
+            this.Nome       = cadastrarEntrada.Nome;
+            this.DataInicio = cadastrarEntrada.DataInicio;
+            this.DataFim    = cadastrarEntrada.DataFim;
+        }
+
+        public void Alterar(AlterarPeriodoEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdPeriodo != this.Id)
+                return;
+
+            this.Nome       = alterarEntrada.Nome;
+            this.DataInicio = alterarEntrada.DataInicio;
+            this.DataFim    = alterarEntrada.DataFim;
         }
 
         public override string ToString()

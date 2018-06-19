@@ -27,15 +27,21 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         /// </summary>
         public bool Ativo { get; }
 
+        /// <summary>
+        /// Permissões de acesso do usuário
+        /// </summary>
+        public string[] PermissoesAcesso { get; }
+
         public UsuarioSaida(Usuario usuario)
         {
             if (usuario == null)
                 return;
 
-            this.Id = usuario.Id;
-            this.Nome = usuario.Nome.ToUpper();
-            this.Email = usuario.Email.ToLower();
-            this.Ativo = usuario.Ativo;
+            this.Id               = usuario.Id;
+            this.Nome             = usuario.Nome.ToUpper();
+            this.Email            = usuario.Email.ToLower();
+            this.Ativo            = usuario.Ativo;
+            this.PermissoesAcesso = usuario.PermissoesAcesso;
         }
 
         public override string ToString()

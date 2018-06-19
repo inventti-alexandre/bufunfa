@@ -70,13 +70,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarContaResponseExemplo))]
         public ISaida CadastrarConta([FromBody] CadastrarContaViewModel cadastroModel)
         {
-            var cadastrarEntrada = new CadastrarContaEntrada(cadastroModel.IdUsuario, cadastroModel.Nome)
-            {
-                NomeInstituicao   = cadastroModel.NomeInstituicao,
-                Numero            = cadastroModel.Numero,
-                NumeroAgencia     = cadastroModel.NumeroAgencia,
-                ValorSaldoInicial = cadastroModel.ValorSaldoInicial
-            };
+            var cadastrarEntrada = new CadastrarContaEntrada(base.ObterIdUsuarioClaim(), cadastroModel.Nome, cadastroModel.ValorSaldoInicial, cadastroModel.NomeInstituicao, cadastroModel.NumeroAgencia, cadastroModel.Numero);
 
             return _contaServico.CadastrarConta(cadastrarEntrada);
         }
@@ -93,13 +87,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarContaResponseExemplo))]
         public ISaida AlterarConta([FromBody] AlterarContaViewModel alterarModel)
         {
-            var alterarEntrada = new AlterarContaEntrada(alterarModel.IdConta, alterarModel.Nome, base.ObterIdUsuarioClaim())
-            {
-                NomeInstituicao   = alterarModel.NomeInstituicao,
-                Numero            = alterarModel.Numero,
-                NumeroAgencia     = alterarModel.NumeroAgencia,
-                ValorSaldoInicial = alterarModel.ValorSaldoInicial
-            };
+            var alterarEntrada = new AlterarContaEntrada(alterarModel.IdConta, alterarModel.Nome, base.ObterIdUsuarioClaim(), alterarModel.ValorSaldoInicial, alterarModel.NomeInstituicao, alterarModel.NumeroAgencia, alterarModel.Numero);
 
             return _contaServico.AlterarConta(alterarEntrada);
         }

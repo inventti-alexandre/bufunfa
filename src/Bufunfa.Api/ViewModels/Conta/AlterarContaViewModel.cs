@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JNogueira.Bufunfa.Dominio.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace JNogueira.Bufunfa.Api.ViewModels
 {
@@ -14,7 +15,8 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Nome da conta
         /// </summary>
-        [Required(ErrorMessage = "O nome da conta é obrigatório e não foi informado.")]
+        [Required(ErrorMessageResourceType = typeof(ContaMensagem), ErrorMessageResourceName = "Nome_Obrigatorio_Nao_Informado")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(ContaMensagem), ErrorMessageResourceName = "Nome_Tamanho_Maximo_Excedido")]
         public string Nome { get; set; }
 
         /// <summary>
@@ -25,16 +27,19 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Nome da instituição financeira a qual a conta pertence
         /// </summary>
+        [MaxLength(500, ErrorMessageResourceType = typeof(ContaMensagem), ErrorMessageResourceName = "Nome_Instituicao_Tamanho_Maximo_Excedido")]
         public string NomeInstituicao { get; set; }
 
         /// <summary>
         /// Número da agência da conta
         /// </summary>
+        [MaxLength(20, ErrorMessageResourceType = typeof(ContaMensagem), ErrorMessageResourceName = "Numero_Agencia_Tamanho_Maximo_Excedido")]
         public string NumeroAgencia { get; set; }
 
         /// <summary>
         /// Número da conta
         /// </summary>
+        [MaxLength(20, ErrorMessageResourceType = typeof(ContaMensagem), ErrorMessageResourceName = "Numero_Tamanho_Maximo_Excedido")]
         public string Numero { get; set; }
     }
 }

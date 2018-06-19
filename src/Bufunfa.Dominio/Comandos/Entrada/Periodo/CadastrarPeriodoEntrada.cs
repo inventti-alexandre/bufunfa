@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
 using System;
 
@@ -40,9 +41,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public bool Valido()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, $"O ID do usuário informado ({this.IdUsuario}) é inválido.")
-                .NotificarSeNuloOuVazio(this.Nome, "O nome é obrigatório e não foi informado.")
-                .NotificarSeMaiorOuIgualA(this.DataInicio, this.DataFim, "A data início do período é maior ou igual a data fim.");
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeNuloOuVazio(this.Nome, PeriodoMensagem.Nome_Obrigatorio_Nao_Informado)
+                .NotificarSeMaiorOuIgualA(this.DataInicio, this.DataFim, PeriodoMensagem.Data_Periodo_Invalidas);
+
+            if (!string.IsNullOrEmpty(this.Nome))
+                this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 50, PeriodoMensagem.Nome_Tamanho_Maximo_Excedido);
 
             return !this.Invalido;
         }

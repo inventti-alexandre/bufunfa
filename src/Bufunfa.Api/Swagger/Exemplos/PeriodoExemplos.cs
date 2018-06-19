@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+using JNogueira.Bufunfa.Dominio.Resources;
 using Swashbuckle.AspNetCore.Examples;
 using System;
 
@@ -39,7 +40,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Período \"Período 1\" cadastrado com sucesso." },
+                Mensagens = new[] { PeriodoMensagem.Periodo_Cadastrado_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
@@ -59,7 +60,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Período alterado com sucesso." },
+                Mensagens = new[] { PeriodoMensagem.Periodo_Alterado_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
@@ -79,7 +80,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Período excluído com sucesso." },
+                Mensagens = new[] { PeriodoMensagem.Periodo_Excluido_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
@@ -99,7 +100,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Período encontrado com sucesso." },
+                Mensagens = new[] { PeriodoMensagem.Periodo_Encontrado_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
@@ -119,7 +120,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Períodos do usuário encontrados com sucesso." },
+                Mensagens = new[] { PeriodoMensagem.Periodos_Encontrados_Com_Sucesso },
                 Retorno = new[]
                 {
                     new

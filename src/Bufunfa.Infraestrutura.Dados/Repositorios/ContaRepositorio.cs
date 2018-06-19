@@ -53,11 +53,9 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext.Entry(conta).State = EntityState.Modified;
         }
 
-        public void Deletar(int idConta)
+        public void Deletar(Conta conta)
         {
-            _efContext.Database.ExecuteSqlCommand(
-                "DELETE FROM conta WHERE IdConta = @p0",
-                new MySqlParameter { ParameterName = "p0", DbType = DbType.Int32, Value = idConta });
+            _efContext.Contas.Remove(conta);
         }
     }
 }

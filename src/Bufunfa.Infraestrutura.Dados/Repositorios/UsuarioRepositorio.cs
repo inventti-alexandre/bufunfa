@@ -14,15 +14,6 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public Usuario ObterPorEmail(string email)
-        {
-            return _efContext
-                .Usuarios
-                .Where(x => x.Email == email)
-                .AsNoTracking()
-                .FirstOrDefault();
-        }
-
         public Usuario ObterPorEmailSenha(string email, string senha)
         {
             return _efContext

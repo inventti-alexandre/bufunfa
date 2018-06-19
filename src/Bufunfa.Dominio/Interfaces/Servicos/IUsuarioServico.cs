@@ -12,10 +12,5 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// Realiza a autenticação de um usuário
         /// </summary>
         ISaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
-
-        /// <summary>
-        /// Obtém um usuário a partir do seu e-mail
-        /// </summary>
-        ISaida ObterUsuarioPorEmail(string email);
     }
 }

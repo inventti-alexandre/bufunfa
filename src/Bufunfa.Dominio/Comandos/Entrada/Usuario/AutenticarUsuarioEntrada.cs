@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
 using NETCore.Encrypt.Extensions;
 
@@ -12,29 +13,32 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// <summary>
         /// E-mail do usuário
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; }
 
         /// <summary>
         /// Senha do usuário
         /// </summary>
-        public string Senha { get; set; }
+        public string Senha { get; }
 
-        internal string CriarHashSenha()
+        public AutenticarUsuarioEntrada(string email, string senha)
         {
-            return this.Senha.MD5();
+            this.Email = email;
+            this.Senha = !string.IsNullOrEmpty(senha)
+                ? senha.MD5()
+                : null;
         }
 
         public bool Valido()
         {
             this
-                .NotificarSeNuloOuVazio(this.Email, "O e-mail é obrigatório e não foi informado.")
-                .NotificarSeNuloOuVazio(this.Senha, "A senha é obrigatória e não foi informada.");
+                .NotificarSeNuloOuVazio(this.Email, UsuarioMensagem.Email_Obrigatorio_Nao_Informado)
+                .NotificarSeNuloOuVazio(this.Senha, UsuarioMensagem.Senha_Obrigatoria_Nao_Informada);
 
             if (this.Invalido)
                 return false;
 
 
-            this.NotificarSeEmailInvalido(this.Email, $"O e-mail informado {this.Email} é inválido.");
+            this.NotificarSeEmailInvalido(this.Email, string.Format(UsuarioMensagem.Email_Invalido, this.Email));
 
             return !this.Invalido;
         }

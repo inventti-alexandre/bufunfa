@@ -57,11 +57,9 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext.Entry(periodo).State = EntityState.Modified;
         }
 
-        public void Deletar(int idPeriodo)
+        public void Deletar(Periodo periodo)
         {
-            _efContext.Database.ExecuteSqlCommand(
-                "DELETE FROM periodo WHERE IdPeriodo = @p0",
-                new MySqlParameter { ParameterName = "p0", DbType = DbType.Int32, Value = idPeriodo });
+            _efContext.Periodos.Remove(periodo);
         }
     }
 }

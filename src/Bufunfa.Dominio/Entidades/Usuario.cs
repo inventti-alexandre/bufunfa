@@ -28,7 +28,7 @@
         /// <summary>
         /// Indica se o usuário está ativo
         /// </summary>
-        public bool Ativo { get; internal set; }
+        public bool Ativo { get; private set; }
 
         /// <summary>
         /// Permissões de acesso do usuário
@@ -40,11 +40,12 @@
             
         }
 
-        public Usuario(string nome, string email)
+        public Usuario(string nome, string email, bool ativo = true)
             : this()
         {
             this.Nome = nome;
             this.Email = email;
+            this.Ativo = ativo;
         }
 
         public override string ToString()

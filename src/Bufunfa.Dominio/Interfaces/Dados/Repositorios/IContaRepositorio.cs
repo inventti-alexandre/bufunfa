@@ -27,7 +27,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Deleta uma conta
         /// </summary>
-        void Deletar(int idConta);
+        void Deletar(Conta conta);
 
         /// <summary>
         /// Verifica se um determinado usuário possui uma conta com o nome informado

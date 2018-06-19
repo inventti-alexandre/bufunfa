@@ -28,7 +28,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Deleta um períoodo
         /// </summary>
-        void Deletar(int idPeriodo);
+        void Deletar(Periodo periodo);
 
         /// <summary>
         /// Verifica se um determinado usuário possui um período com as datas de início e fim informados

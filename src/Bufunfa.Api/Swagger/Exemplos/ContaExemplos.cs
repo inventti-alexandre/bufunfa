@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+using JNogueira.Bufunfa.Dominio.Resources;
 using Swashbuckle.AspNetCore.Examples;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
@@ -10,7 +11,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         {
             return new CadastrarContaViewModel
             {
-                IdUsuario = 1,
                 Nome = "Conta corrente Santander",
                 ValorSaldoInicial = (decimal?)(-1542.12),
                 NomeInstituicao = "Banco Santander S/A",
@@ -43,11 +43,10 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Conta \"Conta corrente Santander\" cadastrada com sucesso." },
+                Mensagens = new[] { ContaMensagem.Conta_Cadastrada_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
                     Nome = "Conta corrente Santander",
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
@@ -65,11 +64,10 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Conta alterada com sucesso." },
+                Mensagens = new[] { ContaMensagem.Conta_Alterada_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
                     Nome = "Conta corrente Santander",
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
@@ -87,11 +85,10 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Conta excluída com sucesso." },
+                Mensagens = new[] { ContaMensagem.Conta_Excluida_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
                     Nome = "Conta corrente Santander",
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
@@ -109,11 +106,10 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Conta encontrada com sucesso." },
+                Mensagens = new[] { ContaMensagem.Conta_Encontrada_Com_Sucesso },
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
                     Nome = "Conta corrente Santander",
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
@@ -131,13 +127,12 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new Saida
             {
                 Sucesso = true,
-                Mensagens = new[] { "Contas do usuário encontradas com sucesso." },
+                Mensagens = new[] { ContaMensagem.Contas_Encontradas_Com_Sucesso },
                 Retorno = new[]
                 {
                     new
                     {
                         Id = 1,
-                        IdUsuario = 1,
                         Nome = "Conta corrente Santander",
                         ValorSaldoInicial = (decimal?)(-1542.12),
                         NomeInstituicao = "Banco Santander S/A",

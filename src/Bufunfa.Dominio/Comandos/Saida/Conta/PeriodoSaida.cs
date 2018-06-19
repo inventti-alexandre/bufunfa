@@ -14,11 +14,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
-        /// Id do usuário proprietário
-        /// </summary>
-        public int IdUsuario { get; }
-
-        /// <summary>
         /// Nome da período
         /// </summary>
         public string Nome { get; }
@@ -39,7 +34,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                 return;
 
             this.Id = periodo.Id;
-            this.IdUsuario = periodo.IdUsuario;
             this.Nome = periodo.Nome;
             this.DataInicio = periodo.DataInicio;
             this.DataFim = periodo.DataFim;

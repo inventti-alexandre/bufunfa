@@ -4,6 +4,7 @@ using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
+using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
 using System.Linq;
 
@@ -22,8 +23,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public ISaida ObterPeriodoPorId(int idPeriodo, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idPeriodo, 0, $"O ID do período informado ({idPeriodo}) é inválido.");
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, $"O ID do usuário informado ({idUsuario}) é inválido.");
+            this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -31,23 +32,23 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var periodo = _periodoRepositorio.ObterPorId(idPeriodo);
 
             // Verifica se o período existe
-            this.NotificarSeNulo(periodo, $"O período de ID {idPeriodo} não existe.");
+            this.NotificarSeNulo(periodo, string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se o período pertece ao usuário informado.
-            this.NotificarSeDiferentes(periodo.IdUsuario, idUsuario, "O período não pertence ao usuário autenticado.");
+            this.NotificarSeDiferentes(periodo.IdUsuario, idUsuario, PeriodoMensagem.Periodo_Nao_Pertence_Usuario);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            return new Saida(true, new[] { "Período encontrado com sucesso." }, new PeriodoSaida(periodo));
+            return new Saida(true, new[] { PeriodoMensagem.Periodo_Encontrado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public ISaida ObterPeriodosPorUsuario(int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, $"O ID do usuário informado ({idUsuario}) é inválido.");
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -55,8 +56,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var lstPeriodos = _periodoRepositorio.ObterPorUsuario(idUsuario);
 
             return lstPeriodos.Any()
-                ? new Saida(true, new[] { "Períodos do usuário encontrados com sucesso." }, lstPeriodos.Select(x => new PeriodoSaida(x)))
-                : new Saida(true, new[] { "Nenhuma período do usuário foi encontrado." }, null);
+                ? new Saida(true, new[] { PeriodoMensagem.Periodos_Encontrados_Com_Sucesso }, lstPeriodos.Select(x => new PeriodoSaida(x)))
+                : new Saida(true, new[] { PeriodoMensagem.Nenhum_periodo_encontrado }, null);
         }
 
         public ISaida CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada)
@@ -66,7 +67,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se o usuário já possui alguma conta com o nome informado
-            this.NotificarSeVerdadeiro(_periodoRepositorio.VerificarExistenciaPorDataInicioFim(cadastroEntrada.IdUsuario, cadastroEntrada.DataInicio, cadastroEntrada.DataFim), "Você já possui um período cadastrado que abrange as datas informadas.");
+            this.NotificarSeVerdadeiro(_periodoRepositorio.VerificarExistenciaPorDataInicioFim(cadastroEntrada.IdUsuario, cadastroEntrada.DataInicio, cadastroEntrada.DataFim), PeriodoMensagem.Periodo_Abrange_Datas_Informadas);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -74,15 +75,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se já existe um período que abrange as datas informadas
             this.NotificarSeVerdadeiro(
                 _periodoRepositorio.VerificarExistenciaPorDataInicioFim(cadastroEntrada.IdUsuario, cadastroEntrada.DataInicio, cadastroEntrada.DataFim),
-                "As datas informadas pelo período, já são abrangidas por outro período.");
+                PeriodoMensagem.Datas_Abrangidas_Outro_Periodo);
 
-            var periodo = new Periodo(cadastroEntrada.IdUsuario, cadastroEntrada.Nome, cadastroEntrada.DataInicio, cadastroEntrada.DataFim);
+            var periodo = new Periodo(cadastroEntrada);
 
             _periodoRepositorio.Inserir(periodo);
 
             _uow.Commit();
 
-            return new Saida(true, new[] { $"Período \"{periodo.Nome}\" cadastrada com sucesso." }, new PeriodoSaida(periodo));
+            return new Saida(true, new[] { PeriodoMensagem.Periodo_Cadastrado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public ISaida AlterarPeriodo(AlterarPeriodoEntrada alterarEntrada)
@@ -94,13 +95,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var periodo = _periodoRepositorio.ObterPorId(alterarEntrada.IdPeriodo, true);
 
             // Verifica se o período existe
-            this.NotificarSeNulo(periodo, $"O período de ID {alterarEntrada.IdPeriodo} não existe.");
+            this.NotificarSeNulo(periodo, string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, alterarEntrada.IdPeriodo));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se o período pertece ao usuário informado.
-            this.NotificarSeDiferentes(periodo.IdUsuario, alterarEntrada.IdUsuario, "O período que se deseja alterar, não pertence ao usuário autenticado.");
+            this.NotificarSeDiferentes(periodo.IdUsuario, alterarEntrada.IdUsuario, PeriodoMensagem.Periodo_Alterar_Nao_Pertence_Usuario);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -108,26 +109,24 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se já existe um período que abrange as datas informadas
             this.NotificarSeVerdadeiro(
                 _periodoRepositorio.VerificarExistenciaPorDataInicioFim(alterarEntrada.IdUsuario, alterarEntrada.DataInicio, alterarEntrada.DataFim, alterarEntrada.IdPeriodo),
-                "As datas informadas pelo período, já são abrangidas por outro período.");
+                PeriodoMensagem.Datas_Abrangidas_Outro_Periodo);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            periodo.Nome       = alterarEntrada.Nome;
-            periodo.DataInicio = alterarEntrada.DataInicio;
-            periodo.DataFim    = alterarEntrada.DataFim;
+            periodo.Alterar(alterarEntrada);
 
             _periodoRepositorio.Atualizar(periodo);
 
             _uow.Commit();
 
-            return new Saida(true, new[] { "Período alterado com sucesso." }, new PeriodoSaida(periodo));
+            return new Saida(true, new[] { PeriodoMensagem.Periodo_Alterado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public ISaida ExcluirPeriodo(int idPeriodo, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idPeriodo, 0, $"O ID do período informado ({idPeriodo}) é inválido.");
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, $"O ID do usuário informado ({idUsuario}) é inválido.");
+            this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -135,20 +134,22 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var periodo = _periodoRepositorio.ObterPorId(idPeriodo);
 
             // Verifica se o período existe
-            this.NotificarSeNulo(periodo, $"O período de ID {idPeriodo} não existe.");
+            this.NotificarSeNulo(periodo, string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se o período pertece ao usuário informado.
-            this.NotificarSeDiferentes(periodo.IdUsuario, idUsuario, "O período não pertence ao usuário autenticado, por isso não é permitido excluí-lo.");
+            this.NotificarSeDiferentes(periodo.IdUsuario, idUsuario, PeriodoMensagem.Periodo_Excluir_Nao_Pertence_Usuario);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            _periodoRepositorio.Deletar(idPeriodo);
+            _periodoRepositorio.Deletar(periodo);
 
-            return new Saida(true, new[] { "Período excluído com sucesso." }, new PeriodoSaida(periodo));
+            _uow.Commit();
+
+            return new Saida(true, new[] { PeriodoMensagem.Periodo_Excluido_Com_Sucesso }, new PeriodoSaida(periodo));
         }
     }
 }

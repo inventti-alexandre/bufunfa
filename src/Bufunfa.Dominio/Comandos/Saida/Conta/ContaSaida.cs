@@ -13,11 +13,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
-        /// Id do usuário proprietário
-        /// </summary>
-        public int IdUsuario { get; }
-
-        /// <summary>
         /// Nome da conta
         /// </summary>
         public string Nome { get; }
@@ -48,7 +43,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                 return;
 
             this.Id = conta.Id;
-            this.IdUsuario = conta.IdUsuario;
             this.Nome = conta.Nome;
             this.ValorSaldoInicial = conta.ValorSaldoInicial;
             this.NomeInstituicao = conta.NomeInstituicao;
