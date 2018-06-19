@@ -26,14 +26,20 @@ namespace Bufunfa.Dominio.Testes
 
             // Período usuário 1
             _periodoRepositorio.ObterPorId(1)
-                .Returns(new Periodo(new CadastrarPeriodoEntrada(1, "Período 1", DateTime.Now, DateTime.Now.AddDays(5))));
+                .Returns(new Periodo(new CadastrarPeriodoEntrada(1, "Período 1", DateTime.Now.Date, DateTime.Now.Date.AddDays(5))));
 
             _periodoRepositorio.ObterPorUsuario(1)
-                .Returns(new List<Periodo> { new Periodo(new CadastrarPeriodoEntrada(1, "Período 1", DateTime.Now, DateTime.Now.AddDays(5))) });
+                .Returns(new List<Periodo> { new Periodo(new CadastrarPeriodoEntrada(1, "Período 1", DateTime.Now.Date, DateTime.Now.Date.AddDays(5))) });
+
+            _periodoRepositorio.VerificarExistenciaPorDataInicioFim(1, DateTime.Now.Date, DateTime.Now.Date.AddDays(5))
+                .Returns(true);
+
+            _periodoRepositorio.VerificarExistenciaPorDataInicioFim(1, DateTime.Now.Date, DateTime.Now.Date.AddDays(10))
+                .Returns(false);
 
             // Período usuário 2
             _periodoRepositorio.ObterPorId(2)
-                .Returns(new Periodo(new CadastrarPeriodoEntrada(2, "Período 2", DateTime.Now, DateTime.Now.AddDays(5))));
+                .Returns(new Periodo(new CadastrarPeriodoEntrada(2, "Período 2", DateTime.Now.Date, DateTime.Now.Date.AddDays(5))));
 
             // Período inexistente
             _periodoRepositorio.ObterPorId(3)
@@ -89,6 +95,26 @@ namespace Bufunfa.Dominio.Testes
         public void Deve_Obter_Periodos_Por_Usuario()
         {
             var saida = _periodoServico.ObterPeriodosPorUsuario(1);
+
+            Assert.IsTrue(saida.Sucesso, string.Join(", ", saida.Mensagens));
+        }
+
+        [TestMethod]
+        public void Nao_Deve_Cadastrar_Periodo_Com_Parametros_Invalidos()
+        {
+            var cadastroEntrada = new CadastrarPeriodoEntrada(0, string.Empty, DateTime.Now, DateTime.Now.AddDays(-2));
+
+            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada);
+
+            Assert.IsFalse(saida.Sucesso, string.Join(", ", saida.Mensagens));
+        }
+
+        [TestMethod]
+        public void Nao_Deve_Cadastrar_Periodo_Com_Datas_Abrangidas_Por_Outro_Periodo()
+        {
+            var cadastroEntrada = new CadastrarPeriodoEntrada(1, "Período X", DateTime.Now.Date, DateTime.Now.Date.AddDays(5));
+
+            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada);
 
             Assert.IsTrue(saida.Sucesso, string.Join(", ", saida.Mensagens));
         }

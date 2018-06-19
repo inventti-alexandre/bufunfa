@@ -69,13 +69,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o usuário já possui alguma conta com o nome informado
             this.NotificarSeVerdadeiro(_periodoRepositorio.VerificarExistenciaPorDataInicioFim(cadastroEntrada.IdUsuario, cadastroEntrada.DataInicio, cadastroEntrada.DataFim), PeriodoMensagem.Periodo_Abrange_Datas_Informadas);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
+            
 
             // Verifica se já existe um período que abrange as datas informadas
             this.NotificarSeVerdadeiro(
                 _periodoRepositorio.VerificarExistenciaPorDataInicioFim(cadastroEntrada.IdUsuario, cadastroEntrada.DataInicio, cadastroEntrada.DataFim),
                 PeriodoMensagem.Datas_Abrangidas_Outro_Periodo);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
 
             var periodo = new Periodo(cadastroEntrada);
 
