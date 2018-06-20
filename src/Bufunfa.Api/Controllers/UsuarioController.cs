@@ -1,5 +1,4 @@
 ﻿using JNogueira.Bufunfa.Api;
-using JNogueira.Bufunfa.Api.Controllers.Interfaces;
 using JNogueira.Bufunfa.Api.Swagger;
 using JNogueira.Bufunfa.Api.Swagger.Exemplos;
 using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
@@ -26,7 +25,7 @@ namespace Bufunfa.Api.Controllers
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
     [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
-    public class UsuarioController : Controller, IUsuarioController
+    public class UsuarioController : Controller
     {
         private readonly IUsuarioServico _usuarioServico;
 

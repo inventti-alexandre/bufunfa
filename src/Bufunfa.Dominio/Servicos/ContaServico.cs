@@ -87,12 +87,6 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (!alterarEntrada.Valido())
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
-            // Verifica se o usuário já possui alguma conta com o nome informado
-            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdConta), ContaMensagem.Conta_Com_Mesmo_Nome);
-
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
             var conta = _contaRepositorio.ObterPorId(alterarEntrada.IdConta, true);
 
             // Verifica se a conta existe
@@ -103,6 +97,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             // Verifica se a conta pertece ao usuário informado.
             this.NotificarSeDiferentes(conta.IdUsuario, alterarEntrada.IdUsuario, ContaMensagem.Conta_Alterar_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se o usuário já possui alguma conta com o nome informado
+            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdConta), ContaMensagem.Conta_Com_Mesmo_Nome);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

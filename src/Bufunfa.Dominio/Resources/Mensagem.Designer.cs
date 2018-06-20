@@ -22,7 +22,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Mensagem {
+    public class Mensagem {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JNogueira.Bufunfa.Dominio.Resources.Mensagem", typeof(Mensagem).Assembly);
@@ -51,7 +51,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         /// <summary>
         ///   Looks up a localized string similar to O ID do usuário informado ({0}) é inválido..
         /// </summary>
-        internal static string Id_Usuario_Invalido {
+        public static string Id_Usuario_Invalido {
             get {
                 return ResourceManager.GetString("Id_Usuario_Invalido", resourceCulture);
             }
