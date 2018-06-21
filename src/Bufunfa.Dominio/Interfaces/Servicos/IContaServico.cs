@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
 {
@@ -11,26 +12,26 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// <summary>
         /// Obtém uma conta a partir do seu ID
         /// </summary>
-        ISaida ObterContaPorId(int idConta, int idUsuario);
+        Task<ISaida> ObterContaPorId(int idConta, int idUsuario);
 
         /// <summary>
         /// Obtém as contas de um usuário.
         /// </summary>
-        ISaida ObterContasPorUsuario(int idUsuario);
+        Task<ISaida> ObterContasPorUsuario(int idUsuario);
 
         /// <summary>
         /// Realiza o cadastro de uma nova conta.
         /// </summary>
-        ISaida CadastrarConta(CadastrarContaEntrada cadastroEntrada);
+        Task<ISaida> CadastrarConta(CadastrarContaEntrada cadastroEntrada);
 
         /// <summary>
         /// Altera as informações da conta
         /// </summary>
-        ISaida AlterarConta(AlterarContaEntrada alterarEntrada);
+        Task<ISaida> AlterarConta(AlterarContaEntrada alterarEntrada);
 
         /// <summary>
         /// Exclui uma conta
         /// </summary>
-        ISaida ExcluirConta(int idConta, int idUsuario);
+        Task<ISaida> ExcluirConta(int idConta, int idUsuario);
     }
 }

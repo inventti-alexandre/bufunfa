@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace Bufunfa.Api.Controllers
 {
@@ -44,11 +45,11 @@ namespace Bufunfa.Api.Controllers
         [Route("v1/usuarios/autenticar")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Caso o usuário seja autenticado com sucesso, o token JWT é retornado.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AutenticarUsuarioResponseExemplo))]
-        public ISaida Autenticar(string email, string senha, [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
+        public async Task<ISaida> Autenticar(string email, string senha, [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
             var autenticarComando = new AutenticarUsuarioEntrada(email, senha);
 
-            var comandoSaida = _usuarioServico.Autenticar(autenticarComando);
+            var comandoSaida = await _usuarioServico.Autenticar(autenticarComando);
 
             if (!comandoSaida.Sucesso)
                 return comandoSaida;

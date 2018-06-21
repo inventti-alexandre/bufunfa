@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Entidades;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
 {
@@ -12,12 +13,17 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Obtém uma conta a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
-        Conta ObterPorId(int idConta, bool habilitarTracking = false);
-        
+        Task<Conta> ObterPorId(int idConta, bool habilitarTracking = false);
+
+        /// <summary>
+        /// Obtém as contas de um usuário.
+        /// </summary>
+        Task<IEnumerable<Conta>> ObterPorUsuario(int idUsuario);
+
         /// <summary>
         /// Insere uma nova conta
         /// </summary>
-        void Inserir(Conta conta);
+        Task Inserir(Conta conta);
 
         /// <summary>
         /// Atualiza as informações da conta
@@ -32,11 +38,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Verifica se um determinado usuário possui uma conta com o nome informado
         /// </summary>
-        bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null);
-
-        /// <summary>
-        /// Obtém as contas de um usuário.
-        /// </summary>
-        IEnumerable<Conta> ObterPorUsuario(int idUsuario);
+        Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null);
     }
 }

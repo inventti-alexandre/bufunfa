@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Entidades;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
 {
@@ -7,6 +8,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Obtém um usuário a partir do seu e-mail e senha
         /// </summary>
-        Usuario ObterPorEmailSenha(string email, string senha);
+        Task<Usuario> ObterPorEmailSenha(string email, string senha);
     }
 }

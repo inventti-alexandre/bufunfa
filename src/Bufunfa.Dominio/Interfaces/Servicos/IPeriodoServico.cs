@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
 {
@@ -11,26 +12,26 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// <summary>
         /// Obtém um período a partir do seu ID
         /// </summary>
-        ISaida ObterPeriodoPorId(int idPeriodo, int idUsuario);
+        Task<ISaida> ObterPeriodoPorId(int idPeriodo, int idUsuario);
 
         /// <summary>
         /// Obtém os períodos de um usuário.
         /// </summary>
-        ISaida ObterPeriodosPorUsuario(int idUsuario);
+        Task<ISaida> ObterPeriodosPorUsuario(int idUsuario);
 
         /// <summary>
         /// Realiza o cadastro de um novo período.
         /// </summary>
-        ISaida CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada);
+        Task<ISaida> CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada);
 
         /// <summary>
         /// Altera as informações do período
         /// </summary>
-        ISaida AlterarPeriodo(AlterarPeriodoEntrada alterarEntrada);
+        Task<ISaida> AlterarPeriodo(AlterarPeriodoEntrada alterarEntrada);
 
         /// <summary>
         /// Exclui um período
         /// </summary>
-        ISaida ExcluirPeriodo(int idPeriodo, int idUsuario);
+        Task<ISaida> ExcluirPeriodo(int idPeriodo, int idUsuario);
     }
 }

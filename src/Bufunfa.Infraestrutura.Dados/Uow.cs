@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados
 {
@@ -14,9 +15,9 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
             _context = context;
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
     }
 }

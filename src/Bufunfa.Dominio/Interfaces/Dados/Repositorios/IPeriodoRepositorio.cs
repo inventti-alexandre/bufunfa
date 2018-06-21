@@ -1,6 +1,7 @@
 ﻿using JNogueira.Bufunfa.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
 {
@@ -13,12 +14,17 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Obtém um período a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
-        Periodo ObterPorId(int idPeriodo, bool habilitarTracking = false);
-        
+        Task<Periodo> ObterPorId(int idPeriodo, bool habilitarTracking = false);
+
+        /// <summary>
+        /// Obtém os períodos de um usuário.
+        /// </summary>
+        Task<IEnumerable<Periodo>> ObterPorUsuario(int idUsuario);
+
         /// <summary>
         /// Insere um novo período
         /// </summary>
-        void Inserir(Periodo periodo);
+        Task Inserir(Periodo periodo);
 
         /// <summary>
         /// Atualiza as informações do período
@@ -33,11 +39,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Verifica se um determinado usuário possui um período com as datas de início e fim informados
         /// </summary>
-        bool VerificarExistenciaPorDataInicioFim(int idUsuario, DateTime dataInicio, DateTime dataFim, int? idPeriodo = null);
-
-        /// <summary>
-        /// Obtém os períodos de um usuário.
-        /// </summary>
-        IEnumerable<Periodo> ObterPorUsuario(int idUsuario);
+        Task<bool> VerificarExistenciaPorDataInicioFim(int idUsuario, DateTime dataInicio, DateTime dataFim, int? idPeriodo = null);
     }
 }

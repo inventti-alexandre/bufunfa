@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
@@ -40,9 +41,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/contas/obter-por-id/{idConta:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Contas do usuário encontradas.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterContaPorIdResponseExemplo))]
-        public ISaida ObterContaPorId(int idConta)
+        public async Task<ISaida> ObterContaPorId(int idConta)
         {
-            return _contaServico.ObterContaPorId(idConta, base.ObterIdUsuarioClaim());
+            return await _contaServico.ObterContaPorId(idConta, base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -53,9 +54,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/contas/obter")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Contas do usuário encontradas.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterContasPorUsuarioResponseExemplo))]
-        public ISaida ObterContasPorUsuarioAutenticado()
+        public async Task<ISaida> ObterContasPorUsuarioAutenticado()
         {
-            return _contaServico.ObterContasPorUsuario(base.ObterIdUsuarioClaim());
+            return await _contaServico.ObterContasPorUsuario(base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -68,11 +69,11 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerRequestExample(typeof(CadastrarContaViewModel), typeof(CadastrarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta cadastrada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarContaResponseExemplo))]
-        public ISaida CadastrarConta([FromBody] CadastrarContaViewModel cadastroModel)
+        public async Task<ISaida> CadastrarConta([FromBody] CadastrarContaViewModel cadastroModel)
         {
             var cadastrarEntrada = new CadastrarContaEntrada(base.ObterIdUsuarioClaim(), cadastroModel.Nome, cadastroModel.ValorSaldoInicial, cadastroModel.NomeInstituicao, cadastroModel.NumeroAgencia, cadastroModel.Numero);
 
-            return _contaServico.CadastrarConta(cadastrarEntrada);
+            return await _contaServico.CadastrarConta(cadastrarEntrada);
         }
 
         /// <summary>
@@ -85,11 +86,11 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerRequestExample(typeof(AlterarContaViewModel), typeof(AlterarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta alterada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarContaResponseExemplo))]
-        public ISaida AlterarConta([FromBody] AlterarContaViewModel alterarModel)
+        public async Task<ISaida> AlterarConta([FromBody] AlterarContaViewModel alterarModel)
         {
             var alterarEntrada = new AlterarContaEntrada(alterarModel.IdConta, alterarModel.Nome, base.ObterIdUsuarioClaim(), alterarModel.ValorSaldoInicial, alterarModel.NomeInstituicao, alterarModel.NumeroAgencia, alterarModel.Numero);
 
-            return _contaServico.AlterarConta(alterarEntrada);
+            return await _contaServico.AlterarConta(alterarEntrada);
         }
 
         /// <summary>
@@ -100,9 +101,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/contas/excluir-conta/{idConta:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta excluída com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirContaResponseExemplo))]
-        public ISaida ExcluirConta(int idConta)
+        public async Task<ISaida> ExcluirConta(int idConta)
         {
-            return _contaServico.ExcluirConta(idConta, base.ObterIdUsuarioClaim());
+            return await _contaServico.ExcluirConta(idConta, base.ObterIdUsuarioClaim());
         }
     }
 }

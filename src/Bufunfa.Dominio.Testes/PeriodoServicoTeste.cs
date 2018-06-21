@@ -38,7 +38,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, 2);
+            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, 2).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodo_Nao_Pertence_Usuario), string.Join(", ", saida.Mensagens));
         }
@@ -54,7 +54,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, idUsuario);
+            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, idUsuario).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo)), string.Join(", ", saida.Mensagens));
         }
@@ -67,7 +67,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, idUsuario);
+            var saida = _periodoServico.ObterPeriodoPorId(idPeriodo, idUsuario).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo)), string.Join(", ", saida.Mensagens));
         }
@@ -83,7 +83,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodoPorId(1, 1);
+            var saida = _periodoServico.ObterPeriodoPorId(1, 1).Result;
 
             Assert.IsTrue(saida.Sucesso, string.Join(", ", saida.Mensagens));
         }
@@ -95,7 +95,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodosPorUsuario(idUsuario);
+            var saida = _periodoServico.ObterPeriodosPorUsuario(idUsuario).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
         }
@@ -110,7 +110,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ObterPeriodosPorUsuario(idUsuario);
+            var saida = _periodoServico.ObterPeriodosPorUsuario(idUsuario).Result;
 
             Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodos_Encontrados_Com_Sucesso), string.Join(", ", saida.Mensagens));
         }
@@ -122,7 +122,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada);
+            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Data_Periodo_Invalidas), string.Join(", ", saida.Mensagens));
         }
@@ -139,7 +139,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada);
+            var saida = _periodoServico.CadastrarPeriodo(cadastroEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Datas_Abrangidas_Outro_Periodo), string.Join(", ", saida.Mensagens));
         }
@@ -153,7 +153,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.AlterarPeriodo(alterarEntrada);
+            var saida = _periodoServico.AlterarPeriodo(alterarEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
         }
@@ -171,7 +171,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.AlterarPeriodo(alterarEntrada);
+            var saida = _periodoServico.AlterarPeriodo(alterarEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo)), string.Join(", ", saida.Mensagens));
         }
@@ -195,7 +195,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.AlterarPeriodo(alterarEntrada);
+            var saida = _periodoServico.AlterarPeriodo(alterarEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Datas_Abrangidas_Outro_Periodo), string.Join(", ", saida.Mensagens));
         }
@@ -216,7 +216,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.AlterarPeriodo(alterarEntrada);
+            var saida = _periodoServico.AlterarPeriodo(alterarEntrada).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodo_Alterar_Nao_Pertence_Usuario), string.Join(", ", saida.Mensagens));
         }
@@ -237,7 +237,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.AlterarPeriodo(alterarEntrada);
+            var saida = _periodoServico.AlterarPeriodo(alterarEntrada).Result;
 
             Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodo_Alterado_Com_Sucesso), string.Join(", ", saida.Mensagens));
         }
@@ -247,7 +247,7 @@ namespace Bufunfa.Dominio.Testes
         {
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ExcluirPeriodo(0, 0);
+            var saida = _periodoServico.ExcluirPeriodo(0, 0).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(PeriodoMensagem.Id_Periodo_Invalido, 0)), string.Join(", ", saida.Mensagens));
         }
@@ -263,7 +263,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario);
+            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo)), string.Join(", ", saida.Mensagens));
         }
@@ -282,7 +282,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario);
+            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodo_Excluir_Nao_Pertence_Usuario), string.Join(", ", saida.Mensagens));
         }
@@ -301,7 +301,7 @@ namespace Bufunfa.Dominio.Testes
 
             _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
 
-            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario);
+            var saida = _periodoServico.ExcluirPeriodo(idPeriodo, idUsuario).Result;
 
             Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodo_Excluido_Com_Sucesso), string.Join(", ", saida.Mensagens));
         }

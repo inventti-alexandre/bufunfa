@@ -2,6 +2,7 @@
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 {
@@ -14,13 +15,13 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public Usuario ObterPorEmailSenha(string email, string senha)
+        public async Task<Usuario> ObterPorEmailSenha(string email, string senha)
         {
-            return _efContext
+            return await _efContext
                 .Usuarios
                 .Where(x => x.Email == email && x.Senha == senha)
                 .AsNoTracking()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
     }
 }

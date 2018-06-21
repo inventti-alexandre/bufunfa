@@ -7,6 +7,7 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Servicos
 {
@@ -21,7 +22,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _uow = uow;
         }
 
-        public ISaida ObterContaPorId(int idConta, int idUsuario)
+        public async Task<ISaida> ObterContaPorId(int idConta, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idConta, 0, string.Format(ContaMensagem.Id_Conta_Invalido, idConta));
             this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
@@ -29,7 +30,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            var conta = _contaRepositorio.ObterPorId(idConta);
+            var conta = await _contaRepositorio.ObterPorId(idConta);
 
             // Verifica se a conta existe
             this.NotificarSeNulo(conta, string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta));
@@ -46,48 +47,48 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             return new Saida(true, new[] { ContaMensagem.Conta_Encontrada_Com_Sucesso }, new ContaSaida(conta));
         }
 
-        public ISaida ObterContasPorUsuario(int idUsuario)
+        public async Task<ISaida> ObterContasPorUsuario(int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            var lstContas = _contaRepositorio.ObterPorUsuario(idUsuario);
+            var lstContas = await _contaRepositorio.ObterPorUsuario(idUsuario);
 
             return lstContas.Any()
                 ? new Saida(true, new[] { ContaMensagem.Contas_Encontradas_Com_Sucesso }, lstContas.Select(x => new ContaSaida(x)))
                 : new Saida(true, new[] { ContaMensagem.Nenhuma_Conta_Encontrada }, null);
         }
 
-        public ISaida CadastrarConta(CadastrarContaEntrada cadastroEntrada)
+        public async Task<ISaida> CadastrarConta(CadastrarContaEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
             if (!cadastroEntrada.Valido())
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se o usuário já possui alguma conta com o nome informado
-            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(cadastroEntrada.IdUsuario, cadastroEntrada.Nome), ContaMensagem.Conta_Com_Mesmo_Nome);
+            this.NotificarSeVerdadeiro(await _contaRepositorio.VerificarExistenciaPorNome(cadastroEntrada.IdUsuario, cadastroEntrada.Nome), ContaMensagem.Conta_Com_Mesmo_Nome);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             var conta = new Conta(cadastroEntrada);
 
-            _contaRepositorio.Inserir(conta);
+            await _contaRepositorio.Inserir(conta);
 
-            _uow.Commit();
+            await _uow.Commit();
 
             return new Saida(true, new[] { ContaMensagem.Conta_Cadastrada_Com_Sucesso }, new ContaSaida(conta));
         }
 
-        public ISaida AlterarConta(AlterarContaEntrada alterarEntrada)
+        public async Task<ISaida> AlterarConta(AlterarContaEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
             if (!alterarEntrada.Valido())
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
-            var conta = _contaRepositorio.ObterPorId(alterarEntrada.IdConta, true);
+            var conta = await _contaRepositorio.ObterPorId(alterarEntrada.IdConta, true);
 
             // Verifica se a conta existe
             this.NotificarSeNulo(conta, string.Format(ContaMensagem.Id_Conta_Nao_Existe, alterarEntrada.IdConta));
@@ -102,7 +103,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se o usuário já possui alguma conta com o nome informado
-            this.NotificarSeVerdadeiro(_contaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdConta), ContaMensagem.Conta_Com_Mesmo_Nome);
+            this.NotificarSeVerdadeiro(await _contaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdConta), ContaMensagem.Conta_Com_Mesmo_Nome);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -111,12 +112,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             _contaRepositorio.Atualizar(conta);
 
-            _uow.Commit();
+            await _uow.Commit();
 
             return new Saida(true, new[] { ContaMensagem.Conta_Alterada_Com_Sucesso }, new ContaSaida(conta));
         }
 
-        public ISaida ExcluirConta(int idConta, int idUsuario)
+        public async Task<ISaida> ExcluirConta(int idConta, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idConta, 0, string.Format(ContaMensagem.Id_Conta_Invalido, idConta));
             this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
@@ -124,7 +125,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            var conta = _contaRepositorio.ObterPorId(idConta);
+            var conta = await _contaRepositorio.ObterPorId(idConta);
 
             // Verifica se a conta existe
             this.NotificarSeNulo(conta, string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta));
@@ -140,7 +141,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             _contaRepositorio.Deletar(conta);
 
-            _uow.Commit();
+            await _uow.Commit();
 
             return new Saida(true, new[] { ContaMensagem.Conta_Excluida_Com_Sucesso }, new ContaSaida(conta));
         }

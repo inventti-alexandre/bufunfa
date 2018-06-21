@@ -27,7 +27,7 @@ namespace Bufunfa.Dominio.Testes
         {
             _usuarioServico = Substitute.For<UsuarioServico>(_usuarioRepositorio);
 
-            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada(string.Empty, string.Empty));
+            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada(string.Empty, string.Empty)).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == UsuarioMensagem.Senha_Obrigatoria_Nao_Informada), string.Join(", ", saida.Mensagens));
         }
@@ -41,7 +41,7 @@ namespace Bufunfa.Dominio.Testes
 
             _usuarioServico = Substitute.For<UsuarioServico>(_usuarioRepositorio);
 
-            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista"));
+            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista")).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == UsuarioMensagem.Usuario_Nao_Encontrado_Por_Login_Senha), string.Join(", ", saida.Mensagens));
         }
@@ -55,7 +55,7 @@ namespace Bufunfa.Dominio.Testes
 
             _usuarioServico = Substitute.For<UsuarioServico>(_usuarioRepositorio);
 
-            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "SenhaInvalida"));
+            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "SenhaInvalida")).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == UsuarioMensagem.Usuario_Nao_Encontrado_Por_Login_Senha), string.Join(", ", saida.Mensagens));
         }
@@ -69,7 +69,7 @@ namespace Bufunfa.Dominio.Testes
 
             _usuarioServico = Substitute.For<UsuarioServico>(_usuarioRepositorio);
 
-            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista"));
+            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista")).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == UsuarioMensagem.Usuario_Inativo), string.Join(", ", saida.Mensagens));
         }
@@ -83,7 +83,7 @@ namespace Bufunfa.Dominio.Testes
 
             _usuarioServico = Substitute.For<UsuarioServico>(_usuarioRepositorio);
 
-            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista"));
+            var saida = _usuarioServico.Autenticar(new AutenticarUsuarioEntrada("jlnpinheiro@gmail.com", "surfista")).Result;
 
             Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == UsuarioMensagem.Usuario_Autenticado_Com_Sucesso), string.Join(", ", saida.Mensagens));
         }

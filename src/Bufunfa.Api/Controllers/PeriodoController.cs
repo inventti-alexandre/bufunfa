@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
@@ -40,9 +41,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/periodos/obter-por-id/{idPeriodo:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodoPorIdResponseExemplo))]
-        public ISaida ObterContaPorId(int idPeriodo)
+        public async Task<ISaida> ObterContaPorId(int idPeriodo)
         {
-            return _periodoServico.ObterPeriodoPorId(idPeriodo, base.ObterIdUsuarioClaim());
+            return await _periodoServico.ObterPeriodoPorId(idPeriodo, base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -53,9 +54,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/periodos/obter")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodosPorUsuarioResponseExemplo))]
-        public ISaida ObterPeriodosPorUsuarioAutenticado()
+        public async Task<ISaida> ObterPeriodosPorUsuarioAutenticado()
         {
-            return _periodoServico.ObterPeriodosPorUsuario(base.ObterIdUsuarioClaim());
+            return await _periodoServico.ObterPeriodosPorUsuario(base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -68,11 +69,11 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerRequestExample(typeof(CadastrarPeriodoViewModel), typeof(CadastrarPeriodoViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período cadastrado com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarPeriodoResponseExemplo))]
-        public ISaida CadastrarPeriodo([FromBody] CadastrarPeriodoViewModel viewModel)
+        public async Task<ISaida> CadastrarPeriodo([FromBody] CadastrarPeriodoViewModel viewModel)
         {
             var cadastrarEntrada = new CadastrarPeriodoEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value);
 
-            return _periodoServico.CadastrarPeriodo(cadastrarEntrada);
+            return await _periodoServico.CadastrarPeriodo(cadastrarEntrada);
         }
 
         /// <summary>
@@ -85,11 +86,11 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [SwaggerRequestExample(typeof(AlterarPeriodoViewModel), typeof(AlterarPeriodoViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período alterado com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarPeriodoResponseExemplo))]
-        public ISaida AlterarPeriodo([FromBody] AlterarPeriodoViewModel viewModel)
+        public async Task<ISaida> AlterarPeriodo([FromBody] AlterarPeriodoViewModel viewModel)
         {
             var alterarEntrada = new AlterarPeriodoEntrada(viewModel.IdPeriodo, viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value, base.ObterIdUsuarioClaim());
 
-            return _periodoServico.AlterarPeriodo(alterarEntrada);
+            return await _periodoServico.AlterarPeriodo(alterarEntrada);
         }
 
         /// <summary>
@@ -100,9 +101,9 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/periodos/excluir-periodo/{idPeriodo:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período excluído com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirPeridoResponseExemplo))]
-        public ISaida ExcluirPeriodo(int idPeriodo)
+        public async Task<ISaida> ExcluirPeriodo(int idPeriodo)
         {
-            return _periodoServico.ExcluirPeriodo(idPeriodo, base.ObterIdUsuarioClaim());
+            return await _periodoServico.ExcluirPeriodo(idPeriodo, base.ObterIdUsuarioClaim());
         }
     }
 }

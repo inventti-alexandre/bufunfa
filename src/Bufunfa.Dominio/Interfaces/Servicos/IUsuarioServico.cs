@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
 {
@@ -11,6 +12,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// <summary>
         /// Realiza a autenticação de um usuário
         /// </summary>
-        ISaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
+        Task<ISaida> Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
     }
 }

@@ -5,6 +5,7 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Servicos
 {
@@ -17,13 +18,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public ISaida Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
+        public async Task<ISaida> Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
         {
             // Verifica se o e-mail e a senha do usuário foi informado.
             if (!autenticacaoEntrada.Valido())
                 return new Saida(false, autenticacaoEntrada.Mensagens, null);
 
-            var usuario = _usuarioRepositorio.ObterPorEmailSenha(autenticacaoEntrada.Email, autenticacaoEntrada.Senha);
+            var usuario = await _usuarioRepositorio.ObterPorEmailSenha(autenticacaoEntrada.Email, autenticacaoEntrada.Senha);
 
             // Verifica se o usuário com o e-mail e a senha (hash) foi encontrado no banco
             this.NotificarSeNulo(usuario, UsuarioMensagem.Usuario_Nao_Encontrado_Por_Login_Senha);

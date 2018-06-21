@@ -32,7 +32,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// Data fim do período
         /// </summary>
         public DateTime DataFim { get; private set; }
-        public int MyProperty { get; private set; }
+
 
         private Periodo()
         {

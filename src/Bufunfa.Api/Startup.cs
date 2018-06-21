@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -20,6 +21,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 
 namespace Bufunfa.Api
@@ -129,6 +132,15 @@ namespace Bufunfa.Api
             {
                 options.Filters.Add(typeof(CustomModelStateValidationFilter));
             });
+
+            // Habilita a compressão do response
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json" });
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -155,6 +167,9 @@ namespace Bufunfa.Api
                 options.DocumentTitle = "Bufunfa API v1";
                 options.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("JNogueira.Bufunfa.Api.Swagger.UI.index.html"); // Permite a utilização de um index.html customizado
             });
+
+            // Utiliza a compressão do response
+            app.UseResponseCompression();
 
             app.UseMvc();
         }

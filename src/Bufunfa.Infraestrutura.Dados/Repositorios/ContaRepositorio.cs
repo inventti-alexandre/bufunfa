@@ -1,10 +1,9 @@
 ﻿using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 {
@@ -17,35 +16,28 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public Conta ObterPorId(int idConta, bool habilitarTracking = false)
+        public async Task<Conta> ObterPorId(int idConta, bool habilitarTracking = false)
         {
             var query = _efContext.Contas.AsQueryable();
 
             if (!habilitarTracking)
                 query = query.AsNoTracking();
 
-            return query.FirstOrDefault(x => x.Id == idConta);
+            return await query.FirstOrDefaultAsync(x => x.Id == idConta);
         }
 
-        public void Inserir(Conta conta)
+        public async Task<IEnumerable<Conta>> ObterPorUsuario(int idUsuario)
         {
-            _efContext.Add(conta);
-        }
-
-        public bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null)
-        {
-            return idConta.HasValue
-                ? _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase) && x.Id != idConta)
-                : _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        public IEnumerable<Conta> ObterPorUsuario(int idUsuario)
-        {
-            return _efContext
+            return await _efContext
                    .Contas
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario)
-                   .AsEnumerable();
+                   .ToListAsync();
+        }
+
+        public async Task Inserir(Conta conta)
+        {
+            await _efContext.AddAsync(conta);
         }
 
         public void Atualizar(Conta conta)
@@ -56,6 +48,13 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         public void Deletar(Conta conta)
         {
             _efContext.Contas.Remove(conta);
+        }
+
+        public async Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null)
+        {
+            return idConta.HasValue
+                ? await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase) && x.Id != idConta)
+                : await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, System.StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
