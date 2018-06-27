@@ -128,6 +128,9 @@
     <value>O index da página informado ({0}) é inválido.</value>
   </data>
   <data name="Paginacao_Pagina_Tamanho_Invalido" xml:space="preserve">
-    <value>O tamanho da página informado ({0}) é inválido</value>
+    <value>O tamanho da página informado ({0}) é inválido.</value>
+  </data>
+  <data name="Procura_Resultado_Com_Sucesso" xml:space="preserve">
+    <value>Procura realizada com sucesso.</value>
   </data>
 </root>

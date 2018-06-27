@@ -70,6 +70,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A pessoa de ID {0} não existe..
+        /// </summary>
+        public static string Id_Pessoa_Nao_Existe {
+            get {
+                return ResourceManager.GetString("Id_Pessoa_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhuma pessoa do usuário foi encontrado..
+        /// </summary>
+        public static string Nenhuma_pessoa_encontrada {
+            get {
+                return ResourceManager.GetString("Nenhuma_pessoa_encontrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome da pessoa é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Obrigatorio_Nao_Informado {
@@ -84,6 +102,87 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Nome_Tamanho_Maximo_Excedido {
             get {
                 return ResourceManager.GetString("Nome_Tamanho_Maximo_Excedido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa alterada com sucesso..
+        /// </summary>
+        public static string Pessoa_Alterada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Pessoa_Alterada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A pessoa que se deseja alterar, não pertence ao usuário autenticado..
+        /// </summary>
+        public static string Pessoa_Alterar_Nao_Pertence_Usuario {
+            get {
+                return ResourceManager.GetString("Pessoa_Alterar_Nao_Pertence_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa cadastrada com sucesso..
+        /// </summary>
+        public static string Pessoa_Cadastrada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Pessoa_Cadastrada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você já possui uma pessoa cadastrada com o nome informado. Informe um nome diferente para a pessoa..
+        /// </summary>
+        public static string Pessoa_Com_Mesmo_Nome {
+            get {
+                return ResourceManager.GetString("Pessoa_Com_Mesmo_Nome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa encontrada com sucesso..
+        /// </summary>
+        public static string Pessoa_Encontrada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Pessoa_Encontrada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa excluída com sucesso..
+        /// </summary>
+        public static string Pessoa_Excluida_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Pessoa_Excluida_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A pessoa que se deseja excluir, não pertence ao usuário autenticado..
+        /// </summary>
+        public static string Pessoa_Excluir_Nao_Pertence_Usuario {
+            get {
+                return ResourceManager.GetString("Pessoa_Excluir_Nao_Pertence_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A pessoa não pertence ao usuário autenticado..
+        /// </summary>
+        public static string Pessoa_Nao_Pertence_Usuario {
+            get {
+                return ResourceManager.GetString("Pessoa_Nao_Pertence_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa(s) do usuário encontrada(s) com sucesso..
+        /// </summary>
+        public static string Pessoas_Encontradas_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Pessoas_Encontradas_Com_Sucesso", resourceCulture);
             }
         }
     }

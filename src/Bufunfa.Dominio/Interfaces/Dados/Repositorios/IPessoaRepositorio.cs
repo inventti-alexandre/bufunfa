@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// <summary>
         /// Obtém as pessoas baseadas nos parâmetros de procura
         /// </summary>
-        Task<IEnumerable<Pessoa>> Procurar(ProcurarPessoaEntrada procurarEntrada);
+        Task<ProcurarSaida> Procurar(ProcurarPessoaEntrada procurarEntrada);
 
         /// <summary>
         /// Verifica se um determinado usuário possui uma pessoa com o nome informado

@@ -5,13 +5,13 @@ using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
-using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
@@ -26,30 +26,30 @@ namespace JNogueira.Bufunfa.Api.Controllers
     [SwaggerResponseExample((int)HttpStatusCode.Forbidden, typeof(ForbiddenApiResponse))]
     public class PessoaController : BaseController
     {
-        private readonly IPessoaRepositorio _pessoaRepositorio;
+        private readonly IPessoaServico _pessoaServico;
 
-        public PessoaController(IPessoaRepositorio pessoaRepositorio)
+        public PessoaController(IPessoaServico pessoaServico)
         {
-            _pessoaRepositorio = pessoaRepositorio;
+            _pessoaServico = pessoaServico;
         }
 
         /// <summary>
-        /// Realiza uma busca por pessoas a partir dos parâmetros informados
+        /// Realiza uma procura por pessoas a partir dos parâmetros informados
         /// </summary>
         /// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>
-        [Authorize(PermissaoAcesso.Contas)]
+        [Authorize(PermissaoAcesso.Pessoas)]
         [HttpPost]
         [Route("v1/pessoas/procurar")]
-        public ISaida Procurar([FromBody] ProcurarPessoaViewModel viewModel)
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Resultado da procura por pessoas.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ProcurarPessoaResponseExemplo))]
+        public async Task<ISaida> Procurar([FromBody] ProcurarPessoaViewModel viewModel)
         {
             var procurarEntrada = new ProcurarPessoaEntrada(base.ObterIdUsuarioClaim(), viewModel.OrdenarPor, viewModel.OrdenarSentido, viewModel.PaginaIndex, viewModel.PaginaTamanho)
             {
                 Nome = viewModel.Nome
             };
 
-            var lst = _pessoaRepositorio.Procurar(procurarEntrada);
-
-            return new Saida(true, new[] { "" }, lst);
+            return await _pessoaServico.ProcurarPessoas(procurarEntrada);
         }
 
         ///// <summary>

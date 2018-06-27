@@ -22,7 +22,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public CadastrarPessoaEntrada(int idUsuario, string nome)
         {
             this.IdUsuario = idUsuario;
-            this.Nome = nome;
+            this.Nome      = nome;
         }
 
         public bool Valido()

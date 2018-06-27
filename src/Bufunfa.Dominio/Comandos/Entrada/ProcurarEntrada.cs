@@ -29,16 +29,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string OrdenarSentido { get; private set; }
 
-        /// <summary>
-        /// Total de registros do resultado da pesquisa (independente das condições de paginação informadas)
-        /// </summary>
-        public int TotalRegistros { get; set; }
-
         public ProcurarEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
         {
             this.IdUsuario = idUsuario;
             this.OrdenarPor = ordenarPor;
-            this.OrdenarSentido = !string.Equals(ordenarSentido, "ASC", StringComparison.OrdinalIgnoreCase) || !string.Equals(ordenarSentido, "DESC", StringComparison.OrdinalIgnoreCase)
+            this.OrdenarSentido = !string.Equals(ordenarSentido, "ASC", StringComparison.InvariantCultureIgnoreCase) && !string.Equals(ordenarSentido, "DESC", StringComparison.InvariantCultureIgnoreCase)
                 ? "ASC"
                 : ordenarSentido;
             this.PaginaIndex = paginaIndex;
@@ -53,7 +48,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public virtual bool Valido()
         {
             if (this.PaginaIndex.HasValue)
-                this.NotificarSeMenorQue(this.PaginaIndex.Value, 0, string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, this.PaginaIndex));
+                this.NotificarSeMenorQue(this.PaginaIndex.Value, 1, string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, this.PaginaIndex));
 
             if (this.PaginaTamanho.HasValue)
                 this.NotificarSeMenorQue(this.PaginaTamanho.Value, 1, string.Format(Mensagem.Paginacao_Pagina_Tamanho_Invalido, this.PaginaTamanho));

@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == idPessoa);
         }
 
-        public async Task<IEnumerable<Pessoa>> Procurar(ProcurarPessoaEntrada procurarEntrada)
+        public async Task<ProcurarSaida> Procurar(ProcurarPessoaEntrada procurarEntrada)
         {
             var query = _efContext.Pessoas
                 .AsNoTracking()
@@ -44,15 +45,24 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             {
                 var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
 
-                procurarEntrada.TotalRegistros = pagedList.TotalItemCount;
-
-                return pagedList.ToList();
+                return new ProcurarSaida(
+                    pagedList.ToList(),
+                    procurarEntrada.OrdenarPor,
+                    procurarEntrada.OrdenarSentido,
+                    pagedList.TotalItemCount,
+                    pagedList.PageCount,
+                    procurarEntrada.PaginaIndex,
+                    procurarEntrada.PaginaTamanho);
             }
             else
             {
-                procurarEntrada.TotalRegistros = await query.CountAsync();
+                var totalRegistros = await query.CountAsync();
 
-                return await query.ToListAsync();
+                return new ProcurarSaida(
+                    await query.ToListAsync(),
+                    procurarEntrada.OrdenarPor,
+                    procurarEntrada.OrdenarSentido,
+                    totalRegistros);
             }
         }
 

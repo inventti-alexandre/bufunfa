@@ -88,11 +88,20 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O tamanho da página informado ({0}) é inválido.
+        ///   Looks up a localized string similar to O tamanho da página informado ({0}) é inválido..
         /// </summary>
         public static string Paginacao_Pagina_Tamanho_Invalido {
             get {
                 return ResourceManager.GetString("Paginacao_Pagina_Tamanho_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Procura realizada com sucesso..
+        /// </summary>
+        public static string Procura_Resultado_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Procura_Resultado_Com_Sucesso", resourceCulture);
             }
         }
     }

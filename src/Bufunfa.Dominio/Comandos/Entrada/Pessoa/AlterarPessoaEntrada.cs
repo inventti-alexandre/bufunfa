@@ -26,8 +26,8 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public AlterarPessoaEntrada(int idPessoa, string nome, int idUsuario)
         {
-            this.IdPessoa = idPessoa;
-            this.Nome = nome;
+            this.IdPessoa  = idPessoa;
+            this.Nome      = nome;
             this.IdUsuario = idUsuario;
         }
 

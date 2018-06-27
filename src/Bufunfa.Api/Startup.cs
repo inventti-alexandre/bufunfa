@@ -45,6 +45,7 @@ namespace Bufunfa.Api
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
             services.AddTransient<IPeriodoServico, PeriodoServico>();
+            services.AddTransient<IPessoaServico, PessoaServico>();
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

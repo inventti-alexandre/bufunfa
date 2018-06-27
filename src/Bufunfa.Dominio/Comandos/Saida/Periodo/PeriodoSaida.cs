@@ -14,7 +14,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
-        /// Nome da período
+        /// Nome do período
         /// </summary>
         public string Nome { get; }
 
