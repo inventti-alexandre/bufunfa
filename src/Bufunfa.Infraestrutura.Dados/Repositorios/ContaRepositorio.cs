@@ -35,9 +35,20 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .ToListAsync();
         }
 
-        public async Task Inserir(Conta conta)
+        public bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null)
         {
-            await _efContext.AddAsync(conta);
+            return idConta.HasValue
+                ? _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Id != idConta)
+                : _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public IEnumerable<Conta> ObterPorUsuario(int idUsuario)
+        {
+            return _efContext
+                   .Contas
+                   .AsNoTracking()
+                   .Where(x => x.IdUsuario == idUsuario)
+                   .AsEnumerable();
         }
 
         public void Atualizar(Conta conta)

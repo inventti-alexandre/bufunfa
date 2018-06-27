@@ -11,7 +11,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// Nome do período
         /// </summary>
         [Required(ErrorMessageResourceType = typeof(PeriodoMensagem), ErrorMessageResourceName = "Nome_Obrigatorio_Nao_Informado")]
-        [MaxLength(50, ErrorMessageResourceType = typeof(PeriodoMensagem), ErrorMessageResourceName = "Nome_Obrigatorio_Nao_Informado")]
+        [MaxLength(50, ErrorMessageResourceType = typeof(PeriodoMensagem), ErrorMessageResourceName = "Nome_Tamanho_Maximo_Excedido")]
         public string Nome { get; set; }
 
         /// <summary>

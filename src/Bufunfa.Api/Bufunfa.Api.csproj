@@ -13,6 +13,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <NoWarn>1701;1702;1705;1591</NoWarn>
+    <DocumentationFile>bin\Release\netcoreapp2.0\Bufunfa.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

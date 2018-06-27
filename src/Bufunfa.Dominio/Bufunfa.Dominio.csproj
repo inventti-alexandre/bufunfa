@@ -32,6 +32,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PeriodoMensagem.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PessoaMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PessoaMensagem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\UsuarioMensagem.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -51,6 +56,10 @@
     <EmbeddedResource Update="Resources\PeriodoMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeriodoMensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PessoaMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PessoaMensagem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UsuarioMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

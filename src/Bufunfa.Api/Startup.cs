@@ -40,6 +40,7 @@ namespace Bufunfa.Api
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IContaRepositorio, ContaRepositorio>();
             services.AddTransient<IPeriodoRepositorio, PeriodoRepositorio>();
+            services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
@@ -97,6 +98,7 @@ namespace Bufunfa.Api
                 options.AddPolicy(PermissaoAcesso.Usuarios, policy => policy.RequireClaim(PermissaoAcesso.Usuarios).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Contas, policy => policy.RequireClaim(PermissaoAcesso.Contas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Periodos, policy => policy.RequireClaim(PermissaoAcesso.Periodos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Pessoas, policy => policy.RequireClaim(PermissaoAcesso.Pessoas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API

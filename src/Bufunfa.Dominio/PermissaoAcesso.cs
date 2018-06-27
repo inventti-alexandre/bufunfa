@@ -19,5 +19,10 @@
         /// Permite realizar o cadastramento de períodos.
         /// </summary>
         public const string Periodos = "periodos";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de pessoas.
+        /// </summary>
+        public const string Pessoas = "pessoas";
     }
 }

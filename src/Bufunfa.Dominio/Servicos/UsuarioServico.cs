@@ -43,7 +43,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             {
                 PermissaoAcesso.Usuarios,
                 PermissaoAcesso.Contas,
-                PermissaoAcesso.Periodos
+                PermissaoAcesso.Periodos,
+                PermissaoAcesso.Pessoas
             };
 
             return new Saida(true, new[] { UsuarioMensagem.Usuario_Autenticado_Com_Sucesso }, new UsuarioSaida(usuario));
