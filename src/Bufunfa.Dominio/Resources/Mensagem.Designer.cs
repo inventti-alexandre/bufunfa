@@ -68,5 +68,32 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
                 return ResourceManager.GetString("Id_Usuario_Invalido", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível ordernar por &quot;{0}&quot;. Essa informação não existe..
+        /// </summary>
+        public static string Paginacao_OrdernarPor_Propriedade_Nao_Existe {
+            get {
+                return ResourceManager.GetString("Paginacao_OrdernarPor_Propriedade_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O index da página informado ({0}) é inválido..
+        /// </summary>
+        public static string Paginacao_Pagina_Index_Invalido {
+            get {
+                return ResourceManager.GetString("Paginacao_Pagina_Index_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O tamanho da página informado ({0}) é inválido.
+        /// </summary>
+        public static string Paginacao_Pagina_Tamanho_Invalido {
+            get {
+                return ResourceManager.GetString("Paginacao_Pagina_Tamanho_Invalido", resourceCulture);
+            }
+        }
     }
 }

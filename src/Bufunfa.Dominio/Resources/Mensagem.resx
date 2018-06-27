@@ -121,4 +121,13 @@
     <value>O ID do usuário informado ({0}) é inválido.</value>
     <comment>Id do usuário inválido</comment>
   </data>
+  <data name="Paginacao_OrdernarPor_Propriedade_Nao_Existe" xml:space="preserve">
+    <value>Não é possível ordernar por "{0}". Essa informação não existe.</value>
+  </data>
+  <data name="Paginacao_Pagina_Index_Invalido" xml:space="preserve">
+    <value>O index da página informado ({0}) é inválido.</value>
+  </data>
+  <data name="Paginacao_Pagina_Tamanho_Invalido" xml:space="preserve">
+    <value>O tamanho da página informado ({0}) é inválido</value>
+  </data>
 </root>

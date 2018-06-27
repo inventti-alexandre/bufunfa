@@ -40,9 +40,12 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPost]
         [Route("v1/pessoas/procurar")]
-        public ISaida Procurar(ProcurarPessoaViewModel viewModel)
+        public ISaida Procurar([FromBody] ProcurarPessoaViewModel viewModel)
         {
-            var procurarEntrada = new ProcurarPessoaEntrada(base.ObterIdUsuarioClaim(), viewModel.PaginaIndex, viewModel.PaginaTamanho, viewModel.OrdenarPor, viewModel.OrdenarSentido);
+            var procurarEntrada = new ProcurarPessoaEntrada(base.ObterIdUsuarioClaim(), viewModel.OrdenarPor, viewModel.OrdenarSentido, viewModel.PaginaIndex, viewModel.PaginaTamanho)
+            {
+                Nome = viewModel.Nome
+            };
 
             var lst = _pessoaRepositorio.Procurar(procurarEntrada);
 

@@ -1,6 +1,7 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
 {
@@ -13,12 +14,27 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Obtém um período a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
-        Pessoa ObterPorId(int idPessoa, bool habilitarTracking = false);
-        
+        Task<Pessoa> ObterPorId(int idPessoa, bool habilitarTracking = false);
+
+        /// <summary>
+        /// Obtém as pessoas de um usuário.
+        /// </summary>
+        Task<IEnumerable<Pessoa>> ObterPorUsuario(int idUsuario);
+
+        /// <summary>
+        /// Obtém as pessoas baseadas nos parâmetros de procura
+        /// </summary>
+        Task<IEnumerable<Pessoa>> Procurar(ProcurarPessoaEntrada procurarEntrada);
+
+        /// <summary>
+        /// Verifica se um determinado usuário possui uma pessoa com o nome informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idPessoa = null);
+
         /// <summary>
         /// Insere uma nova pessoa
         /// </summary>
-        void Inserir(Pessoa pessoa);
+        Task Inserir(Pessoa pessoa);
 
         /// <summary>
         /// Atualiza as informações da pessoa
@@ -29,20 +45,5 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Deleta uma pessoa
         /// </summary>
         void Deletar(Pessoa pessoa);
-
-        /// <summary>
-        /// Verifica se um determinado usuário possui uma pessoa com o nome informado
-        /// </summary>
-        bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idPessoa = null);
-
-        /// <summary>
-        /// Obtém as pessoas de um usuário.
-        /// </summary>
-        IEnumerable<Pessoa> ObterPorUsuario(int idUsuario);
-
-        /// <summary>
-        /// Obtém as pessoas baseadas nos parâmetros de busca
-        /// </summary>
-        IEnumerable<Pessoa> Procurar(ProcurarPessoaEntrada buscaEntrada);
     }
 }

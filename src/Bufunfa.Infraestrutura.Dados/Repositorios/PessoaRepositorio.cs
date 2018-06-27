@@ -2,10 +2,11 @@
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using X.PagedList;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 {
@@ -18,35 +19,62 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public Pessoa ObterPorId(int idPessoa, bool habilitarTracking = false)
+        public async Task<Pessoa> ObterPorId(int idPessoa, bool habilitarTracking = false)
         {
             var query = _efContext.Pessoas.AsQueryable();
 
             if (!habilitarTracking)
                 query = query.AsNoTracking();
 
-            return query.FirstOrDefault(x => x.Id == idPessoa);
+            return await query.FirstOrDefaultAsync(x => x.Id == idPessoa);
         }
 
-        public void Inserir(Pessoa pessoa)
+        public async Task<IEnumerable<Pessoa>> Procurar(ProcurarPessoaEntrada procurarEntrada)
         {
-            _efContext.Add(pessoa);
+            var query = _efContext.Pessoas
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(procurarEntrada.Nome))
+                query = query.Where(x => x.Nome.Contains(procurarEntrada.Nome));
+
+            query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+
+            if (procurarEntrada.Paginar())
+            {
+                var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
+
+                procurarEntrada.TotalRegistros = pagedList.TotalItemCount;
+
+                return pagedList.ToList();
+            }
+            else
+            {
+                procurarEntrada.TotalRegistros = await query.CountAsync();
+
+                return await query.ToListAsync();
+            }
         }
 
-        public bool VerificarExistenciaPorNome(int idUsuario, string nome, int? idPessoa = null)
+        public async Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idPessoa = null)
         {
             return idPessoa.HasValue
-                ? _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Id != idPessoa)
-                : _efContext.Contas.Any(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
+                ? await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Id != idPessoa)
+                : await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public IEnumerable<Pessoa> ObterPorUsuario(int idUsuario)
+        public async Task<IEnumerable<Pessoa>> ObterPorUsuario(int idUsuario)
         {
-            return _efContext
+            return await _efContext
                    .Pessoas
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario)
-                   .AsEnumerable();
+                   .ToListAsync();
+        }
+
+        public async Task Inserir(Pessoa pessoa)
+        {
+            await _efContext.AddAsync(pessoa);
         }
 
         public void Atualizar(Pessoa pessoa)
@@ -57,24 +85,6 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         public void Deletar(Pessoa pessoa)
         {
             _efContext.Pessoas.Remove(pessoa);
-        }
-
-        public IEnumerable<Pessoa> Procurar(ProcurarPessoaEntrada buscaEntrada)
-        {
-            var query = _efContext.Pessoas
-                .AsNoTracking()
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(buscaEntrada.Nome))
-                query = query.Where(x => x.Nome.Contains(buscaEntrada.Nome));
-
-            query = query.OrderByExtended(buscaEntrada.OrdenarPor, buscaEntrada.OrdenarSentido);
-
-            buscaEntrada.TotalRegistros = query.Count();
-
-            return buscaEntrada.Paginar()
-                ? query.ToPagedList(buscaEntrada.PaginaIndex, buscaEntrada.PaginaTamanho).ToList()
-                : query.ToList();
         }
     }
 }

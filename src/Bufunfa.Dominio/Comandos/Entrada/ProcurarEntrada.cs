@@ -1,26 +1,28 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
+using JNogueira.Bufunfa.Dominio.Resources;
+using JNogueira.Infraestrutura.NotifiqueMe;
+using System;
 
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
-    public abstract class ProcurarEntrada<T>
+    public abstract class ProcurarEntrada<T> : Notificavel, IEntrada
     {
         public int IdUsuario { get; private set; }
 
         /// <summary>
         /// Página atual da listagem que exibirá o resultado da pesquisa
         /// </summary>
-        public int PaginaIndex { get; private set; }
+        public int? PaginaIndex { get; private set; }
 
         /// <summary>
         /// Quantidade de registros exibidos por página na listagem que exibirá o resultado da pesquisa
         /// </summary>
-        public int PaginaTamanho { get; private set; }
+        public int? PaginaTamanho { get; private set; }
 
         /// <summary>
         /// Nome da propriedade que deverá ser utilizada para ordenação do resultado da pesquisa
         /// </summary>
-        public Expression<Func<T, object>> OrdenarPor { get; private set; }
+        public string OrdenarPor { get; private set; }
 
         /// <summary>
         /// Sentido da ordenação do resultado da pesquisa: "ASC" para crescente / "DESC" para decrescente
@@ -32,25 +34,31 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public int TotalRegistros { get; set; }
 
-        public ProcurarEntrada(Expression<Func<T, object>> ordenarPor, string ordenarSentido)
-        {
-            this.PaginaIndex = -1;
-            this.PaginaTamanho = int.MaxValue;
-            this.OrdenarPor = ordenarPor;
-            this.OrdenarSentido = ordenarSentido;
-        }
-
-        public ProcurarEntrada(int idUsuario, int paginaIndex, int paginaTamanho, Expression<Func<T, object>> ordenarPor, string ordenarSentido)
-            : this(ordenarPor, ordenarSentido)
+        public ProcurarEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
         {
             this.IdUsuario = idUsuario;
+            this.OrdenarPor = ordenarPor;
+            this.OrdenarSentido = !string.Equals(ordenarSentido, "ASC", StringComparison.OrdinalIgnoreCase) || !string.Equals(ordenarSentido, "DESC", StringComparison.OrdinalIgnoreCase)
+                ? "ASC"
+                : ordenarSentido;
             this.PaginaIndex = paginaIndex;
             this.PaginaTamanho = paginaTamanho;
         }
 
         public bool Paginar()
         {
-            return !(this.PaginaIndex == -1 && this.PaginaTamanho == int.MaxValue);
+            return this.PaginaIndex.HasValue && this.PaginaTamanho.HasValue;
+        }
+
+        public virtual bool Valido()
+        {
+            if (this.PaginaIndex.HasValue)
+                this.NotificarSeMenorQue(this.PaginaIndex.Value, 0, string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, this.PaginaIndex));
+
+            if (this.PaginaTamanho.HasValue)
+                this.NotificarSeMenorQue(this.PaginaTamanho.Value, 1, string.Format(Mensagem.Paginacao_Pagina_Tamanho_Invalido, this.PaginaTamanho));
+
+            return !this.Invalido;
         }
     }
 }
