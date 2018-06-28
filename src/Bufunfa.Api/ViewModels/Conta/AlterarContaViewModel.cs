@@ -9,7 +9,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Id da conta
         /// </summary>
-        [Required(ErrorMessage = "O ID da conta é obrigatório e não foi informado.")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "Id_Invalido")]
         public int IdConta { get; set; }
 
         /// <summary>

@@ -3,7 +3,6 @@ using JNogueira.Bufunfa.Api.Swagger.Exemplos;
 using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
-using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +33,33 @@ namespace JNogueira.Bufunfa.Api.Controllers
         }
 
         /// <summary>
+        /// Obtém uma pessoa a partir do seu ID
+        /// </summary>
+        /// <param name="idPessoa">ID da pessoa</param>
+        [Authorize(PermissaoAcesso.Pessoas)]
+        [HttpGet]
+        [Route("v1/pessoas/obter-por-id/{idPessoa:int}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoa do usuário encontrada.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPessoaPorIdResponseExemplo))]
+        public async Task<ISaida> ObterContaPorId(int idPessoa)
+        {
+            return await _pessoaServico.ObterPessoaPorId(idPessoa, base.ObterIdUsuarioClaim());
+        }
+
+        /// <summary>
+        /// Obtém as pessoas do usuário autenticado
+        /// </summary>
+        [Authorize(PermissaoAcesso.Pessoas)]
+        [HttpGet]
+        [Route("v1/pessoas/obter")]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoas do usuário encontradas.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPessoasPorUsuarioResponseExemplo))]
+        public async Task<ISaida> ObterPessoasPorUsuarioAutenticado()
+        {
+            return await _pessoaServico.ObterPessoasPorUsuario(base.ObterIdUsuarioClaim());
+        }
+
+        /// <summary>
         /// Realiza uma procura por pessoas a partir dos parâmetros informados
         /// </summary>
         /// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>
@@ -52,78 +78,51 @@ namespace JNogueira.Bufunfa.Api.Controllers
             return await _pessoaServico.ProcurarPessoas(procurarEntrada);
         }
 
-        ///// <summary>
-        ///// Obtém um período a partir do seu ID
-        ///// </summary>
-        ///// <param name="idPeriodo">ID do período</param>
-        //[Authorize(PermissaoAcesso.Contas)]
-        //[HttpGet]
-        //[Route("v1/periodos/obter-por-id/{idPeriodo:int}")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodoPorIdResponseExemplo))]
-        //public ISaida ObterContaPorId(int idPeriodo)
-        //{
-        //    return _periodoServico.ObterPeriodoPorId(idPeriodo, base.ObterIdUsuarioClaim());
-        //}
+        /// <summary>
+        /// Realiza o cadastro de uma nova pessoa.
+        /// </summary>
+        /// <param name="viewModel">Informações de cadastro da pessoa.</param>
+        [Authorize(PermissaoAcesso.Pessoas)]
+        [HttpPost]
+        [Route("v1/pessoas/cadastrar")]
+        [SwaggerRequestExample(typeof(CadastrarPessoaViewModel), typeof(CadastrarPessoaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoa cadastrada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarPessoaResponseExemplo))]
+        public async Task<ISaida> CadastrarPessoa([FromBody] CadastrarPessoaViewModel viewModel)
+        {
+            var cadastrarEntrada = new CadastrarPessoaEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome);
 
-        ///// <summary>
-        ///// Obtém um período a partir do seu ID
-        ///// </summary>
-        //[Authorize(PermissaoAcesso.Periodos)]
-        //[HttpGet]
-        //[Route("v1/periodos/obter")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodosPorUsuarioResponseExemplo))]
-        //public ISaida ObterPeriodosPorUsuarioAutenticado()
-        //{
-        //    return _periodoServico.ObterPeriodosPorUsuario(base.ObterIdUsuarioClaim());
-        //}
+            return await _pessoaServico.CadastrarPessoa(cadastrarEntrada);
+        }
 
-        ///// <summary>
-        ///// Realiza o cadastro de um novo período.
-        ///// </summary>
-        ///// <param name="viewModel">Informações de cadastro do período.</param>
-        //[Authorize(PermissaoAcesso.Periodos)]
-        //[HttpPost]
-        //[Route("v1/periodos/cadastrar-periodo")]
-        //[SwaggerRequestExample(typeof(CadastrarPeriodoViewModel), typeof(CadastrarPeriodoViewModelExemplo))]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período cadastrado com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarPeriodoResponseExemplo))]
-        //public ISaida CadastrarPeriodo([FromBody] CadastrarPeriodoViewModel viewModel)
-        //{
-        //    var cadastrarEntrada = new CadastrarPeriodoEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value);
+        /// <summary>
+        /// Realiza a alteração de uma pessoa.
+        /// </summary>
+        /// <param name="viewModel">Informações para alteração de uma pessoa.</param>
+        [Authorize(PermissaoAcesso.Pessoas)]
+        [HttpPut]
+        [Route("v1/pessoas/alterar")]
+        [SwaggerRequestExample(typeof(AlterarPessoaViewModel), typeof(AlterarPessoaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoa alterada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarPessoaResponseExemplo))]
+        public async Task<ISaida> AlterarPessoa([FromBody] AlterarPessoaViewModel viewModel)
+        {
+            var alterarEntrada = new AlterarPessoaEntrada(viewModel.IdPessoa, viewModel.Nome, base.ObterIdUsuarioClaim());
 
-        //    return _periodoServico.CadastrarPeriodo(cadastrarEntrada);
-        //}
+            return await _pessoaServico.AlterarPessoa(alterarEntrada);
+        }
 
-        ///// <summary>
-        ///// Realiza a alteração de um período.
-        ///// </summary>
-        ///// <param name="viewModel">Informações para alteração de um período.</param>
-        //[Authorize(PermissaoAcesso.Periodos)]
-        //[HttpPut]
-        //[Route("v1/periodos/alterar-periodo")]
-        //[SwaggerRequestExample(typeof(AlterarPeriodoViewModel), typeof(AlterarPeriodoViewModelExemplo))]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período alterado com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarPeriodoResponseExemplo))]
-        //public ISaida AlterarPeriodo([FromBody] AlterarPeriodoViewModel viewModel)
-        //{
-        //    var alterarEntrada = new AlterarPeriodoEntrada(viewModel.IdPeriodo, viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value, base.ObterIdUsuarioClaim());
-
-        //    return _periodoServico.AlterarPeriodo(alterarEntrada);
-        //}
-
-        ///// <summary>
-        ///// Realiza a exclusão de um período.
-        ///// </summary>
-        //[Authorize(PermissaoAcesso.Periodos)]
-        //[HttpDelete]
-        //[Route("v1/periodos/excluir-periodo/{idPeriodo:int}")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período excluído com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirPeridoResponseExemplo))]
-        //public ISaida ExcluirPeriodo(int idPeriodo)
-        //{
-        //    return _periodoServico.ExcluirPeriodo(idPeriodo, base.ObterIdUsuarioClaim());
-        //}
+        /// <summary>
+        /// Realiza a exclusão de uma pessoa.
+        /// </summary>
+        [Authorize(PermissaoAcesso.Pessoas)]
+        [HttpDelete]
+        [Route("v1/pessoas/excluir/{idPessoa:int}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoa excluída com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirPessoaResponseExemplo))]
+        public async Task<ISaida> ExcluirPessoa(int idPessoa)
+        {
+            return await _pessoaServico.ExcluirPessoa(idPessoa, base.ObterIdUsuarioClaim());
+        }
     }
 }

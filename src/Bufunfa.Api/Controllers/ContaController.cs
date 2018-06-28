@@ -65,7 +65,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <param name="cadastroModel">Informações de cadastro da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPost]
-        [Route("v1/contas/cadastrar-conta")]
+        [Route("v1/contas/cadastrar")]
         [SwaggerRequestExample(typeof(CadastrarContaViewModel), typeof(CadastrarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta cadastrada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarContaResponseExemplo))]
@@ -82,7 +82,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <param name="alterarModel">Informações para alteração da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPut]
-        [Route("v1/contas/alterar-conta")]
+        [Route("v1/contas/alterar")]
         [SwaggerRequestExample(typeof(AlterarContaViewModel), typeof(AlterarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta alterada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarContaResponseExemplo))]
@@ -98,7 +98,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// </summary>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpDelete]
-        [Route("v1/contas/excluir-conta/{idConta:int}")]
+        [Route("v1/contas/excluir/{idConta:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta excluída com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirContaResponseExemplo))]
         public async Task<ISaida> ExcluirConta(int idConta)

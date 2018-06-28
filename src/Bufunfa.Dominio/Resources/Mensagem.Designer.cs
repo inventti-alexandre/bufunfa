@@ -61,6 +61,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ID informado é inválido..
+        /// </summary>
+        public static string Id_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O ID do usuário informado ({0}) é inválido..
         /// </summary>
         public static string Id_Usuario_Invalido {

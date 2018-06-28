@@ -61,6 +61,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 : new Saida(true, new[] { PeriodoMensagem.Nenhum_periodo_encontrado }, null);
         }
 
+        public async Task<ISaida> ProcurarPeriodos(ProcurarPeriodoEntrada procurarEntrada)
+        {
+            // Verifica se os parâmetros para a procura foram informadas corretamente
+            if (!procurarEntrada.Valido())
+                return new Saida(false, procurarEntrada.Mensagens, null);
+
+            return await _periodoRepositorio.Procurar(procurarEntrada);
+        }
+
         public async Task<ISaida> CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente

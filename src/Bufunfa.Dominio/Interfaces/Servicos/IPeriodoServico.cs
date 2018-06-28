@@ -20,6 +20,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         Task<ISaida> ObterPeriodosPorUsuario(int idUsuario);
 
         /// <summary>
+        /// Obtém os períodos baseados nos parâmetros de procura
+        /// </summary>
+        Task<ISaida> ProcurarPeriodos(ProcurarPeriodoEntrada procurarEntrada);
+
+        /// <summary>
         /// Realiza o cadastro de um novo período.
         /// </summary>
         Task<ISaida> CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada);

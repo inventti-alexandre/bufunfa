@@ -1,9 +1,101 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+﻿using JNogueira.Bufunfa.Api.ViewModels;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
 using Swashbuckle.AspNetCore.Examples;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
+    public class CadastrarPessoaViewModelExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new CadastrarPessoaViewModel
+            {
+                Nome = "Supermecado Carone"
+            };
+        }
+    }
+
+    public class CadastrarPessoaResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { PessoaMensagem.Pessoa_Cadastrada_Com_Sucesso },
+                Retorno = new
+                {
+                    Id = 1,
+                    Nome = "Supermecado Carone"
+                }
+            };
+        }
+    }
+
+    public class AlterarPessoaViewModelExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new AlterarPessoaViewModel
+            {
+                IdPessoa = 1,
+                Nome = "Supermecado Carone"
+            };
+        }
+    }
+
+    public class AlterarPessoaResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { PessoaMensagem.Pessoa_Alterada_Com_Sucesso },
+                Retorno = new
+                {
+                    Id = 1,
+                    Nome = "Supermecado Carone"
+                }
+            };
+        }
+    }
+
+    public class ExcluirPessoaResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { PessoaMensagem.Pessoa_Excluida_Com_Sucesso },
+                Retorno = new
+                {
+                    Id = 1,
+                    Nome = "Supermecado Carone"
+                }
+            };
+        }
+    }
+
+    public class ObterPessoaPorIdResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { PessoaMensagem.Pessoa_Encontrada_Com_Sucesso },
+                Retorno = new
+                {
+                    Id = 1,
+                    Nome = "Supermecado Carone"
+                }
+            };
+        }
+    }
+
     public class ProcurarPessoaResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -12,21 +104,46 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                         new
                         {
                             Id = 1,
-                            Nome = "Pessoa 1"
+                            Nome = "Supermecado Carone"
                         },
                         new
                         {
                             Id = 2,
-                            Nome = "Pessoa 2"
+                            Nome = "Padaria Pão Chick"
                         },
                         new
                         {
                             Id = 3,
-                            Nome = "Pessoa 3"
+                            Nome = "Farmácia Pague Menos"
                         }
                     }, "Nome", "ASC", 3, 1, 1, 3)
             {
                 Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso }
+            };
+        }
+    }
+
+    public class ObterPessoasPorUsuarioResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { PessoaMensagem.Pessoas_Encontradas_Com_Sucesso },
+                Retorno = new[]
+                {
+                    new
+                    {
+                        Id = 1,
+                        Nome = "Supermecado Carone"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Nome = "Padaria Pão Chick"
+                    }
+                }
             };
         }
     }

@@ -7,12 +7,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     /// <summary>
     /// Classe com opções de filtro para procura de pessoas
     /// </summary>
-    public class ProcurarPessoaEntrada : ProcurarEntrada<Pessoa>
+    public class ProcurarPessoaEntrada : ProcurarEntrada
     {
         public string Nome { get; set; }
 
         public ProcurarPessoaEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
-            : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "Id" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
+            : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "Nome" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
         {
             
         }

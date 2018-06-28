@@ -1,4 +1,6 @@
-﻿using JNogueira.Bufunfa.Dominio.Entidades;
+﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
+using JNogueira.Bufunfa.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,6 +24,16 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<IEnumerable<Periodo>> ObterPorUsuario(int idUsuario);
 
         /// <summary>
+        /// Obtém os períodos baseados nos parâmetros de procura
+        /// </summary>
+        Task<ProcurarSaida> Procurar(ProcurarPeriodoEntrada procurarEntrada);
+
+        /// <summary>
+        /// Verifica se um determinado usuário possui um período com as datas de início e fim informados
+        /// </summary>
+        Task<bool> VerificarExistenciaPorDataInicioFim(int idUsuario, DateTime dataInicio, DateTime dataFim, int? idPeriodo = null);
+
+        /// <summary>
         /// Insere um novo período
         /// </summary>
         Task Inserir(Periodo periodo);
@@ -35,10 +47,5 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Deleta um períoodo
         /// </summary>
         void Deletar(Periodo periodo);
-
-        /// <summary>
-        /// Verifica se um determinado usuário possui um período com as datas de início e fim informados
-        /// </summary>
-        Task<bool> VerificarExistenciaPorDataInicioFim(int idUsuario, DateTime dataInicio, DateTime dataFim, int? idPeriodo = null);
     }
 }

@@ -105,6 +105,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            // Verifica se o período pertece ao usuário informado.
+            this.NotificarSeDiferentes(pessoa.IdUsuario, alterarEntrada.IdUsuario, PessoaMensagem.Pessoa_Alterar_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             // Verifica se já existe uma pessoa com o mesmo nome informado
             this.NotificarSeVerdadeiro(await _pessoaRepositorio.VerificarExistenciaPorNome(alterarEntrada.IdUsuario, alterarEntrada.Nome, alterarEntrada.IdPessoa), PessoaMensagem.Pessoa_Com_Mesmo_Nome);
 

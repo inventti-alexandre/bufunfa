@@ -36,10 +36,10 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Obtém um período a partir do seu ID
         /// </summary>
         /// <param name="idPeriodo">ID do período</param>
-        [Authorize(PermissaoAcesso.Contas)]
+        [Authorize(PermissaoAcesso.Periodos)]
         [HttpGet]
         [Route("v1/periodos/obter-por-id/{idPeriodo:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período do usuário encontrado.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodoPorIdResponseExemplo))]
         public async Task<ISaida> ObterContaPorId(int idPeriodo)
         {
@@ -47,7 +47,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         }
 
         /// <summary>
-        /// Obtém um período a partir do seu ID
+        /// Obtém os períodos do usuário autenticado
         /// </summary>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpGet]
@@ -60,12 +60,32 @@ namespace JNogueira.Bufunfa.Api.Controllers
         }
 
         /// <summary>
+        /// Realiza uma procura por períodos a partir dos parâmetros informados
+        /// </summary>
+        /// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>
+        [Authorize(PermissaoAcesso.Periodos)]
+        [HttpPost]
+        [Route("v1/periodos/procurar")]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Resultado da procura por períodos.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ProcurarPeriodoResponseExemplo))]
+        public async Task<ISaida> Procurar([FromBody] ProcurarPeriodoViewModel viewModel)
+        {
+            var procurarEntrada = new ProcurarPeriodoEntrada(base.ObterIdUsuarioClaim(), viewModel.OrdenarPor, viewModel.OrdenarSentido, viewModel.PaginaIndex, viewModel.PaginaTamanho)
+            {
+                Nome = viewModel.Nome,
+                Data = viewModel.Data
+            };
+
+            return await _periodoServico.ProcurarPeriodos(procurarEntrada);
+        }
+
+        /// <summary>
         /// Realiza o cadastro de um novo período.
         /// </summary>
         /// <param name="viewModel">Informações de cadastro do período.</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpPost]
-        [Route("v1/periodos/cadastrar-periodo")]
+        [Route("v1/periodos/cadastrar")]
         [SwaggerRequestExample(typeof(CadastrarPeriodoViewModel), typeof(CadastrarPeriodoViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período cadastrado com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarPeriodoResponseExemplo))]
@@ -82,7 +102,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <param name="viewModel">Informações para alteração de um período.</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpPut]
-        [Route("v1/periodos/alterar-periodo")]
+        [Route("v1/periodos/alterar")]
         [SwaggerRequestExample(typeof(AlterarPeriodoViewModel), typeof(AlterarPeriodoViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período alterado com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarPeriodoResponseExemplo))]
@@ -98,7 +118,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// </summary>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpDelete]
-        [Route("v1/periodos/excluir-periodo/{idPeriodo:int}")]
+        [Route("v1/periodos/excluir/{idPeriodo:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período excluído com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirPeridoResponseExemplo))]
         public async Task<ISaida> ExcluirPeriodo(int idPeriodo)

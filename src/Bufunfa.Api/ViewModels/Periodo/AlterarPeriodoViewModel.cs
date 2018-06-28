@@ -10,7 +10,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        [Required(ErrorMessageResourceType = typeof(PeriodoMensagem), ErrorMessageResourceName = "Id_Periodo_Nao_Informado")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "Id_Invalido")]
         public int IdPeriodo { get; set; }
 
         /// <summary>

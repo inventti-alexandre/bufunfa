@@ -171,4 +171,7 @@
   <data name="Periodo_Excluir_Nao_Pertence_Usuario" xml:space="preserve">
     <value>O período que se deseja excluir, não pertence ao usuário autenticado.</value>
   </data>
+  <data name="Periodo_Procura_Data_Invalida" xml:space="preserve">
+    <value>A data informada é inválida. Informe uma data superior á {0}.</value>
+  </data>
 </root>

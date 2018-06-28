@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
@@ -113,6 +114,38 @@ namespace Bufunfa.Dominio.Testes
             var saida = _periodoServico.ObterPeriodosPorUsuario(idUsuario).Result;
 
             Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == PeriodoMensagem.Periodos_Encontrados_Com_Sucesso), string.Join(", ", saida.Mensagens));
+        }
+
+        [TestMethod]
+        public void Nao_Deve_Procurar_Periodos_Com_Parametros_Invalidos()
+        {
+            var procurarEntrada = new ProcurarPeriodoEntrada(0, "Abc", "ASC", -1, -1);
+
+            _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
+
+            var saida = _periodoServico.ProcurarPeriodos(procurarEntrada).Result;
+
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, -1)), string.Join(", ", saida.Mensagens));
+        }
+
+        [TestMethod]
+        public void Deve_Procurar_Periodos()
+        {
+            var idUsuario = 1;
+
+            var procurarEntrada = new ProcurarPeriodoEntrada(idUsuario, "Nome", "ASC", 1, 1);
+
+            var periodo1 = new Periodo(new CadastrarPeriodoEntrada(idUsuario, "Período 1", DateTime.Now, DateTime.Now.AddDays(5)));
+            var periodo2 = new Periodo(new CadastrarPeriodoEntrada(idUsuario, "Período 2", DateTime.Now, DateTime.Now.AddDays(5)));
+
+            _periodoRepositorio.Procurar(procurarEntrada)
+                .Returns(new ProcurarSaida(new[] { periodo1, periodo2 }, "Nome", "ASC", 2, 2, 1, 1));
+
+            _periodoServico = Substitute.For<PeriodoServico>(_periodoRepositorio, _uow);
+
+            var saida = _periodoServico.ProcurarPeriodos(procurarEntrada).Result;
+
+            Assert.IsTrue(saida.Sucesso && (int)saida.Retorno.GetType().GetProperty("TotalPaginas").GetValue(saida.Retorno, null) == 2, string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]

@@ -6,15 +6,35 @@ using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
+    public class ProcurarPeriodoResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new ProcurarSaida(new[] {
+                        new
+                        {
+                            Id = 1,
+                            IdUsuario = 1,
+                            Nome = "Período 1",
+                            DataInicio = DateTime.Now.Date,
+                            DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                        }
+                    }, "DataInicio", "ASC", 1, 1, 1, 1)
+            {
+                Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso }
+            };
+        }
+    }
+
     public class CadastrarPeriodoViewModelExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
             return new CadastrarPeriodoViewModel
             {
-                Nome = "Período 1",
-                DataInicio = DateTime.Now.Date,
-                DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                Nome = "Junho 2018",
+                DataInicio = new DateTime(2018, 6, 1),
+                DataFim = new DateTime(2018, 6, 30)
             };
         }
     }
@@ -26,9 +46,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new AlterarPeriodoViewModel
             {
                 IdPeriodo = 1,
-                Nome = "Período 1",
-                DataInicio = DateTime.Now.Date,
-                DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                Nome = "Junho 2018",
+                DataInicio = new DateTime(2018, 6, 1),
+                DataFim = new DateTime(2018, 6, 30)
             };
         }
     }
@@ -44,10 +64,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
-                    Nome = "Período 1",
-                    DataInicio = DateTime.Now.Date,
-                    DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                    Nome = "Junho 2018",
+                    DataInicio = new DateTime(2018, 6, 1),
+                    DataFim = new DateTime(2018, 6, 30)
                 }
             };
         }
@@ -64,10 +83,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
-                    Nome = "Período 1",
-                    DataInicio = DateTime.Now.Date,
-                    DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                    Nome = "Junho 2018",
+                    DataInicio = new DateTime(2018, 6, 1),
+                    DataFim = new DateTime(2018, 6, 30)
                 }
             };
         }
@@ -84,10 +102,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
-                    Nome = "Período 1",
-                    DataInicio = DateTime.Now.Date,
-                    DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                    Nome = "Junho 2018",
+                    DataInicio = new DateTime(2018, 6, 1),
+                    DataFim = new DateTime(2018, 6, 30)
                 }
             };
         }
@@ -104,10 +121,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    IdUsuario = 1,
-                    Nome = "Período 1",
-                    DataInicio = DateTime.Now.Date,
-                    DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                    Nome = "Junho 2018",
+                    DataInicio = new DateTime(2018, 6, 1),
+                    DataFim = new DateTime(2018, 6, 30)
                 }
             };
         }
@@ -126,10 +142,9 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     new
                     {
                         Id = 1,
-                        IdUsuario = 1,
-                        Nome = "Período 1",
-                        DataInicio = DateTime.Now.Date,
-                        DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
+                        Nome = "Junho 2018",
+                        DataInicio = new DateTime(2018, 6, 1),
+                        DataFim = new DateTime(2018, 6, 30)
                     }
                 }
             };

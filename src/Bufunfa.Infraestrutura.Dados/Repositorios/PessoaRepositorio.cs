@@ -46,7 +46,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                 var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
 
                 return new ProcurarSaida(
-                    pagedList.ToList(),
+                    pagedList.ToList().Select(x => new PessoaSaida(x)),
                     procurarEntrada.OrdenarPor,
                     procurarEntrada.OrdenarSentido,
                     pagedList.TotalItemCount,
@@ -59,7 +59,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                 var totalRegistros = await query.CountAsync();
 
                 return new ProcurarSaida(
-                    await query.ToListAsync(),
+                    (await query.ToListAsync()).Select(x => new PessoaSaida(x)),
                     procurarEntrada.OrdenarPor,
                     procurarEntrada.OrdenarSentido,
                     totalRegistros);

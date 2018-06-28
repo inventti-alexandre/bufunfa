@@ -214,6 +214,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A data informada é inválida. Informe uma data superior á {0}..
+        /// </summary>
+        public static string Periodo_Procura_Data_Invalida {
+            get {
+                return ResourceManager.GetString("Periodo_Procura_Data_Invalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Período(s) do usuário encontrado(s) com sucesso..
         /// </summary>
         public static string Periodos_Encontrados_Com_Sucesso {

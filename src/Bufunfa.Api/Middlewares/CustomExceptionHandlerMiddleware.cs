@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace JNogueira.Bufunfa.Api.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(JsonConvert.SerializeObject(new InternalServerErrorApiResponse(exception)));
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(new InternalServerErrorApiResponse(exception), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
         }
     }
 

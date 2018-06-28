@@ -10,7 +10,6 @@ using JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -131,10 +130,7 @@ namespace Bufunfa.Api
                 options.IncludeXmlComments(caminhoXmlDoc);
             });
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(CustomModelStateValidationFilter));
-            });
+            services.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)));
 
             // Habilita a compressão do response
             services.AddResponseCompression(options =>

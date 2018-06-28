@@ -5,7 +5,7 @@ using System;
 
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
-    public abstract class ProcurarEntrada<T> : Notificavel, IEntrada
+    public abstract class ProcurarEntrada : Notificavel, IEntrada
     {
         public int IdUsuario { get; private set; }
 
