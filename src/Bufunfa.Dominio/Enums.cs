@@ -1,6 +1,15 @@
 ﻿namespace JNogueira.Bufunfa.Dominio
 {
     /// <summary>
+    /// Tipo de categoria
+    /// </summary>
+    public static class TipoCategoria
+    {
+        public static readonly string Credito = "C";
+        public static readonly string Debito = "D";
+    }
+
+    /// <summary>
     /// Métodos de pagamento
     /// </summary>
     public enum MetodoPagamento

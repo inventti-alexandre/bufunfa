@@ -10,12 +10,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Id da conta
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; }
 
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        public int IdUsuario { get; private set; }
+        public int IdUsuario { get; }
 
         /// <summary>
         /// Nome da conta

@@ -8,17 +8,17 @@
         /// <summary>
         /// Id do usuário
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; }
 
         /// <summary>
         /// Nome do usuário
         /// </summary>
-        public string Nome { get; private set; }
+        public string Nome { get; }
 
         /// <summary>
         /// E-mail do usuário
         /// </summary>
-        public string Email { get; private set; }
+        public string Email { get; }
 
         /// <summary>
         /// Senha do usuário
@@ -28,7 +28,7 @@
         /// <summary>
         /// Indica se o usuário está ativo
         /// </summary>
-        public bool Ativo { get; private set; }
+        public bool Ativo { get; }
 
         /// <summary>
         /// Permissões de acesso do usuário

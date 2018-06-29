@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -40,6 +41,7 @@ namespace Bufunfa.Api
             services.AddTransient<IContaRepositorio, ContaRepositorio>();
             services.AddTransient<IPeriodoRepositorio, PeriodoRepositorio>();
             services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
+            services.AddTransient<ICategoriaRepositorio, CategoriaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
@@ -99,6 +101,7 @@ namespace Bufunfa.Api
                 options.AddPolicy(PermissaoAcesso.Contas, policy => policy.RequireClaim(PermissaoAcesso.Contas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Periodos, policy => policy.RequireClaim(PermissaoAcesso.Periodos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Pessoas, policy => policy.RequireClaim(PermissaoAcesso.Pessoas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Categorias, policy => policy.RequireClaim(PermissaoAcesso.Categorias).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API
@@ -130,7 +133,8 @@ namespace Bufunfa.Api
                 options.IncludeXmlComments(caminhoXmlDoc);
             });
 
-            services.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)));
+            services.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)))
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             // Habilita a compressão do response
             services.AddResponseCompression(options =>

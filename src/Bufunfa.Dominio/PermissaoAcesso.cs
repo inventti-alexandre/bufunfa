@@ -24,5 +24,10 @@
         /// Permite realizar o cadastramento de pessoas.
         /// </summary>
         public const string Pessoas = "pessoas";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de categorias.
+        /// </summary>
+        public const string Categorias = "categorias";
     }
 }

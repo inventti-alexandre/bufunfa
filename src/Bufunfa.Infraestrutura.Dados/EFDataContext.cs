@@ -12,6 +12,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Periodo> Periodos { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -30,6 +31,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new ContaMap());
             modelBuilder.ApplyConfiguration(new PeriodoMap());
             modelBuilder.ApplyConfiguration(new PessoaMap());
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
         }
     }
 }

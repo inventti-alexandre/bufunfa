@@ -54,12 +54,12 @@ namespace JNogueira.Bufunfa.Api.Middlewares
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(JsonConvert.SerializeObject(new InternalServerErrorApiResponse(exception), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new InternalServerErrorApiResponse(exception), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
         }
     }
 
