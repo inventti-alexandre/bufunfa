@@ -12,39 +12,39 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
     public interface ICategoriaRepositorio
     {
         /// <summary>
-        /// Obtém um período a partir do seu ID
+        /// Obtém uma categoria a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
         Task<Categoria> ObterPorId(int idCategoria, bool habilitarTracking = false);
 
         /// <summary>
-        /// Obtém as pessoas de um usuário.
+        /// Obtém as categorias de um usuário.
         /// </summary>
         Task<IEnumerable<Categoria>> ObterPorUsuario(int idUsuario);
 
         /// <summary>
-        /// Obtém as pessoas baseadas nos parâmetros de procura
+        /// Obtém as categorias baseadas nos parâmetros de procura
         /// </summary>
-        //Task<ProcurarSaida> Procurar(ProcurarCategoriaEntrada procurarEntrada);
+        Task<ProcurarSaida> Procurar(ProcurarCategoriaEntrada procurarEntrada);
 
         /// <summary>
-        /// Verifica se um determinado usuário possui uma pessoa com o nome informado
+        /// Verifica se um determinado usuário possui uma categoria com o nome e tipo informado
         /// </summary>
-        //Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idCategoria = null);
+        Task<bool> VerificarExistenciaPorNomeTipo(int idUsuario, string nome, string tipo, int? idCategoria = null);
 
         /// <summary>
-        /// Insere uma nova pessoa
+        /// Insere uma nova categoria
         /// </summary>
-        Task Inserir(Categoria pessoa);
+        Task Inserir(Categoria categoria);
 
         /// <summary>
-        /// Atualiza as informações da pessoa
+        /// Atualiza as informações da categoria
         /// </summary>
-        void Atualizar(Categoria pessoa);
+        void Atualizar(Categoria categoria);
 
         /// <summary>
-        /// Deleta uma pessoa
+        /// Deleta uma categoria
         /// </summary>
-        void Deletar(Categoria pessoa);
+        void Deletar(Categoria categoria);
     }
 }

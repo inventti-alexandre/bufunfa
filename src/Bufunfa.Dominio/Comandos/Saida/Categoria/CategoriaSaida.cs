@@ -61,12 +61,21 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                 };
             }
 
-            this.CategoriasFilha = categoria.CategoriasFilha.Select(x => new
+            this.CategoriasFilha = ObterCategoriasFilha(categoria.CategoriasFilha);
+        }
+
+        private IEnumerable<object> ObterCategoriasFilha(IEnumerable<Categoria> categorias)
+        {
+            if (categorias == null || !categorias.Any())
+                return null;
+
+            return categorias.Select(x => new
             {
-                Id     = x.Id,
-                Nome   = x.Nome,
-                Tipo   = x.Tipo,
-                Arvore = x.ObterArvore()
+                Id = x.Id,
+                Nome = x.Nome,
+                Tipo = x.Tipo,
+                Arvore = x.ObterArvore(),
+                CategoriasFilha = ObterCategoriasFilha(x.CategoriasFilha)
             }).ToList();
         }
         

@@ -25,6 +25,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             var query = _efContext.Categorias
                     .Include(x => x.CategoriaPai)
                     .Include(x => x.CategoriasFilha)
+                        .ThenInclude(y => y.CategoriasFilha)
                     .AsQueryable();
 
             if (!habilitarTracking)
@@ -33,71 +34,86 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == idCategoria);
         }
 
-        //public async Task<ProcurarSaida> Procurar(ProcurarCategoriaEntrada procurarEntrada)
-        //{
-        //    var query = _efContext.Categorias
-        //        .AsNoTracking()
-        //        .AsQueryable();
+        public async Task<ProcurarSaida> Procurar(ProcurarCategoriaEntrada procurarEntrada)
+        {
+            var query = _efContext.Categorias
+                .Include(x => x.CategoriaPai)
+                .AsNoTracking()
+                .AsQueryable();
 
-        //    if (!string.IsNullOrEmpty(procurarEntrada.Nome))
-        //        query = query.Where(x => x.Nome.Contains(procurarEntrada.Nome));
+            if (!string.IsNullOrEmpty(procurarEntrada.Nome))
+                query = query.Where(x => x.Nome.Contains(procurarEntrada.Nome));
 
-        //    query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+            if (!string.IsNullOrEmpty(procurarEntrada.Tipo))
+                query = query.Where(x => x.Tipo.Equals(procurarEntrada.Tipo, StringComparison.InvariantCultureIgnoreCase));
 
-        //    if (procurarEntrada.Paginar())
-        //    {
-        //        var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
+            if (procurarEntrada.IdCategoriaPai.HasValue)
+                query = query.Where(x => x.IdCategoriaPai.HasValue && x.IdCategoriaPai.Value == procurarEntrada.IdCategoriaPai.Value);
 
-        //        return new ProcurarSaida(
-        //            pagedList.ToList().Select(x => new CategoriaSaida(x)),
-        //            procurarEntrada.OrdenarPor,
-        //            procurarEntrada.OrdenarSentido,
-        //            pagedList.TotalItemCount,
-        //            pagedList.PageCount,
-        //            procurarEntrada.PaginaIndex,
-        //            procurarEntrada.PaginaTamanho);
-        //    }
-        //    else
-        //    {
-        //        var totalRegistros = await query.CountAsync();
+            query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
 
-        //        return new ProcurarSaida(
-        //            (await query.ToListAsync()).Select(x => new CategoriaSaida(x)),
-        //            procurarEntrada.OrdenarPor,
-        //            procurarEntrada.OrdenarSentido,
-        //            totalRegistros);
-        //    }
-        //}
+            if (procurarEntrada.Paginar())
+            {
+                var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
 
-        //public async Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idCategoria = null)
-        //{
-        //    return idCategoria.HasValue
-        //        ? await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Id != idCategoria)
-        //        : await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
-        //}
+                return new ProcurarSaida(
+                    pagedList.ToList().Select(x => new CategoriaSaida(x)),
+                    procurarEntrada.OrdenarPor,
+                    procurarEntrada.OrdenarSentido,
+                    pagedList.TotalItemCount,
+                    pagedList.PageCount,
+                    procurarEntrada.PaginaIndex,
+                    procurarEntrada.PaginaTamanho);
+            }
+            else
+            {
+                var totalRegistros = await query.CountAsync();
+
+                return new ProcurarSaida(
+                    (await query.ToListAsync()).Select(x => new CategoriaSaida(x)),
+                    procurarEntrada.OrdenarPor,
+                    procurarEntrada.OrdenarSentido,
+                    totalRegistros);
+            }
+        }
+
+        public async Task<bool> VerificarExistenciaPorNomeTipo(int idUsuario, string nome, string tipo, int? idCategoria = null)
+        {
+            return idCategoria.HasValue
+                ? await _efContext.Categorias.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Tipo.Equals(tipo, StringComparison.InvariantCultureIgnoreCase) && x.Id != idCategoria)
+                : await _efContext.Categorias.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase) && x.Tipo.Equals(tipo, StringComparison.InvariantCultureIgnoreCase));
+        }
 
         public async Task<IEnumerable<Categoria>> ObterPorUsuario(int idUsuario)
         {
             return await _efContext
                    .Categorias
+                   .Include(x => x.CategoriaPai)
+                   .Include(x => x.CategoriasFilha)
+                        .ThenInclude(y => y.CategoriasFilha)
                    .AsNoTracking()
-                   .Where(x => x.IdUsuario == idUsuario)
+                   .Where(x => x.IdUsuario == idUsuario && x.IdCategoriaPai == null)
                    .ToListAsync();
         }
 
-        public async Task Inserir(Categoria pessoa)
+        public async Task Inserir(Categoria categoria)
         {
-            await _efContext.AddAsync(pessoa);
+            await _efContext.AddAsync(categoria);
         }
 
-        public void Atualizar(Categoria pessoa)
+        public void Atualizar(Categoria categoria)
         {
-            _efContext.Entry(pessoa).State = EntityState.Modified;
+            _efContext.Entry(categoria).State = EntityState.Modified;
         }
 
-        public void Deletar(Categoria pessoa)
+        public void Deletar(Categoria categoria)
         {
-            _efContext.Categorias.Remove(pessoa);
+            foreach (var categoriaFilha in categoria.CategoriasFilha)
+            {
+                Deletar(categoriaFilha);
+            }
+
+            _efContext.Categorias.Remove(categoria);
         }
     }
 }

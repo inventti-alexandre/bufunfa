@@ -5,14 +5,19 @@ using JNogueira.Infraestrutura.NotifiqueMe;
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Comando utilizado para o cadastro de uma nova categoria
+    /// Comando utilizado para o alterar uma categoria
     /// </summary>
-    public class CadastrarCategoriaEntrada : Notificavel, IEntrada
+    public class AlterarCategoriaEntrada : Notificavel, IEntrada
     {
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
         public int IdUsuario { get; }
+
+        /// <summary>
+        /// ID da categoria
+        /// </summary>
+        public int IdCategoria { get; }
 
         /// <summary>
         /// Id da categoria pai
@@ -29,12 +34,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Tipo { get; }
 
-        public CadastrarCategoriaEntrada(int idUsuario, string nome, string tipo, int? idCategoriaPai = null)
+        public AlterarCategoriaEntrada(int idCategoria, string nome, int? idCategoriaPai, string tipo, int idUsuario)
         {
-            this.IdUsuario      = idUsuario;
-            this.Nome           = nome;
-            this.Tipo           = tipo?.ToUpper();
+            this.IdCategoria = idCategoria;
             this.IdCategoriaPai = idCategoriaPai;
+            this.Nome = nome;
+            this.Tipo = tipo?.ToUpper();
+            
+            this.IdUsuario = idUsuario;
         }
 
         public bool Valido()
@@ -51,7 +58,10 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 this.NotificarSeVerdadeiro(this.Tipo != "D" && this.Tipo != "C", string.Format(CategoriaMensagem.Tipo_Invalido, this.Tipo));
 
             if (this.IdCategoriaPai.HasValue)
+            {
                 this.NotificarSeMenorQue(this.IdCategoriaPai.Value, 1, string.Format(CategoriaMensagem.Id_Categoria_Pai_Invalido, this.IdCategoriaPai.Value));
+                this.NotificarSeIguais(this.IdCategoriaPai.Value, this.IdCategoria, CategoriaMensagem.Id_Categoria_Pai_Id_Categoria_Nao_Podem_Ser_Iguais);
+            }
 
             return !this.Invalido;
         }

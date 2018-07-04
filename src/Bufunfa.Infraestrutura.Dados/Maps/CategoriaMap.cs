@@ -11,12 +11,14 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.ToTable("categoria");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("IdCategoria");
+            builder.Property(x => x.IdCategoriaPai);
 
             builder.HasOne(x => x.CategoriaPai)
                 .WithMany(y => y.CategoriasFilha)
                 .HasForeignKey(x => x.IdCategoriaPai);
 
-            builder.HasMany(x => x.CategoriasFilha);
+            //builder.HasMany(x => x.CategoriasFilha);
+
 
             builder.Property(x => x.IdUsuario);
             builder.Property(x => x.Nome);

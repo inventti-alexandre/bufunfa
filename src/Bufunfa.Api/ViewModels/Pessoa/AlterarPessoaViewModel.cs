@@ -7,7 +7,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
     public class AlterarPessoaViewModel
     {
         /// <summary>
-        /// Id do usuário proprietário
+        /// Id da pessoa
         /// </summary>
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "Id_Invalido")]
         public int IdPessoa{ get; set; }

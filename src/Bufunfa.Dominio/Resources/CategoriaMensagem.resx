@@ -165,4 +165,19 @@
   <data name="Tipo_Invalido" xml:space="preserve">
     <value>O tipo da categoria informado ({0}) é inválido.</value>
   </data>
+  <data name="Categoria_Com_Mesmo_Nome_Tipo" xml:space="preserve">
+    <value>Você já possui uma categoria cadastrada com o mesmo nome e tipo.</value>
+  </data>
+  <data name="Categoria_Pai_Nao_Existe" xml:space="preserve">
+    <value>A categoria pai de ID {0} não existe.</value>
+  </data>
+  <data name="Categoria_Pai_Nao_Pode_Ser_Excluida" xml:space="preserve">
+    <value>A categoria possui categorias filhas. Antes de excluí-la, é preciso excluir primeiramente todas as suas categorias filhas.</value>
+  </data>
+  <data name="Id_Categoria_Pai_Id_Categoria_Nao_Podem_Ser_Iguais" xml:space="preserve">
+    <value>O ID da categoria pai não pode ser igual ao ID da categoria.</value>
+  </data>
+  <data name="Tipo_Nao_Pode_Ser_Diferente_Tipo_Categoria_Pai" xml:space="preserve">
+    <value>O tipo da categoria informado não pode ser diferente do tipo da categoria pai "{0}".</value>
+  </data>
 </root>

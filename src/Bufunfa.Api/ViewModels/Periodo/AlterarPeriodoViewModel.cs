@@ -8,7 +8,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
     public class AlterarPeriodoViewModel
     {
         /// <summary>
-        /// Id do usuário proprietário
+        /// Id do período
         /// </summary>
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "Id_Invalido")]
         public int IdPeriodo { get; set; }

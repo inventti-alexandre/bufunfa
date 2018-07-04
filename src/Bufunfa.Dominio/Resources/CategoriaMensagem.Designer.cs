@@ -88,6 +88,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você já possui uma categoria cadastrada com o mesmo nome e tipo..
+        /// </summary>
+        public static string Categoria_Com_Mesmo_Nome_Tipo {
+            get {
+                return ResourceManager.GetString("Categoria_Com_Mesmo_Nome_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categoria encontrada com sucesso..
         /// </summary>
         public static string Categoria_Encontrada_Com_Sucesso {
@@ -124,6 +133,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A categoria pai de ID {0} não existe..
+        /// </summary>
+        public static string Categoria_Pai_Nao_Existe {
+            get {
+                return ResourceManager.GetString("Categoria_Pai_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A categoria possui categorias filhas. Antes de excluí-la, é preciso excluir primeiramente todas as suas categorias filhas..
+        /// </summary>
+        public static string Categoria_Pai_Nao_Pode_Ser_Excluida {
+            get {
+                return ResourceManager.GetString("Categoria_Pai_Nao_Pode_Ser_Excluida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categoria(s) do usuário encontrada(s) com sucesso..
         /// </summary>
         public static string Categorias_Encontradas_Com_Sucesso {
@@ -147,6 +174,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Id_Categoria_Nao_Existe {
             get {
                 return ResourceManager.GetString("Id_Categoria_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O ID da categoria pai não pode ser igual ao ID da categoria..
+        /// </summary>
+        public static string Id_Categoria_Pai_Id_Categoria_Nao_Podem_Ser_Iguais {
+            get {
+                return ResourceManager.GetString("Id_Categoria_Pai_Id_Categoria_Nao_Podem_Ser_Iguais", resourceCulture);
             }
         }
         
@@ -192,6 +228,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Tipo_Invalido {
             get {
                 return ResourceManager.GetString("Tipo_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O tipo da categoria informado não pode ser diferente do tipo da categoria pai &quot;{0}&quot;..
+        /// </summary>
+        public static string Tipo_Nao_Pode_Ser_Diferente_Tipo_Categoria_Pai {
+            get {
+                return ResourceManager.GetString("Tipo_Nao_Pode_Ser_Diferente_Tipo_Categoria_Pai", resourceCulture);
             }
         }
         

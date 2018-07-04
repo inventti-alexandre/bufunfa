@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq;
 using System.Reflection;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Dados
@@ -10,10 +8,10 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
         /// <summary>
         /// Ordena uma coleção a partir do nome da propriedade do seu tipo
         /// </summary>
-        public static IOrderedQueryable<T> OrderByProperty<T>(this IQueryable<T> entities, string propertyName, string sortDirection)
+        public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> entities, string propertyName, string sortDirection)
         {
             if (!entities.Any() || string.IsNullOrEmpty(propertyName))
-                return null;
+                return entities;
 
             var propertyInfo = typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 

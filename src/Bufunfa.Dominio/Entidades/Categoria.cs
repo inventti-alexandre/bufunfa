@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JNogueira.Bufunfa.Dominio.Entidades
 {
@@ -11,12 +12,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// ID da categoria
         /// </summary>
-        public int Id { get; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        public int IdUsuario { get; }
+        public int IdUsuario { get; private set; }
 
         /// <summary>
         /// ID da categoria pai
@@ -80,6 +81,21 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdCategoriaPai = cadastrarEntrada.IdCategoriaPai;
             this.Nome           = cadastrarEntrada.Nome;
             this.Tipo           = cadastrarEntrada.Tipo;
+        }
+
+        public void Alterar(AlterarCategoriaEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdCategoria != this.Id)
+                return;
+
+            this.Nome           = alterarEntrada.Nome;
+            this.IdCategoriaPai = alterarEntrada.IdCategoriaPai;
+            this.Tipo           = alterarEntrada.Tipo;
+        }
+
+        public bool VerificarSePai()
+        {
+            return !(this.CategoriasFilha == null || !this.CategoriasFilha.Any());
         }
 
         public override string ToString()

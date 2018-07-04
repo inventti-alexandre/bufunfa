@@ -14,7 +14,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                         new
                         {
                             Id = 1,
-                            IdUsuario = 1,
                             Nome = "Período 1",
                             DataInicio = DateTime.Now.Date,
                             DataFim = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59)

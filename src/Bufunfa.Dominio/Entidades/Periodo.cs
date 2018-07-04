@@ -11,12 +11,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// ID do período
         /// </summary>
-        public int Id { get; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        public int IdUsuario { get; }
+        public int IdUsuario { get; private set; }
 
         /// <summary>
         /// Nome da período
