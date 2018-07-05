@@ -7,7 +7,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
     public class ProcurarCategoriaViewModel : ProcurarViewModel
     {
         /// <summary>
-        /// Nome da categoria
+        /// Nome da categoria (palavra-chave)
         /// </summary>
         [MaxLength(100, ErrorMessageResourceType = typeof(CategoriaMensagem), ErrorMessageResourceName = "Nome_Tamanho_Maximo_Excedido")]
         public string Nome { get; set; }
@@ -22,5 +22,10 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// </summary>
         [MaxLength(1, ErrorMessage = "O tipo da categoria é inválido.")]
         public string Tipo { get; set; }
+
+        /// <summary>
+        /// Caminho da categoria (palavra-chave)
+        /// </summary>
+        public string Caminho { get; set; }
     }
 }

@@ -25,9 +25,9 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public string Tipo { get; }
 
         /// <summary>
-        /// Árvore da categoria
+        /// Caminho da categoria
         /// </summary>
-        public string Arvore { get; }
+        public string Caminho { get; }
 
         /// <summary>
         /// Categoria pai
@@ -47,7 +47,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
             this.Id     = categoria.Id;
             this.Nome   = categoria.Nome;
             this.Tipo   = categoria.Tipo;
-            this.Arvore = categoria.ObterArvore();
+            this.Caminho = categoria.ObterCaminho();
 
             if (categoria.CategoriaPai != null)
             {
@@ -57,7 +57,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                     IdCategoriaPai = categoria.CategoriaPai.IdCategoriaPai,
                     Nome           = categoria.CategoriaPai.Nome,
                     Tipo           = categoria.CategoriaPai.Tipo,
-                    Arvore         = categoria.CategoriaPai.ObterArvore()
+                    Caminho = categoria.CategoriaPai.ObterCaminho()
                 };
             }
 
@@ -74,14 +74,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                 Id = x.Id,
                 Nome = x.Nome,
                 Tipo = x.Tipo,
-                Arvore = x.ObterArvore(),
+                Caminho = x.ObterCaminho(),
                 CategoriasFilha = ObterCategoriasFilha(x.CategoriasFilha)
             }).ToList();
         }
         
         public override string ToString()
         {
-            return $"{this.Nome} ({this.Arvore})";
+            return $"{this.Nome} ({this.Caminho})";
         }
     }
 }

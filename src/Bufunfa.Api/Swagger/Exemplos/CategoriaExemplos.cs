@@ -17,7 +17,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                             Id = 1,
                             Nome = "Restaurante",
                             Tipo = TipoCategoria.Debito,
-                            Arvore = "DÉBITO » Alimentação » Restaurante",
+                            Caminho = "DÉBITO » Alimentação » Restaurante",
                             CategoriaPai = new
                             {
                                 Id = 1,
@@ -32,7 +32,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                                     Id = 4,
                                     Nome = "Selfservice",
                                     Tipo = TipoCategoria.Debito,
-                                    Arvore = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                    Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
                                     CategoriasFilha = new object[] {}
                                 }
                             }
@@ -103,7 +103,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     Id = 1,
                     Nome = "Restaurante",
                     Tipo = TipoCategoria.Debito,
-                    Arvore = "DÉBITO » Alimentação » Restaurante",
+                    Caminho = "DÉBITO » Alimentação » Restaurante",
                     CategoriaPai = new
                     {
                         Id = 1,
@@ -118,7 +118,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                             Id = 4,
                             Nome = "Selfservice",
                             Tipo = TipoCategoria.Debito,
-                            Arvore = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                            Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
                             CategoriasFilha = new object[] {}
                         }
                     }
@@ -140,7 +140,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     Id = 1,
                     Nome = "Restaurante",
                     Tipo = TipoCategoria.Debito,
-                    Arvore = "DÉBITO » Alimentação » Restaurante",
+                    Caminho = "DÉBITO » Alimentação » Restaurante",
                     CategoriaPai = new
                     {
                         Id = 1,
@@ -155,7 +155,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                             Id = 4,
                             Nome = "Selfservice",
                             Tipo = TipoCategoria.Debito,
-                            Arvore = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                            Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
                             CategoriasFilha = new object[] {}
                         }
                     }
@@ -177,7 +177,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     Id = 1,
                     Nome = "Restaurante",
                     Tipo = TipoCategoria.Debito,
-                    Arvore = "DÉBITO » Alimentação » Restaurante",
+                    Caminho = "DÉBITO » Alimentação » Restaurante",
                     CategoriaPai = new
                     {
                         Id = 1,
@@ -192,7 +192,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                                 Id = 4,
                                 Nome = "Selfservice",
                                 Tipo = TipoCategoria.Debito,
-                                Arvore = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
                                 CategoriasFilha = new object[] {}
                             }
                         }
@@ -216,7 +216,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                         Id = 1,
                         Nome = "Restaurante",
                         Tipo = TipoCategoria.Debito,
-                        Arvore = "DÉBITO » Alimentação » Restaurante",
+                        Caminho = "DÉBITO » Alimentação » Restaurante",
                         CategoriaPai = new
                         {
                             Id = 1,
@@ -231,7 +231,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                                 Id = 4,
                                 Nome = "Selfservice",
                                 Tipo = TipoCategoria.Debito,
-                                Arvore = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
                                 CategoriasFilha = new object[] {}
                             }
                         }

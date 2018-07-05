@@ -39,13 +39,17 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             var query = _efContext.Categorias
                 .Include(x => x.CategoriaPai)
                 .AsNoTracking()
+                .Where(x => !x.CategoriasFilha.Any())
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(procurarEntrada.Nome))
-                query = query.Where(x => x.Nome.Contains(procurarEntrada.Nome));
+                query = query.Where(x => x.Nome.IndexOf(procurarEntrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
 
             if (!string.IsNullOrEmpty(procurarEntrada.Tipo))
                 query = query.Where(x => x.Tipo.Equals(procurarEntrada.Tipo, StringComparison.InvariantCultureIgnoreCase));
+
+            if (!string.IsNullOrEmpty(procurarEntrada.Caminho))
+                query = query.Where(x => x.ObterCaminho().IndexOf(procurarEntrada.Caminho, StringComparison.InvariantCultureIgnoreCase) != -1);
 
             if (procurarEntrada.IdCategoriaPai.HasValue)
                 query = query.Where(x => x.IdCategoriaPai.HasValue && x.IdCategoriaPai.Value == procurarEntrada.IdCategoriaPai.Value);

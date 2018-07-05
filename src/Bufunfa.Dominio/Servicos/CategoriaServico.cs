@@ -57,7 +57,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var lstCategorias = await _categoriaRepositorio.ObterPorUsuario(idUsuario);
 
             return lstCategorias.Any()
-                ? new Saida(true, new[] { CategoriaMensagem.Categorias_Encontradas_Com_Sucesso }, lstCategorias.OrderBy(x => x.ObterArvore()).Select(x => new CategoriaSaida(x)))
+                ? new Saida(true, new[] { CategoriaMensagem.Categorias_Encontradas_Com_Sucesso }, lstCategorias.OrderBy(x => x.ObterCaminho()).Select(x => new CategoriaSaida(x)))
                 : new Saida(true, new[] { CategoriaMensagem.Nenhuma_categoria_encontrada }, null);
         }
 

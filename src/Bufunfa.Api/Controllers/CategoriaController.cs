@@ -77,7 +77,8 @@ namespace JNogueira.Bufunfa.Api.Controllers
             {
                 IdCategoriaPai = viewModel.IdCategoriaPai,
                 Nome = viewModel.Nome,
-                Tipo = viewModel.Tipo
+                Tipo = viewModel.Tipo,
+                Caminho = viewModel.Caminho
             };
 
             return await _categoriaServico.ProcurarCategorias(procurarEntrada);

@@ -63,9 +63,9 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         }
 
         /// <summary>
-        /// Obtém a árvore da categoria
+        /// Obtém o caminho da categoria
         /// </summary>
-        public string ObterArvore()
+        public string ObterCaminho()
         {
             return this.CategoriaPai != null
                     ? ObterNomeCategoriaPai(this)
@@ -95,12 +95,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public bool VerificarSePai()
         {
-            return !(this.CategoriasFilha == null || !this.CategoriasFilha.Any());
+            return this.CategoriasFilha.Any();
         }
 
         public override string ToString()
         {
-            return $"{this.Nome} ({this.ObterArvore()})";
+            return $"{this.Nome} ({this.ObterCaminho()})";
         }
 
         private static string ObterNomeCategoriaPai(Categoria categoria)

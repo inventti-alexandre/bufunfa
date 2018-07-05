@@ -37,7 +37,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(procurarEntrada.Nome))
-                query = query.Where(x => x.Nome.Contains(procurarEntrada.Nome));
+                query = query.Where(x => x.Nome.IndexOf(procurarEntrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
 
             query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
 

@@ -15,6 +15,8 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public string Tipo { get; set; }
 
+        public string Caminho { get; set; }
+
         public ProcurarCategoriaEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
             : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "Nome" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
         {
