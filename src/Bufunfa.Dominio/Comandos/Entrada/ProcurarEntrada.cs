@@ -47,6 +47,8 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public virtual bool Valido()
         {
+            this.NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario));
+
             if (this.PaginaIndex.HasValue)
                 this.NotificarSeMenorQue(this.PaginaIndex.Value, 1, string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, this.PaginaIndex));
 

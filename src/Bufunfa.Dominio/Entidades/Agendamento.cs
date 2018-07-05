@@ -7,24 +7,54 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
     /// </summary>
     public class Agendamento
     {
-        public int IdAgendamento { get; internal set; }
+        /// <summary>
+        /// Id do agendamento
+        /// </summary>
+        public int Id { get; private set; }
 
-        public int IdUsuario { get; }
+        /// <summary>
+        /// Id do usuário proprietário
+        /// </summary>
+        public int IdUsuario { get; private set; }
 
-        public int IdConta { get; }
+        /// <summary>
+        /// Id da categoria
+        /// </summary>
+        public int IdCategoria { get; private set; }
 
-        public int IdPessoa { get; set; }
+        /// <summary>
+        /// Id da conta
+        /// </summary>
+        public int? IdConta { get; private set; }
 
-        public MetodoPagamento TipoMetodoPagamento { get; set; }
+        /// <summary>
+        /// Id do cartão de crédito
+        /// </summary>
+        public int? IdCartaoCredito { get; private set; }
+        
+        /// <summary>
+        /// Id da pessoa
+        /// </summary>
+        public int? IdPessoa { get; private set; }
 
-        public DateTime DataPrimeiraParcela { get; set; }
+        /// <summary>
+        /// Tipo do método de pagamento
+        /// </summary>
+        public MetodoPagamento TipoMetodoPagamento { get; private set; }
 
-        public DateTime DataUltimaParcela { get; set; }
+        /// <summary>
+        /// Observação sobre o agendamento
+        /// </summary>
+        public string Observacao { get; private set; }
 
-        public int QuantidadeParcelas { get; set; }
+        private Agendamento()
+        {
 
-        public decimal ValorTotal { get; set; }
+        }
 
-        public string Observacao { get; set; }
+        public Agendamento()
+        {
+
+        }
     }
 }

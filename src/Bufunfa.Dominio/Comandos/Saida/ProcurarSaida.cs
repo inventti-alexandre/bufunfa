@@ -1,5 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Resources;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
 {
@@ -27,6 +28,17 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
                 OrdenarSentido = ordenarSentido,
                 TotalRegistros = totalRegistros,
                 TotalPaginas = totalPaginas,
+                Registros = registros
+            };
+        }
+
+        public ProcurarSaida(IEnumerable<object> registros)
+        {
+            this.Sucesso = true;
+            this.Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso };
+            this.Retorno = new
+            {
+                TotalRegistros = registros != null ? registros.Count() : 0,
                 Registros = registros
             };
         }

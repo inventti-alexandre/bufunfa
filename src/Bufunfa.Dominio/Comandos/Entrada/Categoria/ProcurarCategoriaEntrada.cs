@@ -1,5 +1,4 @@
-﻿using JNogueira.Bufunfa.Dominio.Entidades;
-using JNogueira.Bufunfa.Dominio.Resources;
+﻿using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
 
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
@@ -7,8 +6,10 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     /// <summary>
     /// Classe com opções de filtro para procura de categorias
     /// </summary>
-    public class ProcurarCategoriaEntrada : ProcurarEntrada
+    public class ProcurarCategoriaEntrada : Notificavel
     {
+        public int IdUsuario { get; private set; }
+
         public string Nome { get; set; }
 
         public int? IdCategoriaPai { get; set; }
@@ -17,17 +18,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public string Caminho { get; set; }
 
-        public ProcurarCategoriaEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
-            : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "Nome" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
+        public ProcurarCategoriaEntrada(int idUsuario)
         {
-            
+            this.IdUsuario = idUsuario;
         }
 
-        public override bool Valido()
+        public bool Valido()
         {
-            base.Valido();
-
-            this.NotificarSeNulo(typeof(Categoria).GetProperty(this.OrdenarPor), string.Format(Mensagem.Paginacao_OrdernarPor_Propriedade_Nao_Existe, this.OrdenarPor));
+            this.NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario));
 
             if (!string.IsNullOrEmpty(this.Nome))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 100, CategoriaMensagem.Nome_Tamanho_Maximo_Excedido);

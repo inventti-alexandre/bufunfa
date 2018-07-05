@@ -136,6 +136,10 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se a conta pertece ao usuário informado.
             this.NotificarSeDiferentes(conta.IdUsuario, idUsuario, ContaMensagem.Conta_Excluir_Nao_Pertence_Usuario);
 
+            //TODO: Verificar se possui agendamentos
+            //TODO: Verificar se possui lançamentos
+            //TODO: Verificar se possui parcelas
+
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 

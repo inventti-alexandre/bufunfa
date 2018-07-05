@@ -37,31 +37,27 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         }
 
-        //public CartaoCredito(CadastrarContaEntrada cadastrarEntrada)
-        //    : this()
-        //{
-        //    if (!cadastrarEntrada.Valido())
-        //        return;
+        public CartaoCredito(CadastrarCartaoCreditoEntrada cadastrarEntrada)
+            : this()
+        {
+            if (!cadastrarEntrada.Valido())
+                return;
 
-        //    this.IdUsuario         = cadastrarEntrada.IdUsuario;
-        //    this.Nome              = cadastrarEntrada.Nome;
-        //    this.ValorSaldoInicial = cadastrarEntrada.ValorSaldoInicial;
-        //    this.NomeInstituicao   = cadastrarEntrada.NomeInstituicao;
-        //    this.NumeroAgencia     = cadastrarEntrada.NumeroAgencia;
-        //    this.Numero            = cadastrarEntrada.Numero;
-        //}
+            this.IdUsuario           = cadastrarEntrada.IdUsuario;
+            this.Nome                = cadastrarEntrada.Nome;
+            this.ValorLimite         = cadastrarEntrada.ValorLimite;
+            this.DiaVencimentoFatura = cadastrarEntrada.DiaVencimentoFatura;
+        }
 
-        //public void Alterar(AlterarContaEntrada alterarEntrada)
-        //{
-        //    if (!alterarEntrada.Valido() || alterarEntrada.IdConta != this.Id)
-        //        return;
+        public void Alterar(AlterarCartaoCreditoEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdCartaoCredito != this.Id)
+                return;
 
-        //    this.Nome              = alterarEntrada.Nome;
-        //    this.ValorSaldoInicial = alterarEntrada.ValorSaldoInicial;
-        //    this.NomeInstituicao   = alterarEntrada.NomeInstituicao;
-        //    this.NumeroAgencia     = alterarEntrada.NumeroAgencia;
-        //    this.Numero            = alterarEntrada.Numero;
-        //}
+            this.Nome                = alterarEntrada.Nome;
+            this.ValorLimite         = alterarEntrada.ValorLimite;
+            this.DiaVencimentoFatura = alterarEntrada.DiaVencimentoFatura;
+        }
 
         public override string ToString()
         {

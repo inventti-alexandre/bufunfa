@@ -95,7 +95,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public bool VerificarSePai()
         {
-            return this.CategoriasFilha.Any();
+            return this.CategoriasFilha != null && this.CategoriasFilha.Any();
         }
 
         public override string ToString()

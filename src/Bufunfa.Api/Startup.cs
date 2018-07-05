@@ -39,12 +39,14 @@ namespace Bufunfa.Api
             // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IContaRepositorio, ContaRepositorio>();
+            services.AddTransient<ICartaoCreditoRepositorio, CartaoCreditoRepositorio>();
             services.AddTransient<IPeriodoRepositorio, PeriodoRepositorio>();
             services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
             services.AddTransient<ICategoriaRepositorio, CategoriaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
+            services.AddTransient<ICartaoCreditoServico, CartaoCreditoServico>();
             services.AddTransient<IPeriodoServico, PeriodoServico>();
             services.AddTransient<IPessoaServico, PessoaServico>();
             services.AddTransient<ICategoriaServico, CategoriaServico>();
@@ -103,6 +105,7 @@ namespace Bufunfa.Api
                 options.AddPolicy(PermissaoAcesso.Periodos, policy => policy.RequireClaim(PermissaoAcesso.Periodos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Pessoas, policy => policy.RequireClaim(PermissaoAcesso.Pessoas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Categorias, policy => policy.RequireClaim(PermissaoAcesso.Categorias).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.CartoesCredito, policy => policy.RequireClaim(PermissaoAcesso.CartoesCredito).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API

@@ -39,7 +39,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             var query = _efContext.Categorias
                 .Include(x => x.CategoriaPai)
                 .AsNoTracking()
-                .Where(x => !x.CategoriasFilha.Any())
+                .Where(x => !x.CategoriasFilha.Any()) // Somente as categorias sem filhas são retornadas.
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(procurarEntrada.Nome))
@@ -48,37 +48,16 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             if (!string.IsNullOrEmpty(procurarEntrada.Tipo))
                 query = query.Where(x => x.Tipo.Equals(procurarEntrada.Tipo, StringComparison.InvariantCultureIgnoreCase));
 
-            if (!string.IsNullOrEmpty(procurarEntrada.Caminho))
-                query = query.Where(x => x.ObterCaminho().IndexOf(procurarEntrada.Caminho, StringComparison.InvariantCultureIgnoreCase) != -1);
-
             if (procurarEntrada.IdCategoriaPai.HasValue)
                 query = query.Where(x => x.IdCategoriaPai.HasValue && x.IdCategoriaPai.Value == procurarEntrada.IdCategoriaPai.Value);
 
-            query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+            query = query.OrderBy(x => x.Tipo).ThenBy(x => x.ObterCaminho());
 
-            if (procurarEntrada.Paginar())
-            {
-                var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
+            var lst = string.IsNullOrEmpty(procurarEntrada.Caminho)
+                ? (await query.ToListAsync()).Select(x => new CategoriaSaida(x))
+                : (await query.ToListAsync()).Select(x => new CategoriaSaida(x)).Where(x => x.Caminho.IndexOf(procurarEntrada.Caminho, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-                return new ProcurarSaida(
-                    pagedList.ToList().Select(x => new CategoriaSaida(x)),
-                    procurarEntrada.OrdenarPor,
-                    procurarEntrada.OrdenarSentido,
-                    pagedList.TotalItemCount,
-                    pagedList.PageCount,
-                    procurarEntrada.PaginaIndex,
-                    procurarEntrada.PaginaTamanho);
-            }
-            else
-            {
-                var totalRegistros = await query.CountAsync();
-
-                return new ProcurarSaida(
-                    (await query.ToListAsync()).Select(x => new CategoriaSaida(x)),
-                    procurarEntrada.OrdenarPor,
-                    procurarEntrada.OrdenarSentido,
-                    totalRegistros);
-            }
+            return new ProcurarSaida(lst);
         }
 
         public async Task<bool> VerificarExistenciaPorNomeTipo(int idUsuario, string nome, string tipo, int? idCategoria = null)
@@ -97,6 +76,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                         .ThenInclude(y => y.CategoriasFilha)
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario && x.IdCategoriaPai == null)
+                   .OrderBy(x => x.Tipo)
+                   .ThenBy(x => x.Nome)
                    .ToListAsync();
         }
 

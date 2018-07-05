@@ -17,6 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\AgendamentoMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AgendamentoMensagem.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CartaoCreditoMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CartaoCreditoMensagem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\CategoriaMensagem.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -50,6 +60,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\AgendamentoMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AgendamentoMensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CartaoCreditoMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CartaoCreditoMensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\CategoriaMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CategoriaMensagem.Designer.cs</LastGenOutput>

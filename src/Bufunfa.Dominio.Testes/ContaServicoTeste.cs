@@ -43,7 +43,7 @@ namespace Bufunfa.Dominio.Testes
         }
 
         [TestMethod]
-        public void Nao_Deve_Obter_Periodo_Por_Id_Inexistente()
+        public void Nao_Deve_Obter_Conta_Por_Id_Inexistente()
         {
             var idConta = 1;
             var idUsuario = 1;
@@ -59,7 +59,7 @@ namespace Bufunfa.Dominio.Testes
         }
 
         [TestMethod]
-        public void Nao_Deve_Obter_Periodo_Por_Id_Com_Parametros_Invalidos()
+        public void Nao_Deve_Obter_Conta_Por_Id_Com_Parametros_Invalidos()
         {
             var idConta = 0;
             var idUsuario = 0;
@@ -222,16 +222,16 @@ namespace Bufunfa.Dominio.Testes
         }
 
         [TestMethod]
-        public void Deve_Alterar_Periodo()
+        public void Deve_Alterar_Conta()
         {
             var idUsuario = 1;
             var idConta = 1;
 
-            var periodo = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1"));
-            typeof(Conta).GetProperty("Id").SetValue(periodo, idConta);
+            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1"));
+            typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta, true)
-                .Returns(periodo);
+                .Returns(conta);
 
             var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1 alterada", idUsuario);
 

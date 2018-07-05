@@ -8,7 +8,6 @@ using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Bufunfa.Dominio.Servicos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -120,13 +119,13 @@ namespace Bufunfa.Dominio.Testes
         [TestMethod]
         public void Nao_Deve_Procurar_Categorias_Com_Parametros_Invalidos()
         {
-            var procurarEntrada = new ProcurarCategoriaEntrada(0, "Abc", "ASC", -1, -1);
+            var procurarEntrada = new ProcurarCategoriaEntrada(0);
 
             _categoriaServico = Substitute.For<CategoriaServico>(_categoriaRepositorio, _uow);
 
             var saida = _categoriaServico.ProcurarCategorias(procurarEntrada).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Paginacao_Pagina_Index_Invalido, -1)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, 0)), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -134,19 +133,19 @@ namespace Bufunfa.Dominio.Testes
         {
             var idUsuario = 1;
 
-            var procurarEntrada = new ProcurarCategoriaEntrada(idUsuario, "Nome", "ASC", 1, 1);
+            var procurarEntrada = new ProcurarCategoriaEntrada(idUsuario);
 
             var categoria1 = new Categoria(new CadastrarCategoriaEntrada(idUsuario, "Categoria 1", TipoCategoria.Debito));
             var categoria2 = new Categoria(new CadastrarCategoriaEntrada(idUsuario, "Categoria 2", TipoCategoria.Debito));
 
             _categoriaRepositorio.Procurar(procurarEntrada)
-                .Returns(new ProcurarSaida(new[] { categoria1, categoria2 }, "Nome", "ASC", 2, 2, 1, 1));
+                .Returns(new ProcurarSaida(new[] { categoria1, categoria2 }));
 
             _categoriaServico = Substitute.For<CategoriaServico>(_categoriaRepositorio, _uow);
 
             var saida = _categoriaServico.ProcurarCategorias(procurarEntrada).Result;
 
-            Assert.IsTrue(saida.Sucesso && (int)saida.Retorno.GetType().GetProperty("TotalPaginas").GetValue(saida.Retorno, null) == 2, string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(saida.Sucesso && (int)saida.Retorno.GetType().GetProperty("TotalRegistros").GetValue(saida.Retorno, null) == 2, string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -287,7 +286,7 @@ namespace Bufunfa.Dominio.Testes
 
             _categoriaServico = Substitute.For<CategoriaServico>(_categoriaRepositorio, _uow);
 
-            var saida = _categoriaServico.AlterarCategoria(new AlterarCategoriaEntrada(idCategoria, "Categoria 1 alterada", null, TipoCategoria.Debito, idUsuario)).Result;
+            var saida = _categoriaServico.AlterarCategoria(new AlterarCategoriaEntrada(idCategoria, "Categoria 1", null, TipoCategoria.Debito, idUsuario)).Result;
 
             Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Categoria_Com_Mesmo_Nome_Tipo), string.Join(", ", saida.Mensagens));
         }

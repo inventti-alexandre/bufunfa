@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace JNogueira.Bufunfa.Api.ViewModels
 {
     // View model utilizado para o procurar categorias
-    public class ProcurarCategoriaViewModel : ProcurarViewModel
+    public class ProcurarCategoriaViewModel
     {
         /// <summary>
         /// Nome da categoria (palavra-chave)

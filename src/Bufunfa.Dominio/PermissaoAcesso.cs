@@ -29,5 +29,10 @@
         /// Permite realizar o cadastramento de categorias.
         /// </summary>
         public const string Categorias = "categorias";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de cartões de crédito.
+        /// </summary>
+        public const string CartoesCredito = "cartoes";
     }
 }

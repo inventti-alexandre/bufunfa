@@ -36,6 +36,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .Periodos
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario)
+                   .OrderBy(x => x.DataInicio)
                    .ToListAsync();
         }
 

@@ -79,6 +79,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .Pessoas
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario)
+                   .OrderBy(x => x.Nome)
                    .ToListAsync();
         }
 
