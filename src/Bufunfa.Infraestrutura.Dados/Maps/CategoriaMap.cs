@@ -17,12 +17,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
                 .WithMany(y => y.CategoriasFilha)
                 .HasForeignKey(x => x.IdCategoriaPai);
 
-            //builder.HasMany(x => x.CategoriasFilha);
-
-
             builder.Property(x => x.IdUsuario);
             builder.Property(x => x.Nome);
             builder.Property(x => x.Tipo);
+
+            builder.Ignore(x => x.SePai);
         }
     }
 }

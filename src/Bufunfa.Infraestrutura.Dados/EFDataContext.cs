@@ -14,6 +14,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<CartaoCredito> CartoesCredito { get; set; }
+        public DbSet<Agendamento> Agendamentos { get; set; }
+        public DbSet<Parcela> Parcelas { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -34,6 +36,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new PessoaMap());
             modelBuilder.ApplyConfiguration(new CategoriaMap());
             modelBuilder.ApplyConfiguration(new CartaoCreditoMap());
+            modelBuilder.ApplyConfiguration(new AgendamentoMap());
+            modelBuilder.ApplyConfiguration(new ParcelaMap());
         }
     }
 }

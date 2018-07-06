@@ -44,6 +44,17 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// </summary>
         public IEnumerable<Categoria> CategoriasFilha { get; private set; }
 
+        /// <summary>
+        /// Indica se a categoria é pai de pelo menos uma outra categoria.
+        /// </summary>
+        public bool SePai
+        {
+            get
+            {
+                return this.CategoriasFilha != null && this.CategoriasFilha.Any();
+            }
+        }
+
         private Categoria()
         {
             this.CategoriasFilha = new List<Categoria>();
@@ -91,11 +102,6 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.Nome           = alterarEntrada.Nome;
             this.IdCategoriaPai = alterarEntrada.IdCategoriaPai;
             this.Tipo           = alterarEntrada.Tipo;
-        }
-
-        public bool VerificarSePai()
-        {
-            return this.CategoriasFilha != null && this.CategoriasFilha.Any();
         }
 
         public override string ToString()

@@ -185,7 +185,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 return new Saida(false, this.Mensagens, null);
 
             // Verificar se a categoria tem filhas. Se for pai, obrigar a exclusão de todas as filhas primeiro
-            this.NotificarSeVerdadeiro(categoria.VerificarSePai(), CategoriaMensagem.Categoria_Pai_Nao_Pode_Ser_Excluida);
+            this.NotificarSeVerdadeiro(categoria.SePai, CategoriaMensagem.Categoria_Pai_Nao_Pode_Ser_Excluida);
 
             //TODO: Verificar se possui lançamentos
             //TODO: Verificar se possui agendamentos
