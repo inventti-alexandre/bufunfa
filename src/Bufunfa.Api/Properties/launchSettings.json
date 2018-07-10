@@ -10,7 +10,6 @@
   "profiles": {
     "DEV": {
       "commandName": "Project",
-      "launchUrl": "docs",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,9 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>JNogueira.Bufunfa.Api</RootNamespace>
     <UserSecretsId>07e2e69f-caa7-469b-833e-ba93972744d6</UserSecretsId>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <PreserveCompilationContext>false</PreserveCompilationContext>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -35,6 +37,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
     <ProjectReference Include="..\Bufunfa.Infraestrutura.Dados\Bufunfa.Infraestrutura.Dados.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>

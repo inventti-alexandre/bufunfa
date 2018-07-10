@@ -152,6 +152,9 @@ namespace Bufunfa.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Entende que a página default é a "index.html" dentro da pasta "wwwroot"
+            app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
@@ -166,7 +169,7 @@ namespace Bufunfa.Api
             // Middleware para utilização do Swagger UI (HTML, JS, CSS, etc.)
             app.UseSwaggerUI(options =>
             {
-                options.RoutePrefix = "docs"; // Define a documentação no endereço http://localhost/docs/
+                options.RoutePrefix = "docs"; // Define a documentação no endereço http://{url}/docs/
                 options.SwaggerEndpoint("/docs/v1/swagger.json", "v1");
                 options.DefaultModelsExpandDepth(-1); // Oculta a sessão "Models"
                 options.DocExpansion(DocExpansion.List);
