@@ -33,6 +33,12 @@ namespace Bufunfa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+
             services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["BufunfaConnectionString"]));
             services.AddScoped<IUow, Uow>();
 
@@ -50,12 +56,6 @@ namespace Bufunfa.Api
             services.AddTransient<IPeriodoServico, PeriodoServico>();
             services.AddTransient<IPessoaServico, PessoaServico>();
             services.AddTransient<ICategoriaServico, CategoriaServico>();
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-
-            Configuration = builder.Build();
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
