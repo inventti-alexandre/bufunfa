@@ -35,7 +35,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public DateTime DataFim { get; }
 
-        public AlterarPeriodoEntrada(int idPeriodo, string nome, DateTime dataInicio, DateTime dataFim, int idUsuario)
+        public AlterarPeriodoEntrada(
+            int idPeriodo,
+            string nome,
+            DateTime dataInicio,
+            DateTime dataFim,
+            int idUsuario)
         {
             this.IdPeriodo = idPeriodo;
             this.Nome = nome;

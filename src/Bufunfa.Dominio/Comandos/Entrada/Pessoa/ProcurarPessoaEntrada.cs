@@ -11,8 +11,18 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
     {
         public string Nome { get; set; }
 
-        public ProcurarPessoaEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
-            : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "Nome" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
+        public ProcurarPessoaEntrada(
+            int idUsuario,
+            string ordenarPor,
+            string ordenarSentido,
+            int? paginaIndex = null,
+            int? paginaTamanho = null)
+            : base(
+                idUsuario,
+                string.IsNullOrEmpty(ordenarPor) ? "Nome" : ordenarPor,
+                string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido,
+                paginaIndex,
+                paginaTamanho)
         {
             
         }

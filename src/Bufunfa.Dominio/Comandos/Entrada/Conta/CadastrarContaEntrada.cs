@@ -39,7 +39,13 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Numero { get; }
 
-        public CadastrarContaEntrada(int idUsuario, string nome, decimal? valorSaldoInicial = null, string nomeInstituicao = null, string numeroAgencia = null, string numero = null)
+        public CadastrarContaEntrada(
+            int idUsuario,
+            string nome,
+            decimal? valorSaldoInicial = null,
+            string nomeInstituicao = null,
+            string numeroAgencia = null,
+            string numero = null)
         {
             this.IdUsuario         = idUsuario;
             this.Nome              = nome;

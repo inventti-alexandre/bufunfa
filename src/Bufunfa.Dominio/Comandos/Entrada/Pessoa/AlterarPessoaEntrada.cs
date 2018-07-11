@@ -24,7 +24,10 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Nome { get; }
 
-        public AlterarPessoaEntrada(int idPessoa, string nome, int idUsuario)
+        public AlterarPessoaEntrada(
+            int idPessoa,
+            string nome,
+            int idUsuario)
         {
             this.IdPessoa  = idPessoa;
             this.Nome      = nome;

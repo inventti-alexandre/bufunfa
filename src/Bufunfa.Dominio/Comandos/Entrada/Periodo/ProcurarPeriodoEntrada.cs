@@ -14,8 +14,18 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public DateTime? Data { get; set; }
 
-        public ProcurarPeriodoEntrada(int idUsuario, string ordenarPor, string ordenarSentido, int? paginaIndex = null, int? paginaTamanho = null)
-            : base(idUsuario, string.IsNullOrEmpty(ordenarPor) ? "DataInicio" : ordenarPor, string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido, paginaIndex, paginaTamanho)
+        public ProcurarPeriodoEntrada(
+            int idUsuario,
+            string ordenarPor,
+            string ordenarSentido,
+            int? paginaIndex = null,
+            int? paginaTamanho = null)
+            : base(
+                idUsuario,
+                string.IsNullOrEmpty(ordenarPor) ? "DataInicio" : ordenarPor,
+                string.IsNullOrEmpty(ordenarSentido) ? "ASC" : ordenarSentido,
+                paginaIndex,
+                paginaTamanho)
         {
             
         }

@@ -30,7 +30,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public DateTime DataFim { get; }
 
-        public CadastrarPeriodoEntrada(int idUsuario, string nome, DateTime dataInicio, DateTime dataFim)
+        public CadastrarPeriodoEntrada(
+            int idUsuario,
+            string nome,
+            DateTime dataInicio,
+            DateTime dataFim)
         {
             this.IdUsuario = idUsuario;
             this.Nome = nome;

@@ -29,7 +29,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public int DiaVencimentoFatura { get; }
 
-        public CadastrarCartaoCreditoEntrada(int idUsuario, string nome, decimal valorLimite, int diaVencimentoFatura)
+        public CadastrarCartaoCreditoEntrada(
+            int idUsuario,
+            string nome,
+            decimal valorLimite,
+            int diaVencimentoFatura)
         {
             this.IdUsuario             = idUsuario;
             this.Nome                  = nome;

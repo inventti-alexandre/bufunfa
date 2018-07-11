@@ -171,4 +171,10 @@
   <data name="Id_Pessoa_Invalido" xml:space="preserve">
     <value>O ID da pessoa do agendamento é inválido.</value>
   </data>
+  <data name="Data_Primeira_Parcela_Menor_Data_Atual" xml:space="preserve">
+    <value>A data da primeira parcela do agendamento não pode ser menor que a data atual.</value>
+  </data>
+  <data name="Quantidade_Parcelas_Inválida" xml:space="preserve">
+    <value>A quantidade de parcelas informada é inválida.</value>
+  </data>
 </root>

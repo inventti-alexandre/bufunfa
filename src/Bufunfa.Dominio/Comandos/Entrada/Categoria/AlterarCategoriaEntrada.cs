@@ -5,7 +5,7 @@ using JNogueira.Infraestrutura.NotifiqueMe;
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Comando utilizado para o alterar uma categoria
+    /// Comando utilizado para alterar uma categoria
     /// </summary>
     public class AlterarCategoriaEntrada : Notificavel, IEntrada
     {
@@ -34,7 +34,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Tipo { get; }
 
-        public AlterarCategoriaEntrada(int idCategoria, string nome, int? idCategoriaPai, string tipo, int idUsuario)
+        public AlterarCategoriaEntrada(
+            int idCategoria,
+            string nome,
+            int? idCategoriaPai,
+            string tipo,
+            int idUsuario)
         {
             this.IdCategoria = idCategoria;
             this.IdCategoriaPai = idCategoriaPai;

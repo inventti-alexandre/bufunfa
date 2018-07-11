@@ -133,6 +133,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A data da primeira parcela do agendamento não pode ser menor que a data atual..
+        /// </summary>
+        public static string Data_Primeira_Parcela_Menor_Data_Atual {
+            get {
+                return ResourceManager.GetString("Data_Primeira_Parcela_Menor_Data_Atual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O ID do agendamento informado ({0}) é inválido..
         /// </summary>
         public static string Id_Agendamento_Invalido {
@@ -219,6 +228,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Observacao_Tamanho_Maximo_Excedido {
             get {
                 return ResourceManager.GetString("Observacao_Tamanho_Maximo_Excedido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A quantidade de parcelas informada é inválida..
+        /// </summary>
+        public static string Quantidade_Parcelas_Inválida {
+            get {
+                return ResourceManager.GetString("Quantidade_Parcelas_Inválida", resourceCulture);
             }
         }
     }

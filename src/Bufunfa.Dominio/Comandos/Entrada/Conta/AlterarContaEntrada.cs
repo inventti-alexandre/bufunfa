@@ -44,7 +44,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Numero { get; }
 
-        public AlterarContaEntrada(int idConta, string nome, int idUsuario, decimal? valorSaldoInicial = null, string nomeInstituicao = null, string numeroAgencia = null, string numero = null)
+        public AlterarContaEntrada(
+            int idConta,
+            string nome,
+            int idUsuario,
+            decimal? valorSaldoInicial = null,
+            string nomeInstituicao = null,
+            string numeroAgencia = null,
+            string numero = null)
         {
             this.IdConta           = idConta;
             this.IdUsuario         = idUsuario;

@@ -6,14 +6,19 @@ using System;
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Comando utilizado para o cadastro de um novo agendamento
+    /// Comando utilizado para alterar um agendamento
     /// </summary>
-    public class CadastrarAgendamentoEntrada : Notificavel, IEntrada
+    public class AlterarAgendamentoEntrada : Notificavel, IEntrada
     {
         /// <summary>
         /// Id do usuário proprietário da conta
         /// </summary>
         public int IdUsuario { get; }
+
+        /// <summary>
+        /// Id do agendamento
+        /// </summary>
+        public int IdAgendamento { get; }
 
         /// <summary>
         /// Id da categoria
@@ -64,9 +69,9 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// Periodicidade das parcelas
         /// </summary>
         public Periodicidade PeriodicidadeParcelas { get; }
-        
-        public CadastrarAgendamentoEntrada(
-            int idUsuario,
+
+        public AlterarAgendamentoEntrada(
+            int idAgendamento,
             int idCategoria,
             int? idConta,
             int? idCartaoCredito,
@@ -75,9 +80,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             DateTime dataPrimeiraParcela,
             int quantidadeParcelas,
             Periodicidade periodicidadeParcelas,
+            int idUsuario,
             int? idPessoa = null,
             string observacao = null)
         {
+            this.IdAgendamento         = idAgendamento;
             this.IdUsuario             = idUsuario;
             this.IdCategoria           = idCategoria;
             this.IdConta               = idConta;
@@ -95,6 +102,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         {
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdAgendamento, 0, string.Format(AgendamentoMensagem.Id_Agendamento_Invalido, this.IdAgendamento))
                 .NotificarSeMenorOuIgualA(this.IdCategoria, 0, string.Format(AgendamentoMensagem.Id_Categoria_Obrigatorio_Nao_Informado, this.IdCategoria))
                 .NotificarSeVerdadeiro(!this.IdConta.HasValue && !this.IdCartaoCredito.HasValue, AgendamentoMensagem.Id_Conta_Id_Cartao_Credito_Nao_Informados)
                 .NotificarSeVerdadeiro(this.IdConta.HasValue && this.IdCartaoCredito.HasValue, AgendamentoMensagem.Id_Conta_Id_Cartao_Credito_Informados)

@@ -14,10 +14,21 @@
     /// </summary>
     public enum MetodoPagamento
     {
-        Cheque = 1,
-        Debito = 2,
-        Deposito = 3,
+        Cheque        = 1,
+        Debito        = 2,
+        Deposito      = 3,
         Transferencia = 4,
-        Dinheiro = 5
+        Dinheiro      = 5
+    }
+
+    /// <summary>
+    /// Periodicidade
+    /// </summary>
+    public enum Periodicidade
+    {
+        Mensal,
+        Trimestral,
+        Semestral,
+        Anual
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -163,11 +164,20 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.Parcelas = new List<Parcela>();
         }
 
-        //public Agendamento() :
-        //    base()
-        //{
+        public Agendamento(CadastrarAgendamentoEntrada cadastrarEntrada) 
+            : this()
+        {
+            if (!cadastrarEntrada.Valido())
+                return;
 
-        //}
+            this.IdUsuario           = cadastrarEntrada.IdUsuario;
+            this.IdCategoria         = cadastrarEntrada.IdCategoria;
+            this.IdConta             = cadastrarEntrada.IdConta;
+            this.IdCartaoCredito     = cadastrarEntrada.IdCartaoCredito;
+            this.IdPessoa            = cadastrarEntrada.IdPessoa;
+            this.TipoMetodoPagamento = cadastrarEntrada.TipoMetodoPagamento;
+            this.Observacao          = cadastrarEntrada.Observacao;
+        }
 
         public override string ToString()
         {
@@ -179,7 +189,10 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             if (this.CartaoCredito != null)
                 descricao.Add(this.CartaoCredito.Nome);
 
-            return base.ToString();
-        }
+            if (!string.IsNullOrEmpty(this.Observacao))
+                descricao.Add(this.Observacao);
+
+            return string.Join(" » ", descricao);
+        } 
     }
 }

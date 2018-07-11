@@ -34,7 +34,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public int DiaVencimentoFatura { get; }
 
-        public AlterarCartaoCreditoEntrada(int idCartaoCredito, string nome, int idUsuario, decimal valorLimite, int diaVencimentoFatura)
+        public AlterarCartaoCreditoEntrada(
+            int idCartaoCredito,
+            string nome,
+            int idUsuario,
+            decimal valorLimite,
+            int diaVencimentoFatura)
         {
             this.IdCartaoCredito       = idCartaoCredito;
             this.IdUsuario             = idUsuario;

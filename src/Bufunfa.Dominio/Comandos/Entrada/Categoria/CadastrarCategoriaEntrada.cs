@@ -29,7 +29,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         /// </summary>
         public string Tipo { get; }
 
-        public CadastrarCategoriaEntrada(int idUsuario, string nome, string tipo, int? idCategoriaPai = null)
+        public CadastrarCategoriaEntrada(
+            int idUsuario,
+            string nome,
+            string tipo,
+            int? idCategoriaPai = null)
         {
             this.IdUsuario      = idUsuario;
             this.Nome           = nome;
