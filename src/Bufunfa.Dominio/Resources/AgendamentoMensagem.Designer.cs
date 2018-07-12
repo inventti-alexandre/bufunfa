@@ -124,6 +124,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O período informado para é inválido. Verifique as datas informadas..
+        /// </summary>
+        public static string Agendamento_Procurar_Periodo_Invalido {
+            get {
+                return ResourceManager.GetString("Agendamento_Procurar_Periodo_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agendamento(s) do usuário encontrado(s) com sucesso..
         /// </summary>
         public static string Agendamentos_Encontrados_Com_Sucesso {

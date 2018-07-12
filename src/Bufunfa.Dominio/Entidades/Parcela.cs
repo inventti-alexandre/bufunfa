@@ -16,7 +16,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Id do agendamento que originou a parcela
         /// </summary>
-        public int IdAgendamento { get; private set; }
+        public int? IdAgendamento { get; private set; }
 
         /// <summary>
         /// Id da fatura cuja parcela pertence
@@ -36,12 +36,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Indica se a parcela já foi lançada
         /// </summary>
-        public bool SeLancada { get; private set; }
+        public bool Lancada { get; private set; }
 
         /// <summary>
         /// Indica se a parcela já foi descartada
         /// </summary>
-        public bool SeDescartada { get; private set; }
+        public bool Descartada { get; private set; }
 
         /// <summary>
         /// Descrição do motivo de descarte da parcela
@@ -49,36 +49,74 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public string MotivoDescarte { get; private set; }
 
         /// <summary>
+        /// Observação da parcela
+        /// </summary>
+        public string Observacao { get; private set; }
+
+        /// <summary>
         /// Agendamento que originou a parcela
         /// </summary>
         public Agendamento Agendamento { get; private set; }
 
+        /// <summary>
+        /// Indica a situação da parcela: fechada (quando lançada ou descartada) ou aberta.
+        /// </summary>
+        public StatusParcela Status
+        {
+            get
+            {
+                return !this.Lancada && !this.Descartada
+                    ? StatusParcela.Aberta
+                    : StatusParcela.Fechada;
+            }
+        }        
+
         private Parcela()
         {
-            this.SeLancada = false;
-            this.SeDescartada = false;
+            this.Lancada = false;
+            this.Descartada = false;
         }
 
-        //public Parcela(CadastrarPeriodoEntrada cadastrarEntrada)
-        //{
-        //    if (!cadastrarEntrada.Valido())
-        //        return;
+        public Parcela(CadastrarParcelaEntrada cadastrarEntrada)
+        {
+            if (!cadastrarEntrada.Valido())
+                return;
 
-        //    this.IdUsuario  = cadastrarEntrada.IdUsuario;
-        //    this.Nome       = cadastrarEntrada.Nome;
-        //    this.DataInicio = cadastrarEntrada.DataInicio;
-        //    this.DataFim    = cadastrarEntrada.DataFim;
-        //}
+            this.IdAgendamento = cadastrarEntrada.IdAgendamento;
+            this.IdFatura      = cadastrarEntrada.IdFatura;
+            this.Data          = cadastrarEntrada.Data;
+            this.Valor         = cadastrarEntrada.Valor;
+            this.Observacao    = cadastrarEntrada.Observacao;
+        }
 
-        //public void Alterar(AlterarPeriodoEntrada alterarEntrada)
-        //{
-        //    if (!alterarEntrada.Valido() || alterarEntrada.IdPeriodo != this.Id)
-        //        return;
+        public void Alterar(AlterarParcelaEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdParcela != this.Id)
+                return;
 
-        //    this.Nome       = alterarEntrada.Nome;
-        //    this.DataInicio = alterarEntrada.DataInicio;
-        //    this.DataFim    = alterarEntrada.DataFim;
-        //}
+            this.Data       = alterarEntrada.Data;
+            this.Valor      = alterarEntrada.Valor;
+            this.Observacao = alterarEntrada.Observacao;
+        }
+
+        public void Descartar(DescartarParcelaEntrada descartarEntrada)
+        {
+            if (!descartarEntrada.Valido() || descartarEntrada.IdParcela != this.Id)
+                return;
+
+            this.Descartada     = true;
+            this.MotivoDescarte = descartarEntrada.MotivoDescarte;
+        }
+
+        public void Lancar(LancarParcelaEntrada lancarEntrada)
+        {
+            if (!lancarEntrada.Valido() || lancarEntrada.IdParcela != this.Id)
+                return;
+
+            this.Lancada    = true;
+            this.Valor      = lancarEntrada.Valor;
+            this.Observacao = lancarEntrada.Observacao;
+        }
 
         public override string ToString()
         {

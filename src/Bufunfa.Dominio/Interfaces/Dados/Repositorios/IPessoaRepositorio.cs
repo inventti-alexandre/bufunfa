@@ -12,7 +12,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
     public interface IPessoaRepositorio
     {
         /// <summary>
-        /// Obtém um período a partir do seu ID
+        /// Obtém um pessoa a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
         Task<Pessoa> ObterPorId(int idPessoa, bool habilitarTracking = false);

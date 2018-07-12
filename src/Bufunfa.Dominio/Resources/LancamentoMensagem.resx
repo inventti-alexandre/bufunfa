@@ -117,67 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Agendamentos_Encontrados_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento(s) do usuário encontrado(s) com sucesso.</value>
+  <data name="Data_Lancamento_Maior_Data_Corrente" xml:space="preserve">
+    <value>A data do lançamento pode ser superior a data atual.</value>
   </data>
-  <data name="Agendamento_Alterado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento alterado com sucesso.</value>
-  </data>
-  <data name="Agendamento_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento que se deseja alterar, não pertence ao usuário autenticado.</value>
-  </data>
-  <data name="Agendamento_Cadastrado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento cadastrado com sucesso.</value>
-  </data>
-  <data name="Agendamento_Encontrado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento encontrado com sucesso.</value>
-  </data>
-  <data name="Agendamento_Excluido_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento excluído com sucesso.</value>
-  </data>
-  <data name="Agendamento_Excluir_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento que se deseja excluir, não pertence ao usuário autenticado.</value>
-  </data>
-  <data name="Agendamento_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento não pertence ao usuário autenticado.</value>
-  </data>
-  <data name="Id_Agendamento_Invalido" xml:space="preserve">
-    <value>O ID do agendamento informado ({0}) é inválido.</value>
-  </data>
-  <data name="Id_Agendamento_Nao_Existe" xml:space="preserve">
-    <value>O agendamento de ID {0} não existe.</value>
-  </data>
-  <data name="Id_Categoria_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O ID da categoria do agendamento é obrigatório e não foi informado.</value>
-  </data>
-  <data name="Nenhum_Agendamento_Encontrado" xml:space="preserve">
-    <value>Nenhum agendamento do usuário foi encontrado.</value>
-  </data>
-  <data name="Observacao_Tamanho_Maximo_Excedido" xml:space="preserve">
-    <value>A observação do agendamento deve possuir no máximo 500 caracteres.</value>
-  </data>
-  <data name="Id_Cartao_Credito_Invalido" xml:space="preserve">
-    <value>O ID do cartão de crédito do agendamento é inválido.</value>
-  </data>
-  <data name="Id_Conta_Id_Cartao_Credito_Informados" xml:space="preserve">
-    <value>O ID da conta e o ID do cartão de crédito do agendamento, ambos foram informados. Informe apenas um.</value>
-  </data>
-  <data name="Id_Conta_Id_Cartao_Credito_Nao_Informados" xml:space="preserve">
-    <value>O ID da conta e o ID do cartão de crédito do agendamento não foi informado. Informe pelo menos um dos dois.</value>
+  <data name="Id_Categoria_Invalido" xml:space="preserve">
+    <value>O ID da categoria do lançamento informado ({0}) é inválido.</value>
   </data>
   <data name="Id_Conta_Invalido" xml:space="preserve">
-    <value>O ID da conta do agendamento é inválido.</value>
+    <value>O ID da conta do lançamento informado ({0}) é inválido.</value>
+  </data>
+  <data name="Id_Lancamento_Invalido" xml:space="preserve">
+    <value>O ID do lançamento informado ({0}) é inválido.</value>
+  </data>
+  <data name="Id_Lancamento_Nao_Existe" xml:space="preserve">
+    <value>O lançamento de ID {0} não existe.</value>
   </data>
   <data name="Id_Pessoa_Invalido" xml:space="preserve">
-    <value>O ID da pessoa do agendamento é inválido.</value>
+    <value>O ID da pessoa do lançamento informado ({0}) é inválido.</value>
   </data>
-  <data name="Data_Primeira_Parcela_Menor_Data_Atual" xml:space="preserve">
-    <value>A data da primeira parcela do agendamento não pode ser menor que a data atual.</value>
+  <data name="Lancamentos_Encontrados_Com_Sucesso" xml:space="preserve">
+    <value>Lançamento(s) do usuário encontrado(s) com sucesso.</value>
   </data>
-  <data name="Quantidade_Parcelas_Inválida" xml:space="preserve">
-    <value>A quantidade de parcelas informada é inválida.</value>
+  <data name="Lancamento_Alterado_Com_Sucesso" xml:space="preserve">
+    <value>Lançamento alterado com sucesso.</value>
   </data>
-  <data name="Agendamento_Procurar_Periodo_Invalido" xml:space="preserve">
-    <value>O período informado para é inválido. Verifique as datas informadas.</value>
+  <data name="Lancamento_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
+    <value>O lançamento que se deseja alterar, não pertence ao usuário autenticado.</value>
+  </data>
+  <data name="Lancamento_Cadastrado_Com_Sucesso" xml:space="preserve">
+    <value>Lançamento cadastrado com sucesso.</value>
+  </data>
+  <data name="Lancamento_Encontrado_Com_Sucesso" xml:space="preserve">
+    <value>Lançamento encontrado com sucesso.</value>
+  </data>
+  <data name="Lancamento_Excluido_Com_Sucesso" xml:space="preserve">
+    <value>Lançamento excluído com sucesso.</value>
+  </data>
+  <data name="Lancamento_Excluir_Nao_Pertence_Usuario" xml:space="preserve">
+    <value>O lançamento que se deseja excluir, não pertence ao usuário autenticado.</value>
+  </data>
+  <data name="Lancamento_Nao_Pertence_Usuario" xml:space="preserve">
+    <value>O lançamento não pertence ao usuário autenticado.</value>
+  </data>
+  <data name="Nenhuma_lancamento_encontrado" xml:space="preserve">
+    <value>Nenhum lançamento do usuário foi encontrado.</value>
+  </data>
+  <data name="Observacao_Tamanho_Maximo_Excedido" xml:space="preserve">
+    <value>A observação do lançamento deve possuir no máximo 500 caracteres.</value>
   </data>
 </root>

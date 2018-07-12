@@ -47,7 +47,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Indica se a categoria é pai de pelo menos uma outra categoria.
         /// </summary>
-        public bool SePai
+        public bool Pai
         {
             get
             {

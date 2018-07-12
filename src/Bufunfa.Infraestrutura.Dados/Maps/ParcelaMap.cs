@@ -14,9 +14,12 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.Property(x => x.IdFatura);
             builder.Property(x => x.Data);
             builder.Property(x => x.Valor);
-            builder.Property(x => x.SeLancada).HasColumnName("Lancada");
-            builder.Property(x => x.SeDescartada).HasColumnName("Descartada");
+            builder.Property(x => x.Lancada);
+            builder.Property(x => x.Descartada);
             builder.Property(x => x.MotivoDescarte);
+            builder.Property(x => x.Observacao);
+
+            builder.Ignore(x => x.Status);
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 {
     /// <summary>
-    /// Comando utilizado para o alterar um período
+    /// Comando utilizado para alterar um período
     /// </summary>
     public class AlterarPeriodoEntrada : Notificavel, IEntrada
     {

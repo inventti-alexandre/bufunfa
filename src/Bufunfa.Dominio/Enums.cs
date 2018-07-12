@@ -26,9 +26,18 @@
     /// </summary>
     public enum Periodicidade
     {
-        Mensal,
-        Trimestral,
-        Semestral,
-        Anual
+        Mensal     = 1,
+        Trimestral = 3,
+        Semestral  = 6,
+        Anual      = 12
+    }
+
+    /// <summary>
+    /// Status de uma parcela
+    /// </summary>
+    public enum StatusParcela
+    {
+        Aberta,
+        Fechada
     }
 }

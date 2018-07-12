@@ -117,67 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Agendamentos_Encontrados_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento(s) do usuário encontrado(s) com sucesso.</value>
+  <data name="Data_Lancamento_Maior_Data_Corrente" xml:space="preserve">
+    <value>A data de lançamento da parcela não pode ser superior a data atual.</value>
   </data>
-  <data name="Agendamento_Alterado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento alterado com sucesso.</value>
+  <data name="Id_Agendamento_Id_Fatura_Informados" xml:space="preserve">
+    <value>O ID do agendamento e o ID da fatura, ambos foram informados. Informe apenas um.</value>
   </data>
-  <data name="Agendamento_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento que se deseja alterar, não pertence ao usuário autenticado.</value>
-  </data>
-  <data name="Agendamento_Cadastrado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento cadastrado com sucesso.</value>
-  </data>
-  <data name="Agendamento_Encontrado_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento encontrado com sucesso.</value>
-  </data>
-  <data name="Agendamento_Excluido_Com_Sucesso" xml:space="preserve">
-    <value>Agendamento excluído com sucesso.</value>
-  </data>
-  <data name="Agendamento_Excluir_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento que se deseja excluir, não pertence ao usuário autenticado.</value>
-  </data>
-  <data name="Agendamento_Nao_Pertence_Usuario" xml:space="preserve">
-    <value>O agendamento não pertence ao usuário autenticado.</value>
+  <data name="Id_Agendamento_Id_Fatura_Nao_Informados" xml:space="preserve">
+    <value>O ID do agendamento e o ID da fatura da parcela não foi informado. Informe pelo menos um dos dois.</value>
   </data>
   <data name="Id_Agendamento_Invalido" xml:space="preserve">
-    <value>O ID do agendamento informado ({0}) é inválido.</value>
+    <value>O ID do agendamento da parcela informado ({0}) é inválido.</value>
   </data>
-  <data name="Id_Agendamento_Nao_Existe" xml:space="preserve">
-    <value>O agendamento de ID {0} não existe.</value>
+  <data name="Id_Fatura_Invalido" xml:space="preserve">
+    <value>O ID da fatura da parcela informado ({0}) é inválido.</value>
   </data>
-  <data name="Id_Categoria_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O ID da categoria do agendamento é obrigatório e não foi informado.</value>
+  <data name="Id_Parcela_Invalido" xml:space="preserve">
+    <value>O ID da parcela informado ({0}) é inválido.</value>
   </data>
-  <data name="Nenhum_Agendamento_Encontrado" xml:space="preserve">
-    <value>Nenhum agendamento do usuário foi encontrado.</value>
+  <data name="Id_Parcela_Nao_Existe" xml:space="preserve">
+    <value>A parcela de ID {0} não existe.</value>
+  </data>
+  <data name="Motivo_Descarte_Tamanho_Maximo_Excedido" xml:space="preserve">
+    <value>A descrição do motivo do descarte da parcela deve possuir no máximo 500 caracteres.</value>
   </data>
   <data name="Observacao_Tamanho_Maximo_Excedido" xml:space="preserve">
-    <value>A observação do agendamento deve possuir no máximo 500 caracteres.</value>
+    <value>A observação da parcela deve possuir no máximo 500 caracteres.</value>
   </data>
-  <data name="Id_Cartao_Credito_Invalido" xml:space="preserve">
-    <value>O ID do cartão de crédito do agendamento é inválido.</value>
+  <data name="Parcela_Alterada_Com_Sucesso" xml:space="preserve">
+    <value>Parcela alterada com sucesso.</value>
   </data>
-  <data name="Id_Conta_Id_Cartao_Credito_Informados" xml:space="preserve">
-    <value>O ID da conta e o ID do cartão de crédito do agendamento, ambos foram informados. Informe apenas um.</value>
+  <data name="Parcela_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
+    <value>A parcela que se deseja alterar, não pertence ao usuário autenticado.</value>
   </data>
-  <data name="Id_Conta_Id_Cartao_Credito_Nao_Informados" xml:space="preserve">
-    <value>O ID da conta e o ID do cartão de crédito do agendamento não foi informado. Informe pelo menos um dos dois.</value>
+  <data name="Parcela_Cadastrada_Com_Sucesso" xml:space="preserve">
+    <value>Parcela cadastrada com sucesso.</value>
   </data>
-  <data name="Id_Conta_Invalido" xml:space="preserve">
-    <value>O ID da conta do agendamento é inválido.</value>
+  <data name="Parcela_Encontrada_Com_Sucesso" xml:space="preserve">
+    <value>Parcela encontrada com sucesso.</value>
   </data>
-  <data name="Id_Pessoa_Invalido" xml:space="preserve">
-    <value>O ID da pessoa do agendamento é inválido.</value>
+  <data name="Parcela_Excluida_Com_Sucesso" xml:space="preserve">
+    <value>Parcela excluída com sucesso.</value>
   </data>
-  <data name="Data_Primeira_Parcela_Menor_Data_Atual" xml:space="preserve">
-    <value>A data da primeira parcela do agendamento não pode ser menor que a data atual.</value>
-  </data>
-  <data name="Quantidade_Parcelas_Inválida" xml:space="preserve">
-    <value>A quantidade de parcelas informada é inválida.</value>
-  </data>
-  <data name="Agendamento_Procurar_Periodo_Invalido" xml:space="preserve">
-    <value>O período informado para é inválido. Verifique as datas informadas.</value>
+  <data name="Parcela_Procurar_Periodo_Invalido" xml:space="preserve">
+    <value>O período informado é inválido. Verifique as datas informadas.</value>
   </data>
 </root>

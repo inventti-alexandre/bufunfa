@@ -33,12 +33,12 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
                 .WithOne(x => x.Agendamento)
                 .HasForeignKey(x => x.IdAgendamento);
 
-            builder.Ignore(x => x.DataPrimeiraParcela);
-            builder.Ignore(x => x.DataUltimaParcela);
+            builder.Ignore(x => x.DataProximaParcelaAberta);
+            builder.Ignore(x => x.DataUltimaParcelaAberta);
             builder.Ignore(x => x.QuantidadeParcelas);
-            builder.Ignore(x => x.QuantidadeParcelasDescartadas);
-            builder.Ignore(x => x.QuantidadeParcelasLancadas);
-            builder.Ignore(x => x.SeConcluido);
+            builder.Ignore(x => x.QuantidadeParcelasAbertas);
+            builder.Ignore(x => x.QuantidadeParcelasFechadas);
+            builder.Ignore(x => x.Concluido);
         }
     }
 }

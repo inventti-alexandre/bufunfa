@@ -21,7 +21,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.Property(x => x.Nome);
             builder.Property(x => x.Tipo);
 
-            builder.Ignore(x => x.SePai);
+            builder.Ignore(x => x.Pai);
         }
     }
 }

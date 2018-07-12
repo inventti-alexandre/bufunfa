@@ -76,30 +76,30 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public IEnumerable<Parcela> Parcelas { get; private set; }
 
         /// <summary>
-        /// Data de vencimento da primeira parcela
+        /// Data de vencimento da próxima parcela aberta.
         /// </summary>
-        public DateTime? DataPrimeiraParcela
+        public DateTime? DataProximaParcelaAberta
         {
             get
             {
                 if (this.Parcelas == null || !this.Parcelas.Any())
                     return null;
 
-                return this.Parcelas.Min(x => x.Data);
+                return this.Parcelas.Where(x => x.Status == StatusParcela.Aberta).Min(x => x.Data);
             }
         }
 
         /// <summary>
-        /// Data de vencimento da última parcela.
+        /// Data de vencimento da última parcela aberta.
         /// </summary>
-        public DateTime? DataUltimaParcela
+        public DateTime? DataUltimaParcelaAberta
         {
             get
             {
                 if (this.Parcelas == null || !this.Parcelas.Any())
                     return null;
 
-                return this.Parcelas.Max(x => x.Data);
+                return this.Parcelas.Where(x => x.Status == StatusParcela.Aberta).Max(x => x.Data);
             }
         }
 
@@ -118,44 +118,44 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         }
 
         /// <summary>
-        /// Quantidade total de parcelas já lançadas.
+        /// Quantidade total de parcelas abertas.
         /// </summary>
-        public int QuantidadeParcelasLancadas
+        public int QuantidadeParcelasAbertas
         {
             get
             {
                 if (this.Parcelas == null || !this.Parcelas.Any())
                     return 0;
 
-                return this.Parcelas.Count(x => x.SeLancada);
+                return this.Parcelas.Count(x => x.Status == StatusParcela.Aberta);
             }
         }
 
         /// <summary>
-        /// Quantidade total de parcelas descartadas.
+        /// Quantidade total de parcelas fechadas.
         /// </summary>
-        public int QuantidadeParcelasDescartadas
+        public int QuantidadeParcelasFechadas
         {
             get
             {
                 if (this.Parcelas == null || !this.Parcelas.Any())
                     return 0;
 
-                return this.Parcelas.Count(x => x.SeDescartada);
+                return this.Parcelas.Count(x => x.Status == StatusParcela.Fechada);
             }
         }
 
         /// <summary>
         /// Indica se o agendamento foi concluído, isto é, o número total de parcelas é igual ao número de parcelas descartadas e lançadas.
         /// </summary>
-        public bool SeConcluido
+        public bool Concluido
         {
             get
             {
                 if (this.Parcelas == null || !this.Parcelas.Any())
                     return true;
 
-                return this.QuantidadeParcelas == this.QuantidadeParcelasLancadas + this.QuantidadeParcelasDescartadas;
+                return this.QuantidadeParcelas == this.QuantidadeParcelasFechadas;
             }
         }
 
@@ -177,6 +177,19 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdPessoa            = cadastrarEntrada.IdPessoa;
             this.TipoMetodoPagamento = cadastrarEntrada.TipoMetodoPagamento;
             this.Observacao          = cadastrarEntrada.Observacao;
+        }
+
+        public void Alterar(AlterarAgendamentoEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdAgendamento != this.Id)
+                return;
+
+            this.IdCategoria         = alterarEntrada.IdCategoria;
+            this.IdConta             = alterarEntrada.IdConta;
+            this.IdCartaoCredito     = alterarEntrada.IdCartaoCredito;
+            this.IdPessoa            = alterarEntrada.IdPessoa;
+            this.TipoMetodoPagamento = alterarEntrada.TipoMetodoPagamento;
+            this.Observacao          = alterarEntrada.Observacao;
         }
 
         public override string ToString()

@@ -42,12 +42,12 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
             if (conta == null)
                 return;
 
-            this.Id = conta.Id;
-            this.Nome = conta.Nome;
+            this.Id                = conta.Id;
+            this.Nome              = conta.Nome;
             this.ValorSaldoInicial = conta.ValorSaldoInicial;
-            this.NomeInstituicao = conta.NomeInstituicao;
-            this.NumeroAgencia = conta.NumeroAgencia;
-            this.Numero = conta.Numero;
+            this.NomeInstituicao   = conta.NomeInstituicao;
+            this.NumeroAgencia     = conta.NumeroAgencia;
+            this.Numero            = conta.Numero;
         }
 
         public override string ToString()

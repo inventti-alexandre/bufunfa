@@ -37,10 +37,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContaMensagem.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\LancamentoMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LancamentoMensagem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Mensagem.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Mensagem.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ParcelaMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ParcelaMensagem.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\PeriodoMensagem.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -76,9 +86,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContaMensagem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\LancamentoMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LancamentoMensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Mensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ParcelaMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ParcelaMensagem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PeriodoMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
