@@ -87,13 +87,33 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.Observacao  = cadastrarEntrada.Observacao;
         }
 
-        //public void Alterar(AlterarPessoaEntrada alterarEntrada)
-        //{
-        //    if (!alterarEntrada.Valido() || alterarEntrada.IdPessoa != this.Id)
-        //        return;
+        public Lancamento(LancarParcelaEntrada lancarParcelaEntrada)
+        {
+            if (!lancarParcelaEntrada.Valido())
+                return;
 
-        //    this.Nome = alterarEntrada.Nome;
-        //}
+            this.IdParcela   = lancarParcelaEntrada.IdParcela;
+            this.IdUsuario   = lancarParcelaEntrada.IdUsuario;
+            this.IdConta     = lancarParcelaEntrada.IdConta;
+            this.IdCategoria = lancarParcelaEntrada.IdCategoria;
+            this.Data        = lancarParcelaEntrada.Data;
+            this.Valor       = lancarParcelaEntrada.Valor;
+            this.IdPessoa    = lancarParcelaEntrada.IdPessoa;
+            this.Observacao  = lancarParcelaEntrada.Observacao;
+        }
+
+        public void Alterar(AlterarLancamentoEntrada alterarEntrada)
+        {
+            if (!alterarEntrada.Valido() || alterarEntrada.IdLancamento != this.Id)
+                return;
+
+            this.IdConta = alterarEntrada.IdConta;
+            this.IdCategoria = alterarEntrada.IdCategoria;
+            this.Data = alterarEntrada.Data;
+            this.Valor = alterarEntrada.Valor;
+            this.IdPessoa = alterarEntrada.IdPessoa;
+            this.Observacao = alterarEntrada.Observacao;
+        }
 
         public override string ToString()
         {

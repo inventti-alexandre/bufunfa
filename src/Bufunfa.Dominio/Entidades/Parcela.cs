@@ -69,7 +69,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
                     ? StatusParcela.Aberta
                     : StatusParcela.Fechada;
             }
-        }        
+        }      
 
         private Parcela()
         {
@@ -78,6 +78,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         }
 
         public Parcela(CadastrarParcelaEntrada cadastrarEntrada)
+            : this()
         {
             if (!cadastrarEntrada.Valido())
                 return;

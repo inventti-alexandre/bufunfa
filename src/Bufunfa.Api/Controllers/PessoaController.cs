@@ -47,19 +47,6 @@ namespace JNogueira.Bufunfa.Api.Controllers
         }
 
         /// <summary>
-        /// Obtém as pessoas do usuário autenticado
-        /// </summary>
-        [Authorize(PermissaoAcesso.Pessoas)]
-        [HttpGet]
-        [Route("v1/pessoas/obter")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Pessoas do usuário encontradas.")]
-        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPessoasPorUsuarioResponseExemplo))]
-        public async Task<ISaida> ObterPessoasPorUsuarioAutenticado()
-        {
-            return await _pessoaServico.ObterPessoasPorUsuario(base.ObterIdUsuarioClaim());
-        }
-
-        /// <summary>
         /// Realiza uma procura por pessoas a partir dos parâmetros informados
         /// </summary>
         /// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>

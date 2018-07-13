@@ -18,11 +18,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<Pessoa> ObterPorId(int idPessoa, bool habilitarTracking = false);
 
         /// <summary>
-        /// Obtém as pessoas de um usuário.
-        /// </summary>
-        Task<IEnumerable<Pessoa>> ObterPorUsuario(int idUsuario);
-
-        /// <summary>
         /// Obtém as pessoas baseadas nos parâmetros de procura
         /// </summary>
         Task<ProcurarSaida> Procurar(ProcurarPessoaEntrada procurarEntrada);

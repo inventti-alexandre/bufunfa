@@ -178,6 +178,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O período informado para é inválido. Verifique as datas informadas..
+        /// </summary>
+        public static string Lancamento_Procurar_Periodo_Invalido {
+            get {
+                return ResourceManager.GetString("Lancamento_Procurar_Periodo_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lançamento(s) do usuário encontrado(s) com sucesso..
         /// </summary>
         public static string Lancamentos_Encontrados_Com_Sucesso {

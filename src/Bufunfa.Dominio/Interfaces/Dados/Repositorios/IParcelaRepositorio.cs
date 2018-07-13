@@ -26,6 +26,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task Inserir(Parcela parcela);
 
         /// <summary>
+        /// Insere várias parcelas
+        /// </summary>
+        Task Inserir(IEnumerable<Parcela> parcelas);
+
+        /// <summary>
         /// Atualiza as informações da parcel
         /// </summary>
         void Atualizar(Parcela parcela);

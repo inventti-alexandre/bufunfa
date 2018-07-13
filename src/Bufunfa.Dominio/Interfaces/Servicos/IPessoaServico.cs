@@ -15,11 +15,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         Task<ISaida> ObterPessoaPorId(int idPessoa, int idUsuario);
 
         /// <summary>
-        /// Obtém as pessoas de um usuário.
-        /// </summary>
-        Task<ISaida> ObterPessoasPorUsuario(int idUsuario);
-
-        /// <summary>
         /// Obtém as pessoas baseadas nos parâmetros de procura
         /// </summary>
         Task<ISaida> ProcurarPessoas(ProcurarPessoaEntrada procurarEntrada);

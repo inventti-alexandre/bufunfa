@@ -7,8 +7,6 @@ using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Bufunfa.Dominio.Servicos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Bufunfa.Dominio.Testes
@@ -87,33 +85,6 @@ namespace Bufunfa.Dominio.Testes
             var saida = _pessoaServico.ObterPessoaPorId(1, 1).Result;
 
             Assert.IsTrue(saida.Sucesso, string.Join(", ", saida.Mensagens));
-        }
-
-        [TestMethod]
-        public void Nao_Deve_Obter_Pessoas_Por_Usuario_Com_Id_Usuario_Invalido()
-        {
-            var idUsuario = 0;
-
-            _pessoaServico = Substitute.For<PessoaServico>(_pessoaRepositorio, _uow);
-
-            var saida = _pessoaServico.ObterPessoasPorUsuario(idUsuario).Result;
-
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
-        }
-
-        [TestMethod]
-        public void Deve_Obter_Pessoas_Por_Usuario()
-        {
-            var idUsuario = 1;
-
-            _pessoaRepositorio.ObterPorUsuario(idUsuario)
-                .Returns(new List<Pessoa> { new Pessoa(new CadastrarPessoaEntrada(idUsuario, "Pessoa 1")) });
-
-            _pessoaServico = Substitute.For<PessoaServico>(_pessoaRepositorio, _uow);
-
-            var saida = _pessoaServico.ObterPessoasPorUsuario(idUsuario).Result;
-
-            Assert.IsTrue(saida.Sucesso && saida.Mensagens.Any(x => x == PessoaMensagem.Pessoas_Encontradas_Com_Sucesso), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]

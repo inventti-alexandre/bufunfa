@@ -43,6 +43,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             await _efContext.AddAsync(parcela);
         }
 
+        public async Task Inserir(IEnumerable<Parcela> parcelas)
+        {
+            await _efContext.AddRangeAsync(parcelas);
+        }
+
         public void Atualizar(Parcela parcela)
         {
             _efContext.Entry(parcela).State = EntityState.Modified;

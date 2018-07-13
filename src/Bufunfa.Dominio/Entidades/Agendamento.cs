@@ -164,7 +164,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.Parcelas = new List<Parcela>();
         }
 
-        public Agendamento(CadastrarAgendamentoEntrada cadastrarEntrada) 
+        public Agendamento(CadastrarAgendamentoEntrada cadastrarEntrada)
             : this()
         {
             if (!cadastrarEntrada.Valido())
@@ -177,6 +177,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdPessoa            = cadastrarEntrada.IdPessoa;
             this.TipoMetodoPagamento = cadastrarEntrada.TipoMetodoPagamento;
             this.Observacao          = cadastrarEntrada.Observacao;
+            this.Parcelas            = this.CriarParcelas(cadastrarEntrada.QuantidadeParcelas, cadastrarEntrada.DataPrimeiraParcela, cadastrarEntrada.ValorTotal, cadastrarEntrada.PeriodicidadeParcelas, cadastrarEntrada.Observacao);
         }
 
         public void Alterar(AlterarAgendamentoEntrada alterarEntrada)
@@ -206,6 +207,46 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
                 descricao.Add(this.Observacao);
 
             return string.Join(" » ", descricao);
-        } 
+        }
+
+        /// <summary>
+        /// Cria as parcelas do agendamento
+        /// </summary>
+        /// <param name="quantidadeParcelas">Quantidade total de parcelas do agendamento</param>
+        /// <param name="dataPrimeiraParcela">Data do vencimento da primeira parcela</param>
+        /// <param name="valorTotal">Valor total do agendamento</param>
+        /// <param name="periodicidade">Periodicidade no lançamento das parcelas</param>
+        /// <param name="observacao">Observação da parcela</param>
+        private IEnumerable<Parcela> CriarParcelas(int quantidadeParcelas, DateTime dataPrimeiraParcela, decimal valorTotal, Periodicidade periodicidade, string observacao)
+        {
+            var valorParcela = valorTotal / quantidadeParcelas;
+
+            var parcela1 = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataPrimeiraParcela, valorParcela, quantidadeParcelas > 1
+                ? (!string.IsNullOrEmpty(observacao)
+                    ? $"{observacao} / Parcela (1/{quantidadeParcelas})"
+                    : $"Parcela (1/{quantidadeParcelas})")
+                : observacao));
+
+            var parcelas = new List<Parcela>() { parcela1 };
+
+            var cont = 1;
+
+            var dataParcela = dataPrimeiraParcela;
+
+            while(cont < quantidadeParcelas)
+            {
+                cont++;
+
+                dataParcela = dataParcela.AddMonths((int)periodicidade);
+
+                var parcela = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataParcela, valorParcela, !string.IsNullOrEmpty(observacao)
+                    ? $"{observacao} / Parcela ({cont}/{quantidadeParcelas})"
+                    : $"Parcela ({cont}/{quantidadeParcelas})"));
+
+                parcelas.Add(parcela);
+            }
+
+            return parcelas;
+        }
     }
 }

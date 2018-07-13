@@ -6,7 +6,6 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Servicos
@@ -45,20 +44,6 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
                 return new Saida(false, this.Mensagens, null);
 
             return new Saida(true, new[] { PessoaMensagem.Pessoa_Encontrada_Com_Sucesso }, new PessoaSaida(pessoa));
-        }
-
-        public async Task<ISaida> ObterPessoasPorUsuario(int idUsuario)
-        {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
-
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            var lstPessoas = await _pessoaRepositorio.ObterPorUsuario(idUsuario);
-
-            return lstPessoas.Any()
-                ? new Saida(true, new[] { PessoaMensagem.Pessoas_Encontradas_Com_Sucesso }, lstPessoas.Select(x => new PessoaSaida(x)))
-                : new Saida(true, new[] { PessoaMensagem.Nenhuma_pessoa_encontrada }, null);
         }
 
         public async Task<ISaida> ProcurarPessoas(ProcurarPessoaEntrada procurarEntrada)

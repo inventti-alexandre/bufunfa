@@ -95,23 +95,6 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             }
         }
 
-        public async Task<IEnumerable<Agendamento>> ObterPorUsuario(int idUsuario)
-        {
-            return await _efContext
-                   .Agendamentos
-                   .Include(x => x.Conta)
-                   .Include(x => x.CartaoCredito)
-                   .Include(x => x.Categoria)
-                        .ThenInclude(x => x.CategoriaPai)
-                        .ThenInclude(x => x.CategoriasFilha)
-                   .Include(x => x.Pessoa)
-                   .Include(x => x.Parcelas)
-                   .AsNoTracking()
-                   .Where(x => x.IdUsuario == idUsuario)
-                   .OrderBy(x => x.DataProximaParcelaAberta)
-                   .ToListAsync();
-        }
-
         public async Task Inserir(Agendamento agendamento)
         {
             await _efContext.AddAsync(agendamento);

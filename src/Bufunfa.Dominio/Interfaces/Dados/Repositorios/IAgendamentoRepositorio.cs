@@ -18,11 +18,6 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<Agendamento> ObterPorId(int idAgendamento, bool habilitarTracking = false);
 
         /// <summary>
-        /// Obtém os agendamentos de um usuário.
-        /// </summary>
-        Task<IEnumerable<Agendamento>> ObterPorUsuario(int idUsuario);
-
-        /// <summary>
         /// Obtém os agendamentos baseados nos parâmetros de procura
         /// </summary>
         Task<ProcurarSaida> Procurar(ProcurarAgendamentoEntrada procurarEntrada);

@@ -165,4 +165,7 @@
   <data name="Observacao_Tamanho_Maximo_Excedido" xml:space="preserve">
     <value>A observação do lançamento deve possuir no máximo 500 caracteres.</value>
   </data>
+  <data name="Lancamento_Procurar_Periodo_Invalido" xml:space="preserve">
+    <value>O período informado para é inválido. Verifique as datas informadas.</value>
+  </data>
 </root>

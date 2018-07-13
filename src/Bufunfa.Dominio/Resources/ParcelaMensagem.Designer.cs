@@ -97,6 +97,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ID da categoria do lançamento da parcela ({0}) é inválido..
+        /// </summary>
+        public static string Id_Categoria_Lancar_Parcela_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Categoria_Lancar_Parcela_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O ID da conta onde o lançamento da parcela será cadastrado ({0}) é inválido..
+        /// </summary>
+        public static string Id_Conta_Lancar_Parcela_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Conta_Lancar_Parcela_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O ID da fatura da parcela informado ({0}) é inválido..
         /// </summary>
         public static string Id_Fatura_Invalido {
@@ -120,6 +138,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Id_Parcela_Nao_Existe {
             get {
                 return ResourceManager.GetString("Id_Parcela_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O ID da pessoa do lançamento da parcela ({0}) é inválido..
+        /// </summary>
+        public static string Id_Pessoa_Lancar_Parcela_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Pessoa_Lancar_Parcela_Invalido", resourceCulture);
             }
         }
         

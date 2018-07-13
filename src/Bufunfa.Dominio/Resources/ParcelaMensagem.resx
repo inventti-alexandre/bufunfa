@@ -129,6 +129,12 @@
   <data name="Id_Agendamento_Invalido" xml:space="preserve">
     <value>O ID do agendamento da parcela informado ({0}) é inválido.</value>
   </data>
+  <data name="Id_Categoria_Lancar_Parcela_Invalido" xml:space="preserve">
+    <value>O ID da categoria do lançamento da parcela ({0}) é inválido.</value>
+  </data>
+  <data name="Id_Conta_Lancar_Parcela_Invalido" xml:space="preserve">
+    <value>O ID da conta onde o lançamento da parcela será cadastrado ({0}) é inválido.</value>
+  </data>
   <data name="Id_Fatura_Invalido" xml:space="preserve">
     <value>O ID da fatura da parcela informado ({0}) é inválido.</value>
   </data>
@@ -137,6 +143,9 @@
   </data>
   <data name="Id_Parcela_Nao_Existe" xml:space="preserve">
     <value>A parcela de ID {0} não existe.</value>
+  </data>
+  <data name="Id_Pessoa_Lancar_Parcela_Invalido" xml:space="preserve">
+    <value>O ID da pessoa do lançamento da parcela ({0}) é inválido.</value>
   </data>
   <data name="Motivo_Descarte_Tamanho_Maximo_Excedido" xml:space="preserve">
     <value>A descrição do motivo do descarte da parcela deve possuir no máximo 500 caracteres.</value>
