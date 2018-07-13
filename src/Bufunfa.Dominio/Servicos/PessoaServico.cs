@@ -90,7 +90,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Verifica se o período pertece ao usuário informado.
+            // Verifica se a pessoa pertece ao usuário informado.
             this.NotificarSeDiferentes(pessoa.IdUsuario, alterarEntrada.IdUsuario, PessoaMensagem.Pessoa_Alterar_Nao_Pertence_Usuario);
 
             if (this.Invalido)

@@ -162,11 +162,20 @@
   <data name="Parcela_Cadastrada_Com_Sucesso" xml:space="preserve">
     <value>Parcela cadastrada com sucesso.</value>
   </data>
+  <data name="Parcela_Descartada_Com_Sucesso" xml:space="preserve">
+    <value>Parcela descartada com sucesso.</value>
+  </data>
   <data name="Parcela_Encontrada_Com_Sucesso" xml:space="preserve">
     <value>Parcela encontrada com sucesso.</value>
   </data>
   <data name="Parcela_Excluida_Com_Sucesso" xml:space="preserve">
     <value>Parcela excluída com sucesso.</value>
+  </data>
+  <data name="Parcela_Lancada_Com_Sucesso" xml:space="preserve">
+    <value>Parcela lançada com sucesso.</value>
+  </data>
+  <data name="Parcela_Lancar_Nao_Pertence_Usuario" xml:space="preserve">
+    <value>A parcela que se deseja lançar, não pertence ao usuário autenticado.</value>
   </data>
   <data name="Parcela_Procurar_Periodo_Invalido" xml:space="preserve">
     <value>O período informado é inválido. Verifique as datas informadas.</value>

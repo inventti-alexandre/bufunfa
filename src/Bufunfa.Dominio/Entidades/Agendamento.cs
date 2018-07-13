@@ -191,6 +191,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdPessoa            = alterarEntrada.IdPessoa;
             this.TipoMetodoPagamento = alterarEntrada.TipoMetodoPagamento;
             this.Observacao          = alterarEntrada.Observacao;
+            this.Parcelas            = this.CriarParcelas(alterarEntrada.QuantidadeParcelas, alterarEntrada.DataPrimeiraParcela, alterarEntrada.ValorTotal, alterarEntrada.PeriodicidadeParcelas, alterarEntrada.Observacao);
         }
 
         public override string ToString()

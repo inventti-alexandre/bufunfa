@@ -196,6 +196,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parcela descartada com sucesso..
+        /// </summary>
+        public static string Parcela_Descartada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Parcela_Descartada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parcela encontrada com sucesso..
         /// </summary>
         public static string Parcela_Encontrada_Com_Sucesso {
@@ -210,6 +219,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Parcela_Excluida_Com_Sucesso {
             get {
                 return ResourceManager.GetString("Parcela_Excluida_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parcela lançada com sucesso..
+        /// </summary>
+        public static string Parcela_Lancada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Parcela_Lancada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A parcela que se deseja lançar, não pertence ao usuário autenticado..
+        /// </summary>
+        public static string Parcela_Lancar_Nao_Pertence_Usuario {
+            get {
+                return ResourceManager.GetString("Parcela_Lancar_Nao_Pertence_Usuario", resourceCulture);
             }
         }
         
