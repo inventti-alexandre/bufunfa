@@ -51,9 +51,9 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public string Observacao { get; }
 
         /// <summary>
-        /// Valor total do agendamento
+        /// Valor da parcela
         /// </summary>
-        public decimal ValorTotal { get; }
+        public decimal ValorParcela { get; }
 
         /// <summary>
         /// Data da primeira parcela do agendamento
@@ -76,7 +76,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             int? idConta,
             int? idCartaoCredito,
             MetodoPagamento tipoMetodoPagamento,
-            decimal valorTotal,
+            decimal valorParcela,
             DateTime dataPrimeiraParcela,
             int quantidadeParcelas,
             Periodicidade periodicidadeParcelas,
@@ -92,7 +92,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.TipoMetodoPagamento   = tipoMetodoPagamento;
             this.IdPessoa              = idPessoa;
             this.Observacao            = observacao;
-            this.ValorTotal            = valorTotal;
+            this.ValorParcela          = valorParcela;
             this.DataPrimeiraParcela   = dataPrimeiraParcela.Date;
             this.QuantidadeParcelas    = quantidadeParcelas;
             this.PeriodicidadeParcelas = periodicidadeParcelas;

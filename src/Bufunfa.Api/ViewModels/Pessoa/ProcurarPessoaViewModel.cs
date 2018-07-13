@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JNogueira.Bufunfa.Api.ViewModels
 {
-    // View model utilizado para o procurar pessoas
+    // View model utilizado para o procurar a
     public class ProcurarPessoaViewModel : ProcurarViewModel
     {
         /// <summary>

@@ -177,7 +177,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdPessoa            = cadastrarEntrada.IdPessoa;
             this.TipoMetodoPagamento = cadastrarEntrada.TipoMetodoPagamento;
             this.Observacao          = cadastrarEntrada.Observacao;
-            this.Parcelas            = this.CriarParcelas(cadastrarEntrada.QuantidadeParcelas, cadastrarEntrada.DataPrimeiraParcela, cadastrarEntrada.ValorTotal, cadastrarEntrada.PeriodicidadeParcelas, cadastrarEntrada.Observacao);
+            this.Parcelas            = this.CriarParcelas(cadastrarEntrada.QuantidadeParcelas, cadastrarEntrada.DataPrimeiraParcela, cadastrarEntrada.ValorParcela, cadastrarEntrada.PeriodicidadeParcelas, cadastrarEntrada.Observacao);
         }
 
         public void Alterar(AlterarAgendamentoEntrada alterarEntrada)
@@ -191,7 +191,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdPessoa            = alterarEntrada.IdPessoa;
             this.TipoMetodoPagamento = alterarEntrada.TipoMetodoPagamento;
             this.Observacao          = alterarEntrada.Observacao;
-            this.Parcelas            = this.CriarParcelas(alterarEntrada.QuantidadeParcelas, alterarEntrada.DataPrimeiraParcela, alterarEntrada.ValorTotal, alterarEntrada.PeriodicidadeParcelas, alterarEntrada.Observacao);
+            this.Parcelas            = this.CriarParcelas(alterarEntrada.QuantidadeParcelas, alterarEntrada.DataPrimeiraParcela, alterarEntrada.ValorParcela, alterarEntrada.PeriodicidadeParcelas, alterarEntrada.Observacao);
         }
 
         public override string ToString()
@@ -215,14 +215,12 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// </summary>
         /// <param name="quantidadeParcelas">Quantidade total de parcelas do agendamento</param>
         /// <param name="dataPrimeiraParcela">Data do vencimento da primeira parcela</param>
-        /// <param name="valorTotal">Valor total do agendamento</param>
+        /// <param name="valor">Valor da parcela</param>
         /// <param name="periodicidade">Periodicidade no lançamento das parcelas</param>
         /// <param name="observacao">Observação da parcela</param>
-        private IEnumerable<Parcela> CriarParcelas(int quantidadeParcelas, DateTime dataPrimeiraParcela, decimal valorTotal, Periodicidade periodicidade, string observacao)
+        private IEnumerable<Parcela> CriarParcelas(int quantidadeParcelas, DateTime dataPrimeiraParcela, decimal valor, Periodicidade periodicidade, string observacao)
         {
-            var valorParcela = valorTotal / quantidadeParcelas;
-
-            var parcela1 = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataPrimeiraParcela, valorParcela, quantidadeParcelas > 1
+            var parcela1 = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataPrimeiraParcela, valor, quantidadeParcelas > 1
                 ? (!string.IsNullOrEmpty(observacao)
                     ? $"{observacao} / Parcela (1/{quantidadeParcelas})"
                     : $"Parcela (1/{quantidadeParcelas})")
@@ -240,7 +238,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
                 dataParcela = dataParcela.AddMonths((int)periodicidade);
 
-                var parcela = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataParcela, valorParcela, !string.IsNullOrEmpty(observacao)
+                var parcela = new Parcela(new CadastrarParcelaEntrada(this.IdUsuario, this.Id, null, dataParcela, valor, !string.IsNullOrEmpty(observacao)
                     ? $"{observacao} / Parcela ({cont}/{quantidadeParcelas})"
                     : $"Parcela ({cont}/{quantidadeParcelas})"));
 

@@ -34,5 +34,15 @@
         /// Permite realizar o cadastramento de cartões de crédito.
         /// </summary>
         public const string CartoesCredito = "cartoes";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de agendamentos.
+        /// </summary>
+        public const string Agendamentos = "agendamentos";
+
+        /// <summary>
+        /// Permite realizar o cadastramento de lançamentos.
+        /// </summary>
+        public const string Lancamentos = "lancamentos";
     }
 }

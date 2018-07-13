@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JNogueira.Bufunfa.Api.ViewModels
 {
-    // View model utilizado para o alterar uma pessoa
+    // View model utilizado para alterar uma pessoa
     public class AlterarPessoaViewModel
     {
         /// <summary>

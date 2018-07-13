@@ -49,6 +49,9 @@ namespace Bufunfa.Api
             services.AddTransient<IPeriodoRepositorio, PeriodoRepositorio>();
             services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
             services.AddTransient<ICategoriaRepositorio, CategoriaRepositorio>();
+            services.AddTransient<IAgendamentoRepositorio, AgendamentoRepositorio>();
+            services.AddTransient<ILancamentoRepositorio, LancamentoRepositorio>();
+            services.AddTransient<IParcelaRepositorio, ParcelaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IContaServico, ContaServico>();
@@ -56,6 +59,8 @@ namespace Bufunfa.Api
             services.AddTransient<IPeriodoServico, PeriodoServico>();
             services.AddTransient<IPessoaServico, PessoaServico>();
             services.AddTransient<ICategoriaServico, CategoriaServico>();
+            services.AddTransient<IAgendamentoServico, AgendamentoServico>();
+            services.AddTransient<ILancamentoServico, LancamentoServico>();
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
@@ -106,6 +111,8 @@ namespace Bufunfa.Api
                 options.AddPolicy(PermissaoAcesso.Pessoas, policy => policy.RequireClaim(PermissaoAcesso.Pessoas).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.Categorias, policy => policy.RequireClaim(PermissaoAcesso.Categorias).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(PermissaoAcesso.CartoesCredito, policy => policy.RequireClaim(PermissaoAcesso.CartoesCredito).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Agendamentos, policy => policy.RequireClaim(PermissaoAcesso.Agendamentos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(PermissaoAcesso.Lancamentos, policy => policy.RequireClaim(PermissaoAcesso.Lancamentos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             // Configuração do Swagger para documentação da API
