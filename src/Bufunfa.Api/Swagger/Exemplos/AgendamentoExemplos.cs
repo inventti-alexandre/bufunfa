@@ -21,7 +21,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Observacao = "TV a cabo",
                 PeriodicidadeParcelas = Periodicidade.Mensal,
                 QuantidadeParcelas = 12,
-                ValorParcela = (decimal?)100.23 
+                ValorParcela = (decimal?)100.23
             };
         }
     }
@@ -37,7 +37,72 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    Nome = "Supermecado Carone"
+                    TipoMetodoPagamento = 2,
+                    Observacao = "Energia - 2018",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta 1",
+                        ValorSaldoInicial = 1000,
+                        NomeInstituicao = (string)null,
+                        NumeroAgencia = (string)null,
+                        Numero = (string)null
+                    },
+                    CartaoCredito = (string)null,
+                    Pessoa = new
+                    {
+                        Id = 80,
+                        Nome = "EDP Escelsa"
+                    },
+                    Categoria = new
+                    {
+                        Id = 16,
+                        Nome = "Energia elétrica",
+                        Tipo = "D",
+                        Caminho = "DÉBITO » Serviços » Energia elétrica",
+                        CategoriaPai = new
+                        {
+                            Id = 6035,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Serviços",
+                            Tipo = "D",
+                            Caminho = "DÉBITO » Serviços"
+                        },
+                        CategoriasFilha = (object)null
+                    },
+                    Parcelas = new[]
+                    {
+                        new
+                        {
+                            Id = 37,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 7, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (1/2)"
+                       },
+                        new
+                        {
+                            Id = 38,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 8, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (2/2)"
+                       }
+                    },
+                    DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                    DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                    QuantidadeParcelas = 2,
+                    QuantidadeParcelasAbertas = 2,
+                    QuantidadeParcelasFechadas = 0,
+                    Concluido = false
                 }
             };
         }
@@ -74,7 +139,72 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    Nome = "Supermecado Carone"
+                    TipoMetodoPagamento = 2,
+                    Observacao = "Energia - 2018",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta 1",
+                        ValorSaldoInicial = 1000,
+                        NomeInstituicao = (string)null,
+                        NumeroAgencia = (string)null,
+                        Numero = (string)null
+                    },
+                    CartaoCredito = (string)null,
+                    Pessoa = new
+                    {
+                        Id = 80,
+                        Nome = "EDP Escelsa"
+                    },
+                    Categoria = new
+                    {
+                        Id = 16,
+                        Nome = "Energia elétrica",
+                        Tipo = "D",
+                        Caminho = "DÉBITO » Serviços » Energia elétrica",
+                        CategoriaPai = new
+                        {
+                            Id = 6035,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Serviços",
+                            Tipo = "D",
+                            Caminho = "DÉBITO » Serviços"
+                        },
+                        CategoriasFilha = (object)null
+                    },
+                    Parcelas = new[]
+                    {
+                        new
+                        {
+                            Id = 37,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 7, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (1/2)"
+                       },
+                        new
+                        {
+                            Id = 38,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 8, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (2/2)"
+                       }
+                    },
+                    DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                    DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                    QuantidadeParcelas = 2,
+                    QuantidadeParcelasAbertas = 2,
+                    QuantidadeParcelasFechadas = 0,
+                    Concluido = false
                 }
             };
         }
@@ -91,7 +221,72 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    Nome = "Supermecado Carone"
+                    TipoMetodoPagamento = 2,
+                    Observacao = "Energia - 2018",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta 1",
+                        ValorSaldoInicial = 1000,
+                        NomeInstituicao = (string)null,
+                        NumeroAgencia = (string)null,
+                        Numero = (string)null
+                    },
+                    CartaoCredito = (string)null,
+                    Pessoa = new
+                    {
+                        Id = 80,
+                        Nome = "EDP Escelsa"
+                    },
+                    Categoria = new
+                    {
+                        Id = 16,
+                        Nome = "Energia elétrica",
+                        Tipo = "D",
+                        Caminho = "DÉBITO » Serviços » Energia elétrica",
+                        CategoriaPai = new
+                        {
+                            Id = 6035,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Serviços",
+                            Tipo = "D",
+                            Caminho = "DÉBITO » Serviços"
+                        },
+                        CategoriasFilha = (object)null
+                    },
+                    Parcelas = new[]
+                    {
+                        new
+                        {
+                            Id = 37,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 7, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (1/2)"
+                       },
+                        new
+                        {
+                            Id = 38,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 8, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (2/2)"
+                       }
+                    },
+                    DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                    DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                    QuantidadeParcelas = 2,
+                    QuantidadeParcelasAbertas = 2,
+                    QuantidadeParcelasFechadas = 0,
+                    Concluido = false
                 }
             };
         }
@@ -108,7 +303,72 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Retorno = new
                 {
                     Id = 1,
-                    Nome = "Supermecado Carone"
+                    TipoMetodoPagamento = 2,
+                    Observacao = "Energia - 2018",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta 1",
+                        ValorSaldoInicial = 1000,
+                        NomeInstituicao = (string)null,
+                        NumeroAgencia = (string)null,
+                        Numero = (string)null
+                    },
+                    CartaoCredito = (string)null,
+                    Pessoa = new
+                    {
+                        Id = 80,
+                        Nome = "EDP Escelsa"
+                    },
+                    Categoria = new
+                    {
+                        Id = 16,
+                        Nome = "Energia elétrica",
+                        Tipo = "D",
+                        Caminho = "DÉBITO » Serviços » Energia elétrica",
+                        CategoriaPai = new
+                        {
+                            Id = 6035,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Serviços",
+                            Tipo = "D",
+                            Caminho = "DÉBITO » Serviços"
+                        },
+                        CategoriasFilha = (object)null
+                    },
+                    Parcelas = new[]
+                    {
+                        new
+                        {
+                            Id = 37,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 7, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (1/2)"
+                       },
+                        new
+                        {
+                            Id = 38,
+                            IdAgendamento = 5,
+                            IdFatura = (int?)null,
+                            Data = new DateTime(2018, 8, 30),
+                            Valor = (decimal)128.35,
+                            Lancada = false,
+                            Descartada = false,
+                            MotivoDescarte = (string)null,
+                            Observacao = "Energia - 2018 / Parcela (2/2)"
+                       }
+                    },
+                    DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                    DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                    QuantidadeParcelas = 2,
+                    QuantidadeParcelasAbertas = 2,
+                    QuantidadeParcelasFechadas = 0,
+                    Concluido = false
                 }
             };
         }
@@ -118,22 +378,79 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
     {
         public object GetExamples()
         {
-            return new ProcurarSaida(new[] {
+            return new ProcurarSaida(new[]
+                    {
                         new
                         {
                             Id = 1,
-                            Nome = "Supermecado Carone"
+                            TipoMetodoPagamento = 2,
+                            Observacao = "Energia - 2018",
+                            Conta = new
+                            {
+                                Id = 1,
+                                Nome = "Conta 1",
+                                ValorSaldoInicial = 1000,
+                                NomeInstituicao = (string)null,
+                                NumeroAgencia = (string)null,
+                                Numero = (string)null
+                            },
+                            CartaoCredito = (string)null,
+                            Pessoa = new
+                            {
+                                Id = 80,
+                                Nome = "EDP Escelsa"
+                            },
+                            Categoria = new
+                            {
+                                Id = 16,
+                                Nome = "Energia elétrica",
+                                Tipo = "D",
+                                Caminho = "DÉBITO » Serviços » Energia elétrica",
+                                CategoriaPai = new
+                                {
+                                    Id = 6035,
+                                    IdCategoriaPai = (int?)null,
+                                    Nome = "Serviços",
+                                    Tipo = "D",
+                                    Caminho = "DÉBITO » Serviços"
+                                },
+                                CategoriasFilha = (object)null
+                            },
+                            Parcelas = new[]
+                            {
+                                new
+                                {
+                                    Id = 37,
+                                    IdAgendamento = 5,
+                                    IdFatura = (int?)null,
+                                    Data = new DateTime(2018, 7, 30),
+                                    Valor = (decimal)128.35,
+                                    Lancada = false,
+                                    Descartada = false,
+                                    MotivoDescarte = (string)null,
+                                    Observacao = "Energia - 2018 / Parcela (1/2)"
+                               },
+                                new
+                                {
+                                    Id = 38,
+                                    IdAgendamento = 5,
+                                    IdFatura = (int?)null,
+                                    Data = new DateTime(2018, 8, 30),
+                                    Valor = (decimal)128.35,
+                                    Lancada = false,
+                                    Descartada = false,
+                                    MotivoDescarte = (string)null,
+                                    Observacao = "Energia - 2018 / Parcela (2/2)"
+                               }
+                            },
+                            DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                            DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                            QuantidadeParcelas = 2,
+                            QuantidadeParcelasAbertas = 2,
+                            QuantidadeParcelasFechadas = 0,
+                            Concluido = false
                         },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Padaria Pão Chick"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Nome = "Farmácia Pague Menos"
-                        }
+
                     }, "Nome", "ASC", 3, 1, 1, 3)
             {
                 Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso }
@@ -154,12 +471,72 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     new
                     {
                         Id = 1,
-                        Nome = "Supermecado Carone"
-                    },
-                    new
-                    {
-                        Id = 2,
-                        Nome = "Padaria Pão Chick"
+                        TipoMetodoPagamento = 2,
+                        Observacao = "Energia - 2018",
+                        Conta = new
+                        {
+                            Id = 1,
+                            Nome = "Conta 1",
+                            ValorSaldoInicial = 1000,
+                            NomeInstituicao = (string)null,
+                            NumeroAgencia = (string)null,
+                            Numero = (string)null
+                        },
+                        CartaoCredito = (string)null,
+                        Pessoa = new
+                        {
+                            Id = 80,
+                            Nome = "EDP Escelsa"
+                        },
+                        Categoria = new
+                        {
+                            Id = 16,
+                            Nome = "Energia elétrica",
+                            Tipo = "D",
+                            Caminho = "DÉBITO » Serviços » Energia elétrica",
+                            CategoriaPai = new
+                            {
+                                Id = 6035,
+                                IdCategoriaPai = (int?)null,
+                                Nome = "Serviços",
+                                Tipo = "D",
+                                Caminho = "DÉBITO » Serviços"
+                            },
+                            CategoriasFilha = (object)null
+                        },
+                        Parcelas = new[]
+                        {
+                            new
+                            {
+                                Id = 37,
+                                IdAgendamento = 5,
+                                IdFatura = (int?)null,
+                                Data = new DateTime(2018, 7, 30),
+                                Valor = (decimal)128.35,
+                                Lancada = false,
+                                Descartada = false,
+                                MotivoDescarte = (string)null,
+                                Observacao = "Energia - 2018 / Parcela (1/2)"
+                            },
+                            new
+                            {
+                                Id = 38,
+                                IdAgendamento = 5,
+                                IdFatura = (int?)null,
+                                Data = new DateTime(2018, 8, 30),
+                                Valor = (decimal)128.35,
+                                Lancada = false,
+                                Descartada = false,
+                                MotivoDescarte = (string)null,
+                                Observacao = "Energia - 2018 / Parcela (2/2)"
+                            }
+                        },
+                        DataProximaParcelaAberta = new DateTime(2018, 7, 30),
+                        DataUltimaParcelaAberta = new DateTime(2018, 8, 30),
+                        QuantidadeParcelas = 2,
+                        QuantidadeParcelasAbertas = 2,
+                        QuantidadeParcelasFechadas = 0,
+                        Concluido = false
                     }
                 }
             };

@@ -63,9 +63,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 .NotificarSeVerdadeiro(!this.IdAgendamento.HasValue && !this.IdFatura.HasValue, ParcelaMensagem.Id_Agendamento_Id_Fatura_Nao_Informados)
                 .NotificarSeVerdadeiro(this.IdAgendamento.HasValue && this.IdFatura.HasValue, ParcelaMensagem.Id_Agendamento_Id_Fatura_Informados);
 
-            if (this.IdAgendamento.HasValue)
-                this.NotificarSeMenorQue(this.IdAgendamento.Value, 1, string.Format(ParcelaMensagem.Id_Agendamento_Invalido, this.IdAgendamento.Value));
-
             if (this.IdFatura.HasValue)
                 this.NotificarSeMenorQue(this.IdFatura.Value, 1, string.Format(ParcelaMensagem.Id_Fatura_Invalido, this.IdFatura.Value));
 

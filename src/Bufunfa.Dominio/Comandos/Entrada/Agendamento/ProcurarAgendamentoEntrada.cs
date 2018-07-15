@@ -22,7 +22,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
         public DateTime? DataFimParcela { get; set; }
 
-        public bool? SeConcluido { get; set; }
+        public bool? Concluido { get; set; }
 
         public ProcurarAgendamentoEntrada(
             int idUsuario,
@@ -50,7 +50,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 this.NotificarSeMaiorQue(this.DataInicioParcela.Value, this.DataFimParcela.Value, AgendamentoMensagem.Agendamento_Procurar_Periodo_Invalido);
 
             if (this.DataInicioParcela.HasValue && !this.DataFimParcela.HasValue || !this.DataInicioParcela.HasValue && this.DataFimParcela.HasValue)
-                this.NotificarSeMaiorQue(this.DataInicioParcela.Value, this.DataFimParcela.Value, AgendamentoMensagem.Agendamento_Procurar_Periodo_Invalido);
+                this.AdicionarNotificacao(AgendamentoMensagem.Agendamento_Procurar_Periodo_Invalido);
 
             return !this.Invalido;
         }

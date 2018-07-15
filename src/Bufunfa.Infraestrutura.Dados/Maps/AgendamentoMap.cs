@@ -31,7 +31,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             
             builder.HasMany(x => x.Parcelas)
                 .WithOne(x => x.Agendamento)
-                .HasForeignKey(x => x.IdAgendamento);
+                .HasForeignKey(x => x.IdAgendamento)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Ignore(x => x.DataProximaParcelaAberta);
             builder.Ignore(x => x.DataUltimaParcelaAberta);

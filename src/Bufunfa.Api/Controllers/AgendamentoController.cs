@@ -65,7 +65,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
                 IdCategoria       = viewModel.IdCategoria,
                 IdConta           = viewModel.IdConta,
                 IdPessoa          = viewModel.IdPessoa,
-                SeConcluido       = viewModel.SeConcluido
+                Concluido       = viewModel.Concluido
             };
 
             return await _agendamentoServico.ProcurarAgendamentos(procurarEntrada);

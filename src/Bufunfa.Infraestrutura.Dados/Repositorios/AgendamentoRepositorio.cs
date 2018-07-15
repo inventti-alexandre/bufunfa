@@ -1,4 +1,5 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+﻿using JNogueira.Bufunfa.Dominio;
+using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
@@ -65,8 +66,12 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             if (procurarEntrada.DataInicioParcela.HasValue && procurarEntrada.DataFimParcela.HasValue)
                 query = query.Where(x => x.Parcelas.Any(y => y.Data.Date >= procurarEntrada.DataInicioParcela.Value.Date && y.Data.Date <= procurarEntrada.DataFimParcela.Value.Date));
 
-            if (procurarEntrada.SeConcluido.HasValue)
-                query = query.Where(x => x.Concluido);
+            if (procurarEntrada.Concluido.HasValue)
+            {
+                query = procurarEntrada.Concluido.Value
+                    ? query.Where(x => x.Parcelas.Count(y => y.Status == StatusParcela.Aberta) == x.Parcelas.Count(y => y.Status == StatusParcela.Fechada))
+                    : query.Where(x => x.Parcelas.Count(y => y.Status == StatusParcela.Aberta) != x.Parcelas.Count(y => y.Status == StatusParcela.Fechada));
+            }
 
             query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
 

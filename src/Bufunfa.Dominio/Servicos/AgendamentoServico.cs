@@ -72,6 +72,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
+            agendamento = await _agendamentoRepositorio.ObterPorId(agendamento.Id);
+
             return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Cadastrado_Com_Sucesso }, new AgendamentoSaida(agendamento));
         }
 
@@ -95,8 +97,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Exclui todas as parcelas abertas do agendamento.
-            foreach (var parcelaAberta in agendamento.Parcelas.Where(x => x.Status == StatusParcela.Aberta))
+            // Exclui todas as parcelas agendamento.
+            foreach (var parcelaAberta in agendamento.Parcelas)
             {
                 _parcelaRepositorio.Deletar(parcelaAberta);
             }
@@ -136,7 +138,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { PessoaMensagem.Pessoa_Excluida_Com_Sucesso }, new AgendamentoSaida(agendamento));
+            return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Excluido_Com_Sucesso }, new AgendamentoSaida(agendamento));
         }
 
         public async Task<ISaida> CadastrarParcela(CadastrarParcelaEntrada cadastroEntrada)

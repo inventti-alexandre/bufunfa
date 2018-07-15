@@ -38,11 +38,11 @@ namespace JNogueira.Bufunfa.Api.ViewModels
         /// <summary>
         /// Procurar apenas por agendamentos concluídos
         /// </summary>
-        public bool? SeConcluido { get; set; }
+        public bool? Concluido { get; set; }
 
         public ProcurarAgendamentoViewModel()
         {
-            this.OrdenarPor = "DataProximaParcela";
+            this.OrdenarPor = "DataProximaParcelaAberta";
         }
     }
 }
