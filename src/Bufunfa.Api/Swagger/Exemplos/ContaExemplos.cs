@@ -1,4 +1,5 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
+using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
 using Swashbuckle.AspNetCore.Examples;
@@ -12,6 +13,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new CadastrarContaViewModel
             {
                 Nome = "Conta corrente Santander",
+                Tipo = TipoConta.ContaCorrente,
                 ValorSaldoInicial = (decimal?)(-1542.12),
                 NomeInstituicao = "Banco Santander S/A",
                 NumeroAgencia = "3345",
@@ -28,6 +30,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             {
                 IdConta = 1,
                 Nome = "Conta corrente Santander",
+                Tipo = TipoConta.ContaCorrente,
                 ValorSaldoInicial = (decimal?)(-1542.1),
                 NomeInstituicao = "Banco Santander",
                 NumeroAgencia = "3345",
@@ -48,6 +51,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 {
                     Id = 1,
                     Nome = "Conta corrente Santander",
+                    Tipo = (int)TipoConta.ContaCorrente,
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
                     NumeroAgencia = "3345",
@@ -69,6 +73,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 {
                     Id = 1,
                     Nome = "Conta corrente Santander",
+                    Tipo = (int)TipoConta.ContaCorrente,
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
                     NumeroAgencia = "3345",
@@ -90,6 +95,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 {
                     Id = 1,
                     Nome = "Conta corrente Santander",
+                    Tipo = (int)TipoConta.ContaCorrente,
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
                     NumeroAgencia = "3345",
@@ -111,6 +117,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 {
                     Id = 1,
                     Nome = "Conta corrente Santander",
+                    Tipo = (int)TipoConta.ContaCorrente,
                     ValorSaldoInicial = (decimal?)(-1542.12),
                     NomeInstituicao = "Banco Santander S/A",
                     NumeroAgencia = "3345",
@@ -134,6 +141,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     {
                         Id = 1,
                         Nome = "Conta corrente Santander",
+                        Tipo = (int)TipoConta.ContaCorrente,
                         ValorSaldoInicial = (decimal?)(-1542.12),
                         NomeInstituicao = "Banco Santander S/A",
                         NumeroAgencia = "3345",

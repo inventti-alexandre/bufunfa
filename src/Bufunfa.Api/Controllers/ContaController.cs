@@ -62,16 +62,16 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de uma nova conta.
         /// </summary>
-        /// <param name="cadastroModel">Informações de cadastro da conta.</param>
+        /// <param name="viewModel">Informações de cadastro da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPost]
         [Route("v1/contas/cadastrar")]
         [SwaggerRequestExample(typeof(CadastrarContaViewModel), typeof(CadastrarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta cadastrada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarContaResponseExemplo))]
-        public async Task<ISaida> CadastrarConta([FromBody] CadastrarContaViewModel cadastroModel)
+        public async Task<ISaida> CadastrarConta([FromBody] CadastrarContaViewModel viewModel)
         {
-            var cadastrarEntrada = new CadastrarContaEntrada(base.ObterIdUsuarioClaim(), cadastroModel.Nome, cadastroModel.ValorSaldoInicial, cadastroModel.NomeInstituicao, cadastroModel.NumeroAgencia, cadastroModel.Numero);
+            var cadastrarEntrada = new CadastrarContaEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome, viewModel.Tipo.Value, viewModel.ValorSaldoInicial, viewModel.NomeInstituicao, viewModel.NumeroAgencia, viewModel.Numero);
 
             return await _contaServico.CadastrarConta(cadastrarEntrada);
         }
@@ -79,16 +79,16 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza a alteração de uma conta.
         /// </summary>
-        /// <param name="alterarModel">Informações para alteração da conta.</param>
+        /// <param name="viewModel">Informações para alteração da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPut]
         [Route("v1/contas/alterar")]
         [SwaggerRequestExample(typeof(AlterarContaViewModel), typeof(AlterarContaViewModelExemplo))]
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta alterada com sucesso.")]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarContaResponseExemplo))]
-        public async Task<ISaida> AlterarConta([FromBody] AlterarContaViewModel alterarModel)
+        public async Task<ISaida> AlterarConta([FromBody] AlterarContaViewModel viewModel)
         {
-            var alterarEntrada = new AlterarContaEntrada(alterarModel.IdConta, alterarModel.Nome, base.ObterIdUsuarioClaim(), alterarModel.ValorSaldoInicial, alterarModel.NomeInstituicao, alterarModel.NumeroAgencia, alterarModel.Numero);
+            var alterarEntrada = new AlterarContaEntrada(viewModel.IdConta, viewModel.Nome, viewModel.Tipo.Value, base.ObterIdUsuarioClaim(), viewModel.ValorSaldoInicial, viewModel.NomeInstituicao, viewModel.NumeroAgencia, viewModel.Numero);
 
             return await _contaServico.AlterarConta(alterarEntrada);
         }

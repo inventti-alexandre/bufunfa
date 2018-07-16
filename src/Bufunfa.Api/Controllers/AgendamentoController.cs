@@ -140,5 +140,92 @@ namespace JNogueira.Bufunfa.Api.Controllers
         {
             return await _agendamentoServico.ExcluirAgendamento(idAgendamento, base.ObterIdUsuarioClaim());
         }
+
+        /// <summary>
+        /// Realiza o cadastro de uma nova parcela.
+        /// </summary>
+        /// <param name="viewModel">Informações de cadastro da parcela.</param>
+        [Authorize(PermissaoAcesso.Agendamentos)]
+        [HttpPost]
+        [Route("v1/agendamentos/cadastrar-parcela")]
+        [SwaggerRequestExample(typeof(CadastrarParcelaViewModel), typeof(CadastrarParcelaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Parcela cadastrada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarParcelaResponseExemplo))]
+        public async Task<ISaida> CadastrarParcela([FromBody] CadastrarParcelaViewModel viewModel)
+        {
+            var cadastrarEntrada = new CadastrarParcelaEntrada(
+                base.ObterIdUsuarioClaim(),
+                viewModel.IdAgendamento.Value,
+                null,
+                viewModel.Data.Value,
+                viewModel.Valor.Value,
+                viewModel.Observacao);
+
+            return await _agendamentoServico.CadastrarParcela(cadastrarEntrada);
+        }
+
+        /// <summary>
+        /// Realiza a alteração de uma parcela.
+        /// </summary>
+        /// <param name="viewModel">Informações para alteração de uma parcela.</param>
+        [Authorize(PermissaoAcesso.Agendamentos)]
+        [HttpPut]
+        [Route("v1/agendamentos/alterar-parcela")]
+        [SwaggerRequestExample(typeof(AlterarParcelaViewModel), typeof(AlterarParcelaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Parcela alterada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarParcelaResponseExemplo))]
+        public async Task<ISaida> AlterarParcela([FromBody] AlterarParcelaViewModel viewModel)
+        {
+            var alterarEntrada = new AlterarParcelaEntrada(
+                viewModel.IdParcela.Value,
+                viewModel.Data.Value,
+                viewModel.Valor.Value,
+                base.ObterIdUsuarioClaim(),
+                viewModel.Observacao);
+
+            return await _agendamentoServico.AlterarParcela(alterarEntrada);
+        }
+
+        /// <summary>
+        /// Realiza o lançamento de uma parcela.
+        /// </summary>
+        /// <param name="viewModel">Informações de lançamento da parcela.</param>
+        [Authorize(PermissaoAcesso.Agendamentos)]
+        [HttpPut]
+        [Route("v1/agendamentos/lancar-parcela")]
+        [SwaggerRequestExample(typeof(LancarParcelaViewModel), typeof(LancarParcelaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Parcela lançada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(LancarParcelaResponseExemplo))]
+        public async Task<ISaida> LancarParcela([FromBody] LancarParcelaViewModel viewModel)
+        {
+            var lancarEntrada = new LancarParcelaEntrada(
+                viewModel.IdParcela.Value,
+                viewModel.Data.Value,
+                viewModel.Valor.Value,
+                base.ObterIdUsuarioClaim(),
+                viewModel.Observacao);
+
+            return await _agendamentoServico.LancarParcela(lancarEntrada);
+        }
+
+        /// <summary>
+        /// Realiza o descarte de uma parcela.
+        /// </summary>
+        /// <param name="viewModel">Informações de descarte da parcela.</param>
+        [Authorize(PermissaoAcesso.Agendamentos)]
+        [HttpPut]
+        [Route("v1/agendamentos/descartar-parcela")]
+        [SwaggerRequestExample(typeof(DescartarParcelaViewModel), typeof(DescartarParcelaViewModelExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Parcela descartada com sucesso.")]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(DescartarParcelaResponseExemplo))]
+        public async Task<ISaida> DescartarParcela([FromBody] DescartarParcelaViewModel viewModel)
+        {
+            var descartarEntrada = new DescartarParcelaEntrada(
+                viewModel.IdParcela.Value,
+                base.ObterIdUsuarioClaim(),
+                viewModel.MotivoDescarte);
+
+            return await _agendamentoServico.DescartarParcela(descartarEntrada);
+        }
     }
 }

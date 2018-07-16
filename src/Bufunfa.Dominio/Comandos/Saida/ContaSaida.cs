@@ -18,6 +18,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public string Nome { get; }
 
         /// <summary>
+        /// Tipo da conta
+        /// </summary>
+        public TipoConta Tipo { get; }
+
+        /// <summary>
         /// Valor inicial do saldo da conta
         /// </summary>
         public decimal? ValorSaldoInicial { get; }
@@ -44,6 +49,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
 
             this.Id                = conta.Id;
             this.Nome              = conta.Nome;
+            this.Tipo              = conta.Tipo;
             this.ValorSaldoInicial = conta.ValorSaldoInicial;
             this.NomeInstituicao   = conta.NomeInstituicao;
             this.NumeroAgencia     = conta.NumeroAgencia;

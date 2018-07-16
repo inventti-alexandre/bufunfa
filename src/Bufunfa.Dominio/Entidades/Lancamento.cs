@@ -81,25 +81,11 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
             this.IdUsuario   = cadastrarEntrada.IdUsuario;
             this.IdConta     = cadastrarEntrada.IdConta;
             this.IdCategoria = cadastrarEntrada.IdCategoria;
+            this.IdParcela   = cadastrarEntrada.IdParcela;
             this.Data        = cadastrarEntrada.Data;
             this.Valor       = cadastrarEntrada.Valor;
             this.IdPessoa    = cadastrarEntrada.IdPessoa;
             this.Observacao  = cadastrarEntrada.Observacao;
-        }
-
-        public Lancamento(LancarParcelaEntrada lancarParcelaEntrada)
-        {
-            if (!lancarParcelaEntrada.Valido())
-                return;
-
-            this.IdParcela   = lancarParcelaEntrada.IdParcela;
-            this.IdUsuario   = lancarParcelaEntrada.IdUsuario;
-            this.IdConta     = lancarParcelaEntrada.IdConta;
-            this.IdCategoria = lancarParcelaEntrada.IdCategoria;
-            this.Data        = lancarParcelaEntrada.Data;
-            this.Valor       = lancarParcelaEntrada.Valor;
-            this.IdPessoa    = lancarParcelaEntrada.IdPessoa;
-            this.Observacao  = lancarParcelaEntrada.Observacao;
         }
 
         public void Alterar(AlterarLancamentoEntrada alterarEntrada)

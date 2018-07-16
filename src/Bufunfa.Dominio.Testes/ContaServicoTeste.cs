@@ -1,4 +1,5 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+﻿using JNogueira.Bufunfa.Dominio;
+using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
@@ -33,7 +34,7 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
 
             _contaRepositorio.ObterPorId(idConta)
-                .Returns(new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1")));
+                .Returns(new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente)));
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -78,7 +79,7 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
 
             _contaRepositorio.ObterPorId(idConta)
-                .Returns(new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1")));
+                .Returns(new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente)));
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -105,7 +106,7 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
 
             _contaRepositorio.ObterPorUsuario(idUsuario)
-                .Returns(new List<Conta> { new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1")) });
+                .Returns(new List<Conta> { new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente)) });
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -117,7 +118,7 @@ namespace Bufunfa.Dominio.Testes
         [TestMethod]
         public void Nao_Deve_Cadastrar_Conta_Com_Parametros_Invalidos()
         {
-            var cadastroEntrada = new CadastrarContaEntrada(0, string.Empty);
+            var cadastroEntrada = new CadastrarContaEntrada(0, string.Empty, TipoConta.ContaCorrente);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -134,7 +135,7 @@ namespace Bufunfa.Dominio.Testes
             _contaRepositorio.VerificarExistenciaPorNome(idUsuario, "Conta 1")
                .Returns(true);
 
-            var cadastroEntrada = new CadastrarContaEntrada(idUsuario, "Conta 1");
+            var cadastroEntrada = new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -149,7 +150,7 @@ namespace Bufunfa.Dominio.Testes
             var idConta = 0;
             var idUsuario = 0;
 
-            var alterarEntrada = new AlterarContaEntrada(idConta, string.Empty, idUsuario);
+            var alterarEntrada = new AlterarContaEntrada(idConta, string.Empty, TipoConta.ContaCorrente, idUsuario);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -167,7 +168,7 @@ namespace Bufunfa.Dominio.Testes
             _contaRepositorio.ObterPorId(idConta, true)
                 .Returns((Conta)null);
 
-            var alterarEntrada = new AlterarContaEntrada(idConta, "Período 1", idUsuario);
+            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1", TipoConta.ContaCorrente, idUsuario);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -182,7 +183,7 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
             var idConta = 1;
 
-            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1"));
+            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente));
             typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta, true)
@@ -191,7 +192,7 @@ namespace Bufunfa.Dominio.Testes
             _contaRepositorio.VerificarExistenciaPorNome(idUsuario, "Conta 1", idConta)
                 .Returns(true);
 
-            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1", idUsuario);
+            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1", TipoConta.ContaCorrente, idUsuario);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -206,13 +207,13 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
             var idConta = 1;
 
-            var conta = new Conta(new CadastrarContaEntrada(2, "Conta 1"));
+            var conta = new Conta(new CadastrarContaEntrada(2, "Conta 1", TipoConta.ContaCorrente));
             typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta, true)
                 .Returns(conta);
 
-            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1 alterada", idUsuario);
+            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1 alterada", TipoConta.ContaCorrente, idUsuario);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -227,13 +228,13 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
             var idConta = 1;
 
-            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1"));
+            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente));
             typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta, true)
                 .Returns(conta);
 
-            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1 alterada", idUsuario);
+            var alterarEntrada = new AlterarContaEntrada(idConta, "Conta 1 alterada", TipoConta.ContaCorrente, idUsuario);
 
             _contaServico = Substitute.For<ContaServico>(_contaRepositorio, _uow);
 
@@ -274,7 +275,7 @@ namespace Bufunfa.Dominio.Testes
             var idConta = 1;
             var idUsuario = 1;
 
-            var conta = new Conta(new CadastrarContaEntrada(2, "Conta 1"));
+            var conta = new Conta(new CadastrarContaEntrada(2, "Conta 1", TipoConta.ContaCorrente));
             typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta)
@@ -293,7 +294,7 @@ namespace Bufunfa.Dominio.Testes
             var idUsuario = 1;
             var idConta = 1;
 
-            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1"));
+            var conta = new Conta(new CadastrarContaEntrada(idUsuario, "Conta 1", TipoConta.ContaCorrente));
             typeof(Conta).GetProperty("Id").SetValue(conta, idConta);
 
             _contaRepositorio.ObterPorId(idConta)

@@ -23,6 +23,11 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public string Nome { get; private set; }
 
         /// <summary>
+        /// Tipo da conta
+        /// </summary>
+        public TipoConta Tipo { get; private set; }
+
+        /// <summary>
         /// Valor inicial do saldo da conta
         /// </summary>
         public decimal? ValorSaldoInicial { get; private set; }
@@ -55,6 +60,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
             this.IdUsuario         = cadastrarEntrada.IdUsuario;
             this.Nome              = cadastrarEntrada.Nome;
+            this.Tipo              = cadastrarEntrada.Tipo;
             this.ValorSaldoInicial = cadastrarEntrada.ValorSaldoInicial;
             this.NomeInstituicao   = cadastrarEntrada.NomeInstituicao;
             this.NumeroAgencia     = cadastrarEntrada.NumeroAgencia;
@@ -67,6 +73,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
                 return;
 
             this.Nome              = alterarEntrada.Nome;
+            this.Tipo              = alterarEntrada.Tipo;
             this.ValorSaldoInicial = alterarEntrada.ValorSaldoInicial;
             this.NomeInstituicao   = alterarEntrada.NomeInstituicao;
             this.NumeroAgencia     = alterarEntrada.NumeroAgencia;

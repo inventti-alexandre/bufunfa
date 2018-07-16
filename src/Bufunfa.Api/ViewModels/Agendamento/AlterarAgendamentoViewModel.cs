@@ -9,7 +9,7 @@ namespace JNogueira.Bufunfa.Api.ViewModels
     public class AlterarAgendamentoViewModel
     {
         /// <summary>
-        /// Id da conta
+        /// Id do agendamento
         /// </summary>
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "Id_Invalido")]
         public int? IdAgendamento { get; set; }

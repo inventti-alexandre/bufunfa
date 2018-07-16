@@ -25,6 +25,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public string Nome { get; }
 
         /// <summary>
+        /// Tipo da conta
+        /// </summary>
+        public TipoConta Tipo { get; }
+
+        /// <summary>
         /// Valor inicial do saldo da conta
         /// </summary>
         public decimal? ValorSaldoInicial { get; }
@@ -47,6 +52,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public AlterarContaEntrada(
             int idConta,
             string nome,
+            TipoConta tipo,
             int idUsuario,
             decimal? valorSaldoInicial = null,
             string nomeInstituicao = null,
@@ -56,6 +62,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.IdConta           = idConta;
             this.IdUsuario         = idUsuario;
             this.Nome              = nome;
+            this.Tipo              = tipo;
             this.ValorSaldoInicial = valorSaldoInicial;
             this.NomeInstituicao   = nomeInstituicao;
             this.NumeroAgencia     = numeroAgencia;

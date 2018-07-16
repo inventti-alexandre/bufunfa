@@ -106,6 +106,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ID da parcela do lançamento informado ({0}) é inválido..
+        /// </summary>
+        public static string Id_Parcela_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Parcela_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O ID da pessoa do lançamento informado ({0}) é inválido..
         /// </summary>
         public static string Id_Pessoa_Invalido {

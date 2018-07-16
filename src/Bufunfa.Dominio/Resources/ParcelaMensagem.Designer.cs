@@ -178,6 +178,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível alterar uma parcela já lançada ou descartada..
+        /// </summary>
+        public static string Parcela_Alterar_Ja_Desacartada_Lancada {
+            get {
+                return ResourceManager.GetString("Parcela_Alterar_Ja_Desacartada_Lancada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A parcela que se deseja alterar, não pertence ao usuário autenticado..
         /// </summary>
         public static string Parcela_Alterar_Nao_Pertence_Usuario {
@@ -205,6 +214,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível descartar essa parcela pois a parcela já foi descartada anteriormente..
+        /// </summary>
+        public static string Parcela_Descartar_Ja_Descartada {
+            get {
+                return ResourceManager.GetString("Parcela_Descartar_Ja_Descartada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível descartar essa parcela pois a parcela já foi lançada anteriormente..
+        /// </summary>
+        public static string Parcela_Descartar_Ja_Lancada {
+            get {
+                return ResourceManager.GetString("Parcela_Descartar_Ja_Lancada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parcela encontrada com sucesso..
         /// </summary>
         public static string Parcela_Encontrada_Com_Sucesso {
@@ -228,6 +255,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Parcela_Lancada_Com_Sucesso {
             get {
                 return ResourceManager.GetString("Parcela_Lancada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível lançar essa parcela pois a parcela já foi descartada anteriormente..
+        /// </summary>
+        public static string Parcela_Lancar_Ja_Descartada {
+            get {
+                return ResourceManager.GetString("Parcela_Lancar_Ja_Descartada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível lançar essa parcela pois a parcela já foi lançada anteriormente..
+        /// </summary>
+        public static string Parcela_Lancar_Ja_Lancada {
+            get {
+                return ResourceManager.GetString("Parcela_Lancar_Ja_Lancada", resourceCulture);
             }
         }
         

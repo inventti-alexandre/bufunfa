@@ -167,6 +167,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se a parcela existe
             this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, alterarEntrada.IdParcela));
 
+            if (parcela != null)
+            {
+                // Verifica se a parcela já foi lançada ou descartada
+                this.NotificarSeVerdadeiro(parcela.Lancada || parcela.Descartada, ParcelaMensagem.Parcela_Alterar_Ja_Desacartada_Lancada);
+            }
+
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
@@ -196,6 +202,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se a parcela existe
             this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, lancarEntrada.IdParcela));
 
+            if (parcela != null)
+            {
+                // Verifica se a parcela já foi lançada ou descartada
+                this.NotificarSeVerdadeiro(parcela.Lancada, ParcelaMensagem.Parcela_Lancar_Ja_Lancada);
+                this.NotificarSeVerdadeiro(parcela.Descartada, ParcelaMensagem.Parcela_Lancar_Ja_Descartada);
+            }
+
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
@@ -210,7 +223,17 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _parcelaRepositorio.Atualizar(parcela);
 
             // Cadastro o lançamento
-            var lancamento = new Lancamento(lancarEntrada);
+            var cadastrarEntrada = new CadastrarLancamentoEntrada(
+                parcela.Agendamento.IdUsuario,
+                parcela.Agendamento.IdConta.Value,
+                parcela.Agendamento.IdCategoria,
+                lancarEntrada.Data,
+                lancarEntrada.Valor,
+                parcela.Agendamento.IdPessoa,
+                parcela.Id,
+                lancarEntrada.Observacao);
+
+            var lancamento = new Lancamento(cadastrarEntrada);
 
             await _lancamentoRepositorio.Inserir(lancamento);
 
@@ -229,6 +252,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             // Verifica se a parcela existe
             this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, descartarEntrada.IdParcela));
+
+            if (parcela != null)
+            {
+                // Verifica se a parcela já foi lançada ou descartada
+                this.NotificarSeVerdadeiro(parcela.Lancada, ParcelaMensagem.Parcela_Lancar_Ja_Lancada);
+                this.NotificarSeVerdadeiro(parcela.Descartada, ParcelaMensagem.Parcela_Lancar_Ja_Descartada);
+            }
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

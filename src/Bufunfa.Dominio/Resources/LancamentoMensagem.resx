@@ -168,4 +168,7 @@
   <data name="Lancamento_Procurar_Periodo_Invalido" xml:space="preserve">
     <value>O período informado para é inválido. Verifique as datas informadas.</value>
   </data>
+  <data name="Id_Parcela_Invalido" xml:space="preserve">
+    <value>O ID da parcela do lançamento informado ({0}) é inválido.</value>
+  </data>
 </root>

@@ -40,4 +40,13 @@
         Aberta,
         Fechada
     }
+
+    /// <summary>
+    /// Tipo da conta
+    /// </summary>
+    public enum TipoConta
+    {
+        ContaCorrente = 1,
+        Investimento  = 2
+    }
 }

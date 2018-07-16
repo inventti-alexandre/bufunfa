@@ -31,6 +31,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public int? IdPessoa { get; }
 
         /// <summary>
+        /// Id da parcela
+        /// </summary>
+        public int? IdParcela { get; }
+
+        /// <summary>
         /// Data do lançamento
         /// </summary>
         public DateTime Data { get; }
@@ -52,11 +57,13 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             DateTime data,
             decimal valor,
             int? idPessoa = null,
+            int? idParcela = null,
             string observacao = null)
         {
             this.IdUsuario   = idUsuario;
             this.IdConta     = idConta;
             this.IdCategoria = idCategoria;
+            this.IdParcela   = idParcela;
             this.Data        = data;
             this.Valor       = valor;
             this.IdPessoa    = idPessoa;
@@ -73,6 +80,9 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (this.IdPessoa.HasValue)
                 this.NotificarSeMenorQue(this.IdPessoa.Value, 1, string.Format(LancamentoMensagem.Id_Pessoa_Invalido, this.IdPessoa.Value));
+
+            if (this.IdParcela.HasValue)
+                this.NotificarSeMenorQue(this.IdParcela.Value, 1, string.Format(LancamentoMensagem.Id_Parcela_Invalido, this.IdParcela.Value));
 
             if (!string.IsNullOrEmpty(this.Observacao))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Observacao, 500, LancamentoMensagem.Observacao_Tamanho_Maximo_Excedido);

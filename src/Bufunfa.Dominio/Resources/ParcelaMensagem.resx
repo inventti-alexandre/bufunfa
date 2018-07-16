@@ -156,6 +156,9 @@
   <data name="Parcela_Alterada_Com_Sucesso" xml:space="preserve">
     <value>Parcela alterada com sucesso.</value>
   </data>
+  <data name="Parcela_Alterar_Ja_Desacartada_Lancada" xml:space="preserve">
+    <value>Não é possível alterar uma parcela já lançada ou descartada.</value>
+  </data>
   <data name="Parcela_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
     <value>A parcela que se deseja alterar, não pertence ao usuário autenticado.</value>
   </data>
@@ -165,6 +168,12 @@
   <data name="Parcela_Descartada_Com_Sucesso" xml:space="preserve">
     <value>Parcela descartada com sucesso.</value>
   </data>
+  <data name="Parcela_Descartar_Ja_Descartada" xml:space="preserve">
+    <value>Não é possível descartar essa parcela pois a parcela já foi descartada anteriormente.</value>
+  </data>
+  <data name="Parcela_Descartar_Ja_Lancada" xml:space="preserve">
+    <value>Não é possível descartar essa parcela pois a parcela já foi lançada anteriormente.</value>
+  </data>
   <data name="Parcela_Encontrada_Com_Sucesso" xml:space="preserve">
     <value>Parcela encontrada com sucesso.</value>
   </data>
@@ -173,6 +182,12 @@
   </data>
   <data name="Parcela_Lancada_Com_Sucesso" xml:space="preserve">
     <value>Parcela lançada com sucesso.</value>
+  </data>
+  <data name="Parcela_Lancar_Ja_Descartada" xml:space="preserve">
+    <value>Não é possível lançar essa parcela pois a parcela já foi descartada anteriormente.</value>
+  </data>
+  <data name="Parcela_Lancar_Ja_Lancada" xml:space="preserve">
+    <value>Não é possível lançar essa parcela pois a parcela já foi lançada anteriormente.</value>
   </data>
   <data name="Parcela_Lancar_Nao_Pertence_Usuario" xml:space="preserve">
     <value>A parcela que se deseja lançar, não pertence ao usuário autenticado.</value>
