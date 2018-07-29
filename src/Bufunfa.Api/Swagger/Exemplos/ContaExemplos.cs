@@ -2,11 +2,11 @@
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class CadastrarContaViewModelExemplo : IExamplesProvider
+    public class CadastrarContaRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -16,23 +16,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Tipo = TipoConta.ContaCorrente,
                 ValorSaldoInicial = (decimal?)(-1542.12),
                 NomeInstituicao = "Banco Santander S/A",
-                NumeroAgencia = "3345",
-                Numero = "01005539-0"
-            };
-        }
-    }
-
-    public class AlterarContaViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new AlterarContaViewModel
-            {
-                IdConta = 1,
-                Nome = "Conta corrente Santander",
-                Tipo = TipoConta.ContaCorrente,
-                ValorSaldoInicial = (decimal?)(-1542.1),
-                NomeInstituicao = "Banco Santander",
                 NumeroAgencia = "3345",
                 Numero = "01005539-0"
             };
@@ -57,6 +40,23 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     NumeroAgencia = "3345",
                     Numero = "01005539-0"
                 }
+            };
+        }
+    }
+
+    public class AlterarContaRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new AlterarContaViewModel
+            {
+                IdConta = 1,
+                Nome = "Conta corrente Santander",
+                Tipo = TipoConta.ContaCorrente,
+                ValorSaldoInicial = (decimal?)(-1542.1),
+                NomeInstituicao = "Banco Santander",
+                NumeroAgencia = "3345",
+                Numero = "01005539-0"
             };
         }
     }

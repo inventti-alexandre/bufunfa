@@ -2,11 +2,24 @@
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
-using System;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
+    public class ProcurarCategoriaRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new ProcurarCategoriaViewModel
+            {
+                Caminho = "DÉBITO » Alimentação » Restaurante",
+                IdCategoriaPai = null,
+                Nome = "Restaurante",
+                Tipo = TipoCategoria.Debito
+            };
+        }
+    }
+
     public class ProcurarCategoriaResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -44,7 +57,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
-    public class CadastrarCategoriaViewModelExemplo : IExamplesProvider
+    public class CadastrarCategoriaRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -53,20 +66,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Nome = "Restaurante",
                 Tipo = TipoCategoria.Debito,
                 IdCategoriaPai = 1
-            };
-        }
-    }
-
-    public class AlterarCategoriaViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new AlterarCategoriaViewModel
-            {
-                IdCategoria = 1,
-                IdCategoriaPai = null,
-                Nome = "Restaurante",
-                Tipo = TipoCategoria.Debito
             };
         }
     }
@@ -86,6 +85,20 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     Tipo = TipoCategoria.Debito,
                     IdCategoriaPai = 1
                 }
+            };
+        }
+    }
+
+    public class AlterarCategoriaRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new AlterarCategoriaViewModel
+            {
+                IdCategoria = 1,
+                IdCategoriaPai = null,
+                Nome = "Restaurante",
+                Tipo = TipoCategoria.Debito
             };
         }
     }

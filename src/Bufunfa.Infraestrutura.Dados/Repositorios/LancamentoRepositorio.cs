@@ -35,6 +35,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                 .Include(x => x.Conta)
                 .Include(x => x.Categoria)
                 .Include(x => x.Pessoa)
+                .Include(x => x.Anexos)
                 .AsNoTracking()
                 .AsQueryable();
 
@@ -84,6 +85,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .Include(x => x.Conta)
                    .Include(x => x.Categoria)
                    .Include(x => x.Pessoa)
+                   .Include(x => x.Anexos)
                    .AsNoTracking()
                    .Where(x => x.IdUsuario == idUsuario)
                    .OrderBy(x => x.Data)

@@ -28,6 +28,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.HasOne(x => x.Pessoa)
                 .WithMany()
                 .HasForeignKey(x => x.IdPessoa);
+
+            builder.HasMany(x => x.Anexos)
+                .WithOne()
+                .HasForeignKey(x => x.IdLancamento)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,7 @@ namespace Bufunfa.Api
 
             var tokenConfig = new JwtTokenConfig();
 
-            // Extrai as informações do arquivo appsettings.json, criando um instância da classe "TokenJwtConfig"
+            // Extrai as informações do arquivo appsettings.json, criando um instância da classe "JwtTokenConfig"
             new ConfigureFromConfigurationOptions<JwtTokenConfig>(Configuration.GetSection("JwtTokenConfig"))
                 .Configure(tokenConfig);
 
@@ -115,11 +115,13 @@ namespace Bufunfa.Api
                 options.AddPolicy(PermissaoAcesso.Lancamentos, policy => policy.RequireClaim(PermissaoAcesso.Lancamentos).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
+            services.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)))
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             // Configuração do Swagger para documentação da API
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info());
-
 
                 options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -133,7 +135,8 @@ namespace Bufunfa.Api
                     { "Bearer", new string[] { } }
                 });
 
-                options.OperationFilter<ExamplesOperationFilter>(); // Permite a exibição de exemplos para o request e response.
+                options.AddSwaggerExamples(services.BuildServiceProvider()); // Permite a exibição de exemplos para o request e response.
+
                 options.OperationFilter<DescriptionOperationFilter>(); // Permite a documentação das propriedades das classes de exemplos com o atributo [Description]
                 options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>(); // Adds "(Auth)" to the summary so that you can see which endpoints have Authorization
 
@@ -142,10 +145,8 @@ namespace Bufunfa.Api
                 string caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
 
                 options.IncludeXmlComments(caminhoXmlDoc);
+                options.EnableAnnotations();
             });
-
-            services.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)))
-                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             // Habilita a compressão do response
             services.AddResponseCompression(options =>
@@ -164,8 +165,15 @@ namespace Bufunfa.Api
 
             app.UseStaticFiles();
 
-            // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
-            app.UseCustomExceptionHandler();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
+                app.UseCustomExceptionHandler();
+            }
 
             // Middleware para utilização do Swagger.
             app.UseSwagger(options =>
@@ -179,7 +187,7 @@ namespace Bufunfa.Api
                 options.RoutePrefix = "docs"; // Define a documentação no endereço http://{url}/docs/
                 options.SwaggerEndpoint("/docs/v1/swagger.json", "v1");
                 options.DefaultModelsExpandDepth(-1); // Oculta a sessão "Models"
-                options.DocExpansion(DocExpansion.List);
+                options.DocExpansion(DocExpansion.None);
                 options.InjectStylesheet("/swagger-ui/custom.css");
                 options.DocumentTitle = "Bufunfa API v1";
                 options.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("JNogueira.Bufunfa.Api.Swagger.UI.index.html"); // Permite a utilização de um index.html customizado

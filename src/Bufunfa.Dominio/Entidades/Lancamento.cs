@@ -69,11 +69,18 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// </summary>
         public Pessoa Pessoa { get; private set; }
 
+        /// <summary>
+        /// Anexos do lançamento
+        /// </summary>
+        public IEnumerable<Anexo> Anexos { get; private set; }
+
         private Lancamento()
         {
+            this.Anexos = new List<Anexo>();
         }
 
         public Lancamento(CadastrarLancamentoEntrada cadastrarEntrada)
+            : this()
         {
             if (!cadastrarEntrada.Valido())
                 return;

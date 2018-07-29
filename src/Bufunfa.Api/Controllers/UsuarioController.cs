@@ -9,8 +9,8 @@ using JNogueira.Bufunfa.Dominio.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Examples;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 namespace Bufunfa.Api.Controllers
 {
     [Produces("application/json")]
-    [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
     public class UsuarioController : Controller
     {
@@ -36,16 +36,18 @@ namespace Bufunfa.Api.Controllers
         }
 
         /// <summary>
-        /// Realiza a autenticação do usuário. Caso a autenticação ocorra com sucesso, um token JWT é gerado e retornado.
+        /// Realiza a autenticação do usuário, a partir do e-mail e senha informados.
         /// </summary>
-        /// <param name="email">E-mail do usuário</param>
-        /// <param name="senha">Senha do usuário</param>
         [AllowAnonymous]
         [HttpPost]
         [Route("v1/usuarios/autenticar")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Caso o usuário seja autenticado com sucesso, o token JWT é retornado.")]
+        [SwaggerOperation(Description = "Caso a autenticação ocorra com sucesso, um token JWT é gerado e retornado.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Caso o usuário seja autenticado com sucesso, o token JWT é retornado.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AutenticarUsuarioResponseExemplo))]
-        public async Task<ISaida> Autenticar(string email, string senha, [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
+        public async Task<ISaida> Autenticar(
+            [SwaggerParameter("E-mail do usuário.", Required = true)] string email,
+            [SwaggerParameter("Senha do usuário.", Required = true)] string senha,
+            [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
             var autenticarComando = new AutenticarUsuarioEntrada(email, senha);
 

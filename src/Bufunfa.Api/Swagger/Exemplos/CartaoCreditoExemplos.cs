@@ -1,30 +1,16 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class CadastrarCartaoCreditoViewModelExemplo : IExamplesProvider
+    public class CadastrarCartaoCreditoRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
             return new CadastrarCartaoCreditoViewModel
             {
-                Nome = "Cartão VISA 1",
-                ValorLimite = (decimal?)5000.00,
-                DiaVencimentoFatura = 5
-            };
-        }
-    }
-
-    public class AlterarCartaoCreditoViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new AlterarCartaoCreditoViewModel
-            {
-                IdCartao = 1,
                 Nome = "Cartão VISA 1",
                 ValorLimite = (decimal?)5000.00,
                 DiaVencimentoFatura = 5
@@ -47,6 +33,20 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     ValorLimite = (decimal?)5000.00,
                     DiaVencimentoFatura = 5
                 }
+            };
+        }
+    }
+
+    public class AlterarCartaoCreditoRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new AlterarCartaoCreditoViewModel
+            {
+                IdCartao = 1,
+                Nome = "Cartão VISA 1",
+                ValorLimite = (decimal?)5000.00,
+                DiaVencimentoFatura = 5
             };
         }
     }

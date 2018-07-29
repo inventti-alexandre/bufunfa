@@ -1,12 +1,12 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class CadastrarParcelaViewModelExemplo : IExamplesProvider
+    public class CadastrarParcelaRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -16,32 +16,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Data = DateTime.Now.Date,
                 Valor = (decimal)134.21,
                 Observacao = "Observação da parcela"
-            };
-        }
-    }
-
-    public class LancarParcelaViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new LancarParcelaViewModel
-            {
-                IdParcela = 1,
-                Data = DateTime.Today,
-                Valor = (decimal?)120.23,
-                Observacao = "Observação do lançamento da parcela"
-            };
-        }
-    }
-
-    public class DescartarParcelaViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new DescartarParcelaViewModel
-            {
-                IdParcela = 1,
-                MotivoDescarte = "Descrição do motivo do descarte da parcela"
             };
         }
     }
@@ -70,6 +44,20 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
+    public class LancarParcelaRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new LancarParcelaViewModel
+            {
+                IdParcela = 1,
+                Data = DateTime.Today,
+                Valor = (decimal?)120.23,
+                Observacao = "Observação do lançamento da parcela"
+            };
+        }
+    }
+
     public class LancarParcelaResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -90,6 +78,18 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     MotivoDescarte = (string)null,
                     Observacao = "Observação da parcela"
                 }
+            };
+        }
+    }
+
+    public class DescartarParcelaRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new DescartarParcelaViewModel
+            {
+                IdParcela = 1,
+                MotivoDescarte = "Descrição do motivo do descarte da parcela"
             };
         }
     }
@@ -118,7 +118,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
-    public class AlterarParcelaViewModelExemplo : IExamplesProvider
+    public class AlterarParcelaRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -200,32 +200,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     MotivoDescarte = (string)null,
                     Observacao = "Observação da parcela"
                 }
-            };
-        }
-    }
-
-    public class ProcurarParcelaResponseExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new ProcurarSaida(new[]
-                    {
-                        new
-                        {
-                            Id = 12,
-                            IdAgendamento = 8,
-                            IdFatura = (int?)null,
-                            Data = DateTime.Now.Date,
-                            Valor = (decimal)23.10,
-                            Lancada = false,
-                            Descartada = false,
-                            MotivoDescarte = (string)null,
-                            Observacao = "Observação da parcela"
-                        },
-
-                    }, "Data", "ASC", 3, 1, 1, 3)
-            {
-                Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso }
             };
         }
     }

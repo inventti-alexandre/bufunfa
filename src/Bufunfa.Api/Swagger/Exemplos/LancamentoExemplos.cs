@@ -1,12 +1,12 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class CadastrarLancamentoViewModelExemplo : IExamplesProvider
+    public class CadastrarLancamentoRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -39,7 +39,7 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
-    public class AlterarLancamentoViewModelExemplo : IExamplesProvider
+    public class AlterarLancamentoRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
@@ -107,6 +107,25 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
+    public class ProcurarLancamentoRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new ProcurarLancamentoViewModel
+            {
+                DataInicio = DateTime.Now.Date,
+                DataFim = DateTime.Now.AddDays(5).Date,
+                IdCategoria = 80,
+                IdConta = 1,
+                IdPessoa = null,
+                OrdenarPor = "Data",
+                OrdenarSentido = "DESC",
+                PaginaIndex = 1,
+                PaginaTamanho = 50
+            };
+        }
+    }
+
     public class ProcurarLancamentoResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -130,31 +149,6 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     }, "Nome", "ASC", 3, 1, 1, 3)
             {
                 Mensagens = new[] { Mensagem.Procura_Resultado_Com_Sucesso }
-            };
-        }
-    }
-
-    public class ObterLancamentosPorUsuarioResponseExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new Saida
-            {
-                Sucesso = true,
-                Mensagens = new[] { LancamentoMensagem.Lancamentos_Encontrados_Com_Sucesso },
-                Retorno = new[]
-                {
-                    new
-                    {
-                        Id = 1,
-                        Nome = "Supermecado Carone"
-                    },
-                    new
-                    {
-                        Id = 2,
-                        Nome = "Padaria Pão Chick"
-                    }
-                }
             };
         }
     }

@@ -7,21 +7,21 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Examples;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
     [Consumes("application/json")]
-    [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Unauthorized, typeof(Response), "Acesso negado. Token de autenticação não encontrado. (Unauthorized)")]
+    [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Acesso negado. Token de autenticação não encontrado. (Unauthorized)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Unauthorized, typeof(UnauthorizedApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Forbidden, typeof(Response), "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)")]
+    [SwaggerResponse((int)HttpStatusCode.Forbidden, "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Forbidden, typeof(ForbiddenApiResponse))]
     public class ContaController : BaseController
     {
@@ -35,15 +35,16 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Obtém um conta a partir do seu ID
         /// </summary>
-        /// <param name="idConta">ID da conta</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpGet]
         [Route("v1/contas/obter-por-id/{idConta:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Contas do usuário encontradas.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Conta encontrada.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterContaPorIdResponseExemplo))]
-        public async Task<ISaida> ObterContaPorId(int idConta)
+        public async Task<ISaida> ObterContaPorId([SwaggerParameter("ID da conta.", Required = true)] int idConta)
         {
-            return await _contaServico.ObterContaPorId(idConta, base.ObterIdUsuarioClaim());
+            return await _contaServico.ObterContaPorId(
+                idConta,
+                base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Contas)]
         [HttpGet]
         [Route("v1/contas/obter")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Contas do usuário encontradas.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Contas do usuário encontradas.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterContasPorUsuarioResponseExemplo))]
         public async Task<ISaida> ObterContasPorUsuarioAutenticado()
         {
@@ -62,16 +63,22 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de uma nova conta.
         /// </summary>
-        /// <param name="viewModel">Informações de cadastro da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPost]
         [Route("v1/contas/cadastrar")]
-        [SwaggerRequestExample(typeof(CadastrarContaViewModel), typeof(CadastrarContaViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta cadastrada com sucesso.")]
+        [SwaggerRequestExample(typeof(CadastrarContaViewModel), typeof(CadastrarContaRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Conta cadastrada com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarContaResponseExemplo))]
-        public async Task<ISaida> CadastrarConta([FromBody] CadastrarContaViewModel viewModel)
+        public async Task<ISaida> CadastrarConta([FromBody, SwaggerParameter("Informações de cadastro da conta.", Required = true)] CadastrarContaViewModel model)
         {
-            var cadastrarEntrada = new CadastrarContaEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome, viewModel.Tipo.Value, viewModel.ValorSaldoInicial, viewModel.NomeInstituicao, viewModel.NumeroAgencia, viewModel.Numero);
+            var cadastrarEntrada = new CadastrarContaEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.Nome,
+                model.Tipo.Value,
+                model.ValorSaldoInicial,
+                model.NomeInstituicao,
+                model.NumeroAgencia,
+                model.Numero);
 
             return await _contaServico.CadastrarConta(cadastrarEntrada);
         }
@@ -79,16 +86,23 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza a alteração de uma conta.
         /// </summary>
-        /// <param name="viewModel">Informações para alteração da conta.</param>
         [Authorize(PermissaoAcesso.Contas)]
         [HttpPut]
         [Route("v1/contas/alterar")]
-        [SwaggerRequestExample(typeof(AlterarContaViewModel), typeof(AlterarContaViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta alterada com sucesso.")]
+        [SwaggerRequestExample(typeof(AlterarContaViewModel), typeof(AlterarContaRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Conta alterada com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarContaResponseExemplo))]
-        public async Task<ISaida> AlterarConta([FromBody] AlterarContaViewModel viewModel)
+        public async Task<ISaida> AlterarConta([FromBody, SwaggerParameter("Informações para alteração da conta.", Required = true)] AlterarContaViewModel model)
         {
-            var alterarEntrada = new AlterarContaEntrada(viewModel.IdConta, viewModel.Nome, viewModel.Tipo.Value, base.ObterIdUsuarioClaim(), viewModel.ValorSaldoInicial, viewModel.NomeInstituicao, viewModel.NumeroAgencia, viewModel.Numero);
+            var alterarEntrada = new AlterarContaEntrada(
+                model.IdConta,
+                model.Nome,
+                model.Tipo.Value,
+                base.ObterIdUsuarioClaim(),
+                model.ValorSaldoInicial,
+                model.NomeInstituicao,
+                model.NumeroAgencia,
+                model.Numero);
 
             return await _contaServico.AlterarConta(alterarEntrada);
         }
@@ -99,11 +113,13 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Contas)]
         [HttpDelete]
         [Route("v1/contas/excluir/{idConta:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Conta excluída com sucesso.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Conta excluída com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirContaResponseExemplo))]
-        public async Task<ISaida> ExcluirConta(int idConta)
+        public async Task<ISaida> ExcluirConta([SwaggerParameter("ID da conta que deverá ser excluída.", Required = true)] int idConta)
         {
-            return await _contaServico.ExcluirConta(idConta, base.ObterIdUsuarioClaim());
+            return await _contaServico.ExcluirConta(
+                idConta,
+                base.ObterIdUsuarioClaim());
         }
     }
 }

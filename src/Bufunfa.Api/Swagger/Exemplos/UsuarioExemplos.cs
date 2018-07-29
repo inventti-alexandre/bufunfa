@@ -1,6 +1,6 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos

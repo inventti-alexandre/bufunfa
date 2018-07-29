@@ -13,12 +13,14 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
     public class LancamentoServico : Notificavel, ILancamentoServico
     {
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
+        private readonly IAnexoRepositorio _anexoRepositorio;
         private readonly IUow _uow;
 
-        public LancamentoServico(ILancamentoRepositorio lancamentoRepositorio, IUow uow)
+        public LancamentoServico(ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
         {
             _lancamentoRepositorio = lancamentoRepositorio;
-            _uow = uow;
+            _anexoRepositorio      = anexoRepositorio;
+            _uow                   = uow;
         }
 
         public async Task<ISaida> ObterLancamentoPorId(int idLancamento, int idUsuario)
@@ -126,6 +128,28 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             await _uow.Commit();
 
             return new Saida(true, new[] { LancamentoMensagem.Lancamento_Excluido_Com_Sucesso }, new LancamentoSaida(lancamento));
+        }
+
+        public async Task<ISaida> CadastrarAnexo(CadastrarAnexoEntrada cadastroEntrada)
+        {
+            // Verifica se as informações para cadastro foram informadas corretamente
+            if (!cadastroEntrada.Valido())
+                return new Saida(false, cadastroEntrada.Mensagens, null);
+
+            var anexo = new Anexo(cadastroEntrada);
+
+            // TODO: Fazer upload do arquivo para o Google Drive
+
+            await _anexoRepositorio.Inserir(anexo);
+
+            await _uow.Commit();
+
+            return new Saida(true, new[] { AnexoMensagem.Anexo_Cadastrado_Com_Sucesso }, new AnexoSaida(anexo));
+        }
+
+        public Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

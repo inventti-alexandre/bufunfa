@@ -1,5 +1,5 @@
 ﻿using JNogueira.Bufunfa.Dominio.Comandos.Saida;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 
 namespace JNogueira.Bufunfa.Api

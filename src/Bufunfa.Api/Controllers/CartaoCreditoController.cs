@@ -7,21 +7,21 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Examples;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
     [Consumes("application/json")]
-    [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Unauthorized, typeof(Response), "Acesso negado. Token de autenticação não encontrado. (Unauthorized)")]
+    [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Acesso negado. Token de autenticação não encontrado. (Unauthorized)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Unauthorized, typeof(UnauthorizedApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Forbidden, typeof(Response), "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)")]
+    [SwaggerResponse((int)HttpStatusCode.Forbidden, "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Forbidden, typeof(ForbiddenApiResponse))]
     public class CartaoCreditoController : BaseController
     {
@@ -35,15 +35,16 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Obtém um cartão de crédito a partir do seu ID
         /// </summary>
-        /// <param name="idCartaoCredito">ID do cartão de crédito.</param>
         [Authorize(PermissaoAcesso.CartoesCredito)]
         [HttpGet]
         [Route("v1/cartoes/obter-por-id/{idCartaoCredito:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Cartões do usuário encontrados.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Cartão encontrado.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterCartaoCreditoPorIdResponseExemplo))]
-        public async Task<ISaida> ObterCartaoCreditoPorId(int idCartaoCredito)
+        public async Task<ISaida> ObterCartaoCreditoPorId([SwaggerParameter("ID do cartão de crédito.", Required = true)] int idCartaoCredito)
         {
-            return await _cartaoCreditoServico.ObterCartaoCreditoPorId(idCartaoCredito, base.ObterIdUsuarioClaim());
+            return await _cartaoCreditoServico.ObterCartaoCreditoPorId(
+                idCartaoCredito,
+                base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.CartoesCredito)]
         [HttpGet]
         [Route("v1/cartoes/obter")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Cartões do usuário encontradas.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Cartões do usuário encontradas.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterCartaoCreditosPorUsuarioResponseExemplo))]
         public async Task<ISaida> ObterCartaoCreditosPorUsuarioAutenticado()
         {
@@ -62,16 +63,19 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo cartão.
         /// </summary>
-        /// <param name="cadastroModel">Informações de cadastro do cartão.</param>
         [Authorize(PermissaoAcesso.CartoesCredito)]
         [HttpPost]
         [Route("v1/cartoes/cadastrar")]
-        [SwaggerRequestExample(typeof(CadastrarCartaoCreditoViewModel), typeof(CadastrarCartaoCreditoViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Cartão cadastrado com sucesso.")]
+        [SwaggerRequestExample(typeof(CadastrarCartaoCreditoViewModel), typeof(CadastrarCartaoCreditoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Cartão cadastrado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarCartaoCreditoResponseExemplo))]
-        public async Task<ISaida> CadastrarCartaoCredito([FromBody] CadastrarCartaoCreditoViewModel cadastroModel)
+        public async Task<ISaida> CadastrarCartaoCredito([FromBody, SwaggerParameter("Informações de cadastro do cartão.", Required = true)] CadastrarCartaoCreditoViewModel model)
         {
-            var cadastrarEntrada = new CadastrarCartaoCreditoEntrada(base.ObterIdUsuarioClaim(), cadastroModel.Nome, cadastroModel.ValorLimite.Value, cadastroModel.DiaVencimentoFatura.Value);
+            var cadastrarEntrada = new CadastrarCartaoCreditoEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.Nome,
+                model.ValorLimite.Value,
+                model.DiaVencimentoFatura.Value);
 
             return await _cartaoCreditoServico.CadastrarCartaoCredito(cadastrarEntrada);
         }
@@ -79,16 +83,20 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um cartão.
         /// </summary>
-        /// <param name="alterarModel">Informações para alteração do cartão.</param>
         [Authorize(PermissaoAcesso.CartoesCredito)]
         [HttpPut]
         [Route("v1/cartoes/alterar")]
-        [SwaggerRequestExample(typeof(AlterarCartaoCreditoViewModel), typeof(AlterarCartaoCreditoViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Cartão alterado com sucesso.")]
+        [SwaggerRequestExample(typeof(AlterarCartaoCreditoViewModel), typeof(AlterarCartaoCreditoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Cartão alterado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarCartaoCreditoResponseExemplo))]
-        public async Task<ISaida> AlterarCartaoCredito([FromBody] AlterarCartaoCreditoViewModel alterarModel)
+        public async Task<ISaida> AlterarCartaoCredito([FromBody, SwaggerParameter("Informações para alteração do cartão.", Required = true)] AlterarCartaoCreditoViewModel model)
         {
-            var alterarEntrada = new AlterarCartaoCreditoEntrada(alterarModel.IdCartao, alterarModel.Nome, base.ObterIdUsuarioClaim(), alterarModel.ValorLimite.Value, alterarModel.DiaVencimentoFatura.Value);
+            var alterarEntrada = new AlterarCartaoCreditoEntrada(
+                model.IdCartao,
+                model.Nome,
+                base.ObterIdUsuarioClaim(),
+                model.ValorLimite.Value,
+                model.DiaVencimentoFatura.Value);
 
             return await _cartaoCreditoServico.AlterarCartaoCredito(alterarEntrada);
         }
@@ -99,11 +107,13 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.CartoesCredito)]
         [HttpDelete]
         [Route("v1/cartoes/excluir/{idCartaoCredito:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Cartão excluído com sucesso.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Cartão excluído com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirCartaoCreditoResponseExemplo))]
-        public async Task<ISaida> ExcluirCartaoCredito(int idCartaoCredito)
+        public async Task<ISaida> ExcluirCartaoCredito([SwaggerParameter("ID do cartão que deverá ser excluído.", Required = true)] int idCartaoCredito)
         {
-            return await _cartaoCreditoServico.ExcluirCartaoCredito(idCartaoCredito, base.ObterIdUsuarioClaim());
+            return await _cartaoCreditoServico.ExcluirCartaoCredito(
+                idCartaoCredito,
+                base.ObterIdUsuarioClaim());
         }
     }
 }

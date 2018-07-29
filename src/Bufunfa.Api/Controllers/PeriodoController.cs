@@ -7,21 +7,21 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Examples;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
     [Consumes("application/json")]
-    [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Unauthorized, typeof(Response), "Acesso negado. Token de autenticação não encontrado. (Unauthorized)")]
+    [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Acesso negado. Token de autenticação não encontrado. (Unauthorized)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Unauthorized, typeof(UnauthorizedApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Forbidden, typeof(Response), "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)")]
+    [SwaggerResponse((int)HttpStatusCode.Forbidden, "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Forbidden, typeof(ForbiddenApiResponse))]
     public class PeriodoController : BaseController
     {
@@ -35,15 +35,16 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Obtém um período a partir do seu ID
         /// </summary>
-        /// <param name="idPeriodo">ID do período</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpGet]
         [Route("v1/periodos/obter-por-id/{idPeriodo:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período do usuário encontrado.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Período encontrado.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodoPorIdResponseExemplo))]
-        public async Task<ISaida> ObterContaPorId(int idPeriodo)
+        public async Task<ISaida> ObterContaPorId([SwaggerParameter("ID do período.", Required = true)] int idPeriodo)
         {
-            return await _periodoServico.ObterPeriodoPorId(idPeriodo, base.ObterIdUsuarioClaim());
+            return await _periodoServico.ObterPeriodoPorId(
+                idPeriodo,
+                base.ObterIdUsuarioClaim());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpGet]
         [Route("v1/periodos/obter")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Períodos do usuário encontrados.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Períodos do usuário encontrados.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterPeriodosPorUsuarioResponseExemplo))]
         public async Task<ISaida> ObterPeriodosPorUsuarioAutenticado()
         {
@@ -62,18 +63,22 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza uma procura por períodos a partir dos parâmetros informados
         /// </summary>
-        /// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpPost]
         [Route("v1/periodos/procurar")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Resultado da procura por períodos.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Resultado da procura por períodos.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ProcurarPeriodoResponseExemplo))]
-        public async Task<ISaida> Procurar([FromBody] ProcurarPeriodoViewModel viewModel)
+        public async Task<ISaida> Procurar([FromBody, SwaggerParameter("Parâmetros utilizados para realizar a procura.", Required = true)] ProcurarPeriodoViewModel model)
         {
-            var procurarEntrada = new ProcurarPeriodoEntrada(base.ObterIdUsuarioClaim(), viewModel.OrdenarPor, viewModel.OrdenarSentido, viewModel.PaginaIndex, viewModel.PaginaTamanho)
+            var procurarEntrada = new ProcurarPeriodoEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.OrdenarPor,
+                model.OrdenarSentido,
+                model.PaginaIndex,
+                model.PaginaTamanho)
             {
-                Nome = viewModel.Nome,
-                Data = viewModel.Data
+                Nome = model.Nome,
+                Data = model.Data
             };
 
             return await _periodoServico.ProcurarPeriodos(procurarEntrada);
@@ -82,16 +87,19 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo período.
         /// </summary>
-        /// <param name="viewModel">Informações de cadastro do período.</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpPost]
         [Route("v1/periodos/cadastrar")]
-        [SwaggerRequestExample(typeof(CadastrarPeriodoViewModel), typeof(CadastrarPeriodoViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período cadastrado com sucesso.")]
+        [SwaggerRequestExample(typeof(CadastrarPeriodoViewModel), typeof(CadastrarPeriodoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Período cadastrado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarPeriodoResponseExemplo))]
-        public async Task<ISaida> CadastrarPeriodo([FromBody] CadastrarPeriodoViewModel viewModel)
+        public async Task<ISaida> CadastrarPeriodo([FromBody, SwaggerParameter("Informações de cadastro do período.", Required = true)] CadastrarPeriodoViewModel model)
         {
-            var cadastrarEntrada = new CadastrarPeriodoEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value);
+            var cadastrarEntrada = new CadastrarPeriodoEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.Nome,
+                model.DataInicio.Value,
+                model.DataFim.Value);
 
             return await _periodoServico.CadastrarPeriodo(cadastrarEntrada);
         }
@@ -99,16 +107,20 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um período.
         /// </summary>
-        /// <param name="viewModel">Informações para alteração de um período.</param>
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpPut]
         [Route("v1/periodos/alterar")]
-        [SwaggerRequestExample(typeof(AlterarPeriodoViewModel), typeof(AlterarPeriodoViewModelExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período alterado com sucesso.")]
+        [SwaggerRequestExample(typeof(AlterarPeriodoViewModel), typeof(AlterarPeriodoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Período alterado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarPeriodoResponseExemplo))]
-        public async Task<ISaida> AlterarPeriodo([FromBody] AlterarPeriodoViewModel viewModel)
+        public async Task<ISaida> AlterarPeriodo([FromBody, SwaggerParameter("Informações para alteração de um período.", Required = true)] AlterarPeriodoViewModel model)
         {
-            var alterarEntrada = new AlterarPeriodoEntrada(viewModel.IdPeriodo, viewModel.Nome, viewModel.DataInicio.Value, viewModel.DataFim.Value, base.ObterIdUsuarioClaim());
+            var alterarEntrada = new AlterarPeriodoEntrada(
+                model.IdPeriodo,
+                model.Nome,
+                model.DataInicio.Value,
+                model.DataFim.Value,
+                base.ObterIdUsuarioClaim());
 
             return await _periodoServico.AlterarPeriodo(alterarEntrada);
         }
@@ -119,11 +131,13 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Periodos)]
         [HttpDelete]
         [Route("v1/periodos/excluir/{idPeriodo:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Período excluído com sucesso.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Período excluído com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirPeridoResponseExemplo))]
-        public async Task<ISaida> ExcluirPeriodo(int idPeriodo)
+        public async Task<ISaida> ExcluirPeriodo([SwaggerParameter("ID do período que deverá ser excluído.", Required = true)] int idPeriodo)
         {
-            return await _periodoServico.ExcluirPeriodo(idPeriodo, base.ObterIdUsuarioClaim());
+            return await _periodoServico.ExcluirPeriodo(
+                idPeriodo,
+                base.ObterIdUsuarioClaim());
         }
     }
 }

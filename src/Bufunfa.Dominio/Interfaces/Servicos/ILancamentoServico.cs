@@ -33,5 +33,15 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// Exclui um lançamento.
         /// </summary>
         Task<ISaida> ExcluirLancamento(int idLancamento, int idUsuario);
+
+        /// <summary>
+        /// Realiza o cadastro de um novo anexo para um lançamento.
+        /// </summary>
+        Task<ISaida> CadastrarAnexo(CadastrarAnexoEntrada cadastroEntrada);
+
+        /// <summary>
+        /// Exclui um anexo de um lançamento.
+        /// </summary>
+        Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario);
     }
 }

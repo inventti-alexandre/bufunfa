@@ -22,6 +22,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AgendamentoMensagem.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\AnexoMensagem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AnexoMensagem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\CartaoCreditoMensagem.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -73,6 +78,10 @@
     <EmbeddedResource Update="Resources\AgendamentoMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AgendamentoMensagem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AnexoMensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AnexoMensagem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\CartaoCreditoMensagem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

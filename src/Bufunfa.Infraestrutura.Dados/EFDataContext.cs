@@ -17,6 +17,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
         public DbSet<Agendamento> Agendamentos { get; set; }
         public DbSet<Parcela> Parcelas { get; set; }
         public DbSet<Lancamento> Lancamentos { get; set; }
+        public DbSet<Anexo> Anexos { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -40,6 +41,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new AgendamentoMap());
             modelBuilder.ApplyConfiguration(new ParcelaMap());
             modelBuilder.ApplyConfiguration(new LancamentoMap());
+            modelBuilder.ApplyConfiguration(new AnexoMap());
         }
     }
 }

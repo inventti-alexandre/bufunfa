@@ -7,109 +7,133 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Examples;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
     [Consumes("application/json")]
-    [SwaggerResponse((int)HttpStatusCode.InternalServerError, typeof(Response), "Erro não tratado encontrado. (Internal Server Error)")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.NotFound, typeof(Response), "Endereço não encontrado. (Not found)")]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.NotFound, typeof(NotFoundApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Unauthorized, typeof(Response), "Acesso negado. Token de autenticação não encontrado. (Unauthorized)")]
+    [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Acesso negado. Token de autenticação não encontrado. (Unauthorized)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Unauthorized, typeof(UnauthorizedApiResponse))]
-    [SwaggerResponse((int)HttpStatusCode.Forbidden, typeof(Response), "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)")]
+    [SwaggerResponse((int)HttpStatusCode.Forbidden, "Acesso negado. Sem permissão de acesso a funcionalidade. (Forbidden)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.Forbidden, typeof(ForbiddenApiResponse))]
     public class LancamentoController : BaseController
     {
-        private readonly ILancamentoServico _pessoaServico;
+        private readonly ILancamentoServico _lancamentoServico;
 
-        public LancamentoController(ILancamentoServico pessoaServico)
+        public LancamentoController(ILancamentoServico lancamentoServico)
         {
-            _pessoaServico = pessoaServico;
+            _lancamentoServico = lancamentoServico;
         }
 
-        ///// <summary>
-        ///// Obtém uma pessoa a partir do seu ID
-        ///// </summary>
-        ///// <param name="idLancamento">ID da pessoa</param>
-        //[Authorize(PermissaoAcesso.Lancamentos)]
-        //[HttpGet]
-        //[Route("v1/pessoas/obter-por-id/{idLancamento:int}")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Lancamento do usuário encontrada.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterLancamentoPorIdResponseExemplo))]
-        //public async Task<ISaida> ObterContaPorId(int idLancamento)
-        //{
-        //    return await _pessoaServico.ObterLancamentoPorId(idLancamento, base.ObterIdUsuarioClaim());
-        //}
+        /// <summary>
+        /// Obtém um lançamento a partir do seu ID
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpGet]
+        [Route("v1/lancamentos/obter-por-id/{idLancamento:int}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento encontrado.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterLancamentoPorIdResponseExemplo))]
+        public async Task<ISaida> ObterContaPorId([SwaggerParameter("ID do lançamento.", Required = true)] int idLancamento)
+        {
+            return await _lancamentoServico.ObterLancamentoPorId(
+                idLancamento,
+                base.ObterIdUsuarioClaim());
+        }
 
-        ///// <summary>
-        ///// Realiza uma procura por pessoas a partir dos parâmetros informados
-        ///// </summary>
-        ///// <param name="viewModel">Parâmetros utilizados para realizar a procura.</param>
-        //[Authorize(PermissaoAcesso.Lancamentos)]
-        //[HttpPost]
-        //[Route("v1/pessoas/procurar")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Resultado da procura por pessoas.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ProcurarLancamentoResponseExemplo))]
-        //public async Task<ISaida> Procurar([FromBody] ProcurarLancamentoViewModel viewModel)
-        //{
-        //    var procurarEntrada = new ProcurarLancamentoEntrada(base.ObterIdUsuarioClaim(), viewModel.OrdenarPor, viewModel.OrdenarSentido, viewModel.PaginaIndex, viewModel.PaginaTamanho)
-        //    {
-        //        Nome = viewModel.Nome
-        //    };
+        /// <summary>
+        /// Realiza uma procura por lançamentos a partir dos parâmetros informados
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpPost]
+        [Route("v1/lancamentos/procurar")]
+        [SwaggerRequestExample(typeof(ProcurarLancamentoViewModel), typeof(ProcurarLancamentoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Resultado da procura por lançamentos.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ProcurarLancamentoResponseExemplo))]
+        public async Task<ISaida> Procurar([FromBody, SwaggerParameter("Parâmetros utilizados para realizar a procura.", Required = true)] ProcurarLancamentoViewModel model)
+        {
+            var procurarEntrada = new ProcurarLancamentoEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.OrdenarPor,
+                model.OrdenarSentido,
+                model.PaginaIndex,
+                model.PaginaTamanho)
+            {
+                DataFim     = model.DataFim,
+                DataInicio  = model.DataInicio,
+                IdCategoria = model.IdCategoria,
+                IdConta     = model.IdConta,
+                IdPessoa    = model.IdPessoa
+            };
 
-        //    return await _pessoaServico.ProcurarLancamentos(procurarEntrada);
-        //}
+            return await _lancamentoServico.ProcurarLancamentos(procurarEntrada);
+        }
 
-        ///// <summary>
-        ///// Realiza o cadastro de uma nova pessoa.
-        ///// </summary>
-        ///// <param name="viewModel">Informações de cadastro da pessoa.</param>
-        //[Authorize(PermissaoAcesso.Lancamentos)]
-        //[HttpPost]
-        //[Route("v1/pessoas/cadastrar")]
-        //[SwaggerRequestExample(typeof(CadastrarLancamentoViewModel), typeof(CadastrarLancamentoViewModelExemplo))]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Lancamento cadastrada com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarLancamentoResponseExemplo))]
-        //public async Task<ISaida> CadastrarLancamento([FromBody] CadastrarLancamentoViewModel viewModel)
-        //{
-        //    var cadastrarEntrada = new CadastrarLancamentoEntrada(base.ObterIdUsuarioClaim(), viewModel.Nome);
+        /// <summary>
+        /// Realiza o cadastro de um novo lançamento.
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpPost]
+        [Route("v1/lancamentos/cadastrar")]
+        [SwaggerRequestExample(typeof(CadastrarLancamentoViewModel), typeof(CadastrarLancamentoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento cadastrado com sucesso.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarLancamentoResponseExemplo))]
+        public async Task<ISaida> CadastrarLancamento([FromBody, SwaggerParameter("Informações de cadastro do lançamento.", Required = true)] CadastrarLancamentoViewModel model)
+        {
+            var cadastrarEntrada = new CadastrarLancamentoEntrada(
+                base.ObterIdUsuarioClaim(),
+                model.IdConta.Value,
+                model.IdCategoria.Value,
+                model.Data.Value,
+                model.Valor.Value,
+                model.IdPessoa,
+                null,
+                model.Observacao);
 
-        //    return await _pessoaServico.CadastrarLancamento(cadastrarEntrada);
-        //}
+            return await _lancamentoServico.CadastrarLancamento(cadastrarEntrada);
+        }
 
-        ///// <summary>
-        ///// Realiza a alteração de uma pessoa.
-        ///// </summary>
-        ///// <param name="viewModel">Informações para alteração de uma pessoa.</param>
-        //[Authorize(PermissaoAcesso.Lancamentos)]
-        //[HttpPut]
-        //[Route("v1/pessoas/alterar")]
-        //[SwaggerRequestExample(typeof(AlterarLancamentoViewModel), typeof(AlterarLancamentoViewModelExemplo))]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Lancamento alterada com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarLancamentoResponseExemplo))]
-        //public async Task<ISaida> AlterarLancamento([FromBody] AlterarLancamentoViewModel viewModel)
-        //{
-        //    var alterarEntrada = new AlterarLancamentoEntrada(viewModel.IdLancamento, viewModel.Nome, base.ObterIdUsuarioClaim());
+        /// <summary>
+        /// Realiza a alteração de um lançamento.
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpPut]
+        [Route("v1/lancamentos/alterar")]
+        [SwaggerRequestExample(typeof(AlterarLancamentoViewModel), typeof(AlterarLancamentoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento alterada com sucesso.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarLancamentoResponseExemplo))]
+        public async Task<ISaida> AlterarLancamento([FromBody, SwaggerParameter("Informações para alteração de um lançamento.", Required = true)] AlterarLancamentoViewModel model)
+        {
+            var alterarEntrada = new AlterarLancamentoEntrada(
+                model.IdLancamento.Value,
+                model.IdConta.Value,
+                model.IdCategoria.Value,
+                model.Data.Value,
+                model.Valor.Value,
+                base.ObterIdUsuarioClaim(),
+                model.IdPessoa,
+                model.Observacao);
 
-        //    return await _pessoaServico.AlterarLancamento(alterarEntrada);
-        //}
+            return await _lancamentoServico.AlterarLancamento(alterarEntrada);
+        }
 
-        ///// <summary>
-        ///// Realiza a exclusão de uma pessoa.
-        ///// </summary>
-        //[Authorize(PermissaoAcesso.Lancamentos)]
-        //[HttpDelete]
-        //[Route("v1/pessoas/excluir/{idLancamento:int}")]
-        //[SwaggerResponse((int)HttpStatusCode.OK, typeof(Response), "Lancamento excluída com sucesso.")]
-        //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirLancamentoResponseExemplo))]
-        //public async Task<ISaida> ExcluirLancamento(int idLancamento)
-        //{
-        //    return await _pessoaServico.ExcluirLancamento(idLancamento, base.ObterIdUsuarioClaim());
-        //}
+        /// <summary>
+        /// Realiza a exclusão de um lançamento.
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpDelete]
+        [Route("v1/lancamentos/excluir/{idLancamento:int}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento excluído com sucesso.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirLancamentoResponseExemplo))]
+        public async Task<ISaida> ExcluirLancamento([SwaggerParameter("ID do lançamento que deverá ser excluído.", Required = true)] int idLancamento)
+        {
+            return await _lancamentoServico.ExcluirLancamento(idLancamento, base.ObterIdUsuarioClaim());
+        }
     }
 }

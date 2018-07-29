@@ -1,6 +1,7 @@
 ﻿using JNogueira.Bufunfa.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
 {
@@ -49,6 +50,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         /// </summary>
         public CategoriaSaida Categoria { get; }
 
+        /// <summary>
+        /// Anexos do lançamento
+        /// </summary>
+        public IEnumerable<AnexoSaida> Anexos { get; }
+
 
         public LancamentoSaida(Lancamento lancamento)
         {
@@ -63,6 +69,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
             this.Conta      = new ContaSaida(lancamento.Conta);
             this.Pessoa     = lancamento.IdPessoa.HasValue ? new PessoaSaida(lancamento.Pessoa) : null;
             this.Categoria  = new CategoriaSaida(lancamento.Categoria);
+            this.Anexos     = lancamento.Anexos.Select(x => new AnexoSaida(x));
         }
 
         public override string ToString()

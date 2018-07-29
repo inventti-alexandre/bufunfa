@@ -1,11 +1,27 @@
 ﻿using JNogueira.Bufunfa.Api.ViewModels;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Resources;
-using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
+    public class ProcurarPeriodoRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new ProcurarPeriodoViewModel
+            {
+                Data = DateTime.Now.Date,
+                Nome = "JANEIRO",
+                OrdenarPor = "Nome",
+                OrdenarSentido = "ASC",
+                PaginaIndex = 1,
+                PaginaTamanho = 10
+            };
+        }
+    }
+
     public class ProcurarPeriodoResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -25,26 +41,12 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
         }
     }
 
-    public class CadastrarPeriodoViewModelExemplo : IExamplesProvider
+    public class CadastrarPeriodoRequestExemplo : IExamplesProvider
     {
         public object GetExamples()
         {
             return new CadastrarPeriodoViewModel
             {
-                Nome = "Junho 2018",
-                DataInicio = new DateTime(2018, 6, 1),
-                DataFim = new DateTime(2018, 6, 30)
-            };
-        }
-    }
-
-    public class AlterarPeriodoViewModelExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new AlterarPeriodoViewModel
-            {
-                IdPeriodo = 1,
                 Nome = "Junho 2018",
                 DataInicio = new DateTime(2018, 6, 1),
                 DataFim = new DateTime(2018, 6, 30)
@@ -67,6 +69,20 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                     DataInicio = new DateTime(2018, 6, 1),
                     DataFim = new DateTime(2018, 6, 30)
                 }
+            };
+        }
+    }
+
+    public class AlterarPeriodoRequestExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new AlterarPeriodoViewModel
+            {
+                IdPeriodo = 1,
+                Nome = "Junho 2018",
+                DataInicio = new DateTime(2018, 6, 1),
+                DataFim = new DateTime(2018, 6, 30)
             };
         }
     }

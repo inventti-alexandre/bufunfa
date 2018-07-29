@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
-    [Produces("application/json")]
     public abstract class BaseController : Controller
     {
         /// <summary>
