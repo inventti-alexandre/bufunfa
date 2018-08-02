@@ -135,5 +135,13 @@ namespace JNogueira.Bufunfa.Api.Controllers
         {
             return await _lancamentoServico.ExcluirLancamento(idLancamento, base.ObterIdUsuarioClaim());
         }
+
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [HttpGet]
+        [Route("v1/lancamentos/listar-pastas-drive")]
+        public string[] ListarPastas()
+        {
+            return _lancamentoServico.ListarPastas();
+        }
     }
 }

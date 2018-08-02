@@ -38,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
     <ProjectReference Include="..\Bufunfa.Infraestrutura.Dados\Bufunfa.Infraestrutura.Dados.csproj" />
+    <ProjectReference Include="..\Bufunfa.Infraestrutura\Bufunfa.Infraestrutura.csproj" />
   </ItemGroup>
 
   <ItemGroup>

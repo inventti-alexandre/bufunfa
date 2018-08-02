@@ -43,5 +43,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Servicos
         /// Exclui um anexo de um lançamento.
         /// </summary>
         Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario);
+
+        string[] ListarPastas();
     }
 }

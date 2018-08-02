@@ -332,3 +332,4 @@ ASALocalRun/
 .mfractor/
 /docs/ModeloER.mwb.bak
 /src/Bufunfa.Api/_publish/netcoreapp2.0
+/src/Bufunfa.Api/google_credentials.json

@@ -3,6 +3,7 @@ using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
+using JNogueira.Bufunfa.Dominio.Interfaces.Infraestrutura;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
@@ -12,12 +13,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 {
     public class LancamentoServico : Notificavel, ILancamentoServico
     {
+        private readonly IGestaoAnexos _gestaoAnexos;
+
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
         private readonly IAnexoRepositorio _anexoRepositorio;
         private readonly IUow _uow;
 
-        public LancamentoServico(ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
+        public LancamentoServico(IGestaoAnexos gestaoAnexos, ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
         {
+            _gestaoAnexos = gestaoAnexos;
             _lancamentoRepositorio = lancamentoRepositorio;
             _anexoRepositorio      = anexoRepositorio;
             _uow                   = uow;
@@ -150,6 +154,11 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario)
         {
             throw new System.NotImplementedException();
+        }
+
+        public string[] ListarPastas()
+        {
+            return _gestaoAnexos.ListarPastas();
         }
     }
 }

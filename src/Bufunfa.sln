@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{100C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infraestrutura", "3 - Infraestrutura", "{5CE3ADF5-B3E4-4BBA-8FA9-CF3D493DCAA7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bufunfa.Infraestrutura", "Bufunfa.Infraestrutura\Bufunfa.Infraestrutura.csproj", "{0A08AADA-91FF-4A0D-A100-296F92569A00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{8ED74CE1-1352-4315-9EF7-157423AB5260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED74CE1-1352-4315-9EF7-157423AB5260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED74CE1-1352-4315-9EF7-157423AB5260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A08AADA-91FF-4A0D-A100-296F92569A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A08AADA-91FF-4A0D-A100-296F92569A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A08AADA-91FF-4A0D-A100-296F92569A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A08AADA-91FF-4A0D-A100-296F92569A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{F6F68E5F-799F-47FD-8773-C680D8786C8E} = {4D5672EA-C139-4881-AD31-1664B78654F9}
 		{100C0482-2E3C-4009-9935-B4F41B79143C} = {4D5672EA-C139-4881-AD31-1664B78654F9}
 		{5CE3ADF5-B3E4-4BBA-8FA9-CF3D493DCAA7} = {4D5672EA-C139-4881-AD31-1664B78654F9}
+		{0A08AADA-91FF-4A0D-A100-296F92569A00} = {5CE3ADF5-B3E4-4BBA-8FA9-CF3D493DCAA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83B52613-069C-44FD-B3DE-741BE1FF2411}
