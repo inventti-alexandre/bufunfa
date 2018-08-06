@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Api.Controllers
 {
-    [Consumes("application/json")]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro não tratado encontrado. (Internal Server Error)", typeof(Response))]
     [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(InternalServerErrorApiResponse))]
     [SwaggerResponse((int)HttpStatusCode.NotFound, "Endereço não encontrado. (Not found)", typeof(Response))]
@@ -36,6 +36,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Obtém um lançamento a partir do seu ID
         /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
         [HttpGet]
         [Route("v1/lancamentos/obter-por-id/{idLancamento:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento encontrado.", typeof(Response))]
@@ -51,6 +52,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Realiza uma procura por lançamentos a partir dos parâmetros informados
         /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
         [HttpPost]
         [Route("v1/lancamentos/procurar")]
         [SwaggerRequestExample(typeof(ProcurarLancamentoViewModel), typeof(ProcurarLancamentoRequestExemplo))]
@@ -79,6 +81,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Realiza o cadastro de um novo lançamento.
         /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
         [HttpPost]
         [Route("v1/lancamentos/cadastrar")]
         [SwaggerRequestExample(typeof(CadastrarLancamentoViewModel), typeof(CadastrarLancamentoRequestExemplo))]
@@ -103,6 +106,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Realiza a alteração de um lançamento.
         /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
         [HttpPut]
         [Route("v1/lancamentos/alterar")]
         [SwaggerRequestExample(typeof(AlterarLancamentoViewModel), typeof(AlterarLancamentoRequestExemplo))]
@@ -127,6 +131,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         /// Realiza a exclusão de um lançamento.
         /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
         [HttpDelete]
         [Route("v1/lancamentos/excluir/{idLancamento:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento excluído com sucesso.", typeof(Response))]
@@ -136,12 +141,33 @@ namespace JNogueira.Bufunfa.Api.Controllers
             return await _lancamentoServico.ExcluirLancamento(idLancamento, base.ObterIdUsuarioClaim());
         }
 
+        /// <summary>
+        /// Realiza o cadastro de um novo anexo para um lançamento.
+        /// </summary>
         [Authorize(PermissaoAcesso.Lancamentos)]
-        [HttpGet]
-        [Route("v1/lancamentos/listar-pastas-drive")]
-        public string[] ListarPastas()
+        [HttpPost]
+        [Route("v1/lancamentos/cadastrar-anexo")]
+        [SwaggerRequestExample(typeof(CadastrarAnexoViewModel), typeof(CadastrarAnexoRequestExemplo))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento cadastrado com sucesso.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarAnexoResponseExemplo))]
+        public async Task<ISaida> CadastrarAnexo([FromForm, SwaggerParameter("Informações de cadastro do anexo.", Required = true)] CadastrarAnexoViewModel model)
         {
-            return _lancamentoServico.ListarPastas();
+            CadastrarAnexoEntrada cadastrarEntrada;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await model.Arquivo.CopyToAsync(memoryStream);
+
+                cadastrarEntrada = new CadastrarAnexoEntrada(
+                    base.ObterIdUsuarioClaim(),
+                    model.IdLancamento.Value,
+                    model.Descricao,
+                    model.NomeArquivo + model.Arquivo.FileName.Substring(model.Arquivo.FileName.LastIndexOf(".")),
+                    memoryStream.ToArray(),
+                    model.Arquivo.ContentType);
+            }
+
+            return await _lancamentoServico.CadastrarAnexo(cadastrarEntrada);
         }
     }
 }

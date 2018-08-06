@@ -123,6 +123,12 @@
   <data name="Anexo_Excluido_Com_Sucesso" xml:space="preserve">
     <value>Anexo excluído com sucesso.</value>
   </data>
+  <data name="Arquivo_Conteudo_Nao_Informado" xml:space="preserve">
+    <value>O conteúdo do arquivo do anexo não foi informado.</value>
+  </data>
+  <data name="Arquivo_Tamanho_Nao_Permitido" xml:space="preserve">
+    <value>O tamanho do arquivo informado ({0} Mb) é superior ao limite máximo permitido de 5 Mb.</value>
+  </data>
   <data name="Descricao_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>A descrição do anexo é obrigatória e não foi informada.</value>
   </data>

@@ -79,6 +79,24 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O conteúdo do arquivo do anexo não foi informado..
+        /// </summary>
+        public static string Arquivo_Conteudo_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Arquivo_Conteudo_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O tamanho do arquivo informado ({0} Mb) é superior ao limite máximo permitido de 5 Mb..
+        /// </summary>
+        public static string Arquivo_Tamanho_Nao_Permitido {
+            get {
+                return ResourceManager.GetString("Arquivo_Tamanho_Nao_Permitido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A descrição do anexo é obrigatória e não foi informada..
         /// </summary>
         public static string Descricao_Obrigatorio_Nao_Informado {

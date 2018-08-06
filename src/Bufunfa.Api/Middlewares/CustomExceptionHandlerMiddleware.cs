@@ -46,6 +46,12 @@ namespace JNogueira.Bufunfa.Api.Middlewares
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(new NotFoundApiResponse(context.Request.Path)));
                             break;
                         }
+                    case (int)HttpStatusCode.UnsupportedMediaType:
+                        {
+                            context.Response.ContentType = "application/json";
+                            await context.Response.WriteAsync(JsonConvert.SerializeObject(new UnsupportedMediaTypeApiResponse(context.Request.ContentType)));
+                            break;
+                        }
                 }
             }
             catch (Exception exception)

@@ -66,6 +66,24 @@ namespace JNogueira.Bufunfa.Api
     }
 
     /// <summary>
+    /// Response padrão da API para o erro HTTP 415
+    /// </summary>
+    public class UnsupportedMediaTypeApiResponse : Saida, IExamplesProvider
+    {
+        public UnsupportedMediaTypeApiResponse(string requestContentType)
+        {
+            this.Sucesso = false;
+            this.Mensagens = new[] { $"Erro 415: O tipo de requisição \"{requestContentType}\" não é suportado pela API." };
+            this.Retorno = null;
+        }
+
+        public object GetExamples()
+        {
+            return new ForbiddenApiResponse();
+        }
+    }
+
+    /// <summary>
     /// Response padrão da API para o erro HTTP 500
     /// </summary>
     public class InternalServerErrorApiResponse : Saida, IExamplesProvider

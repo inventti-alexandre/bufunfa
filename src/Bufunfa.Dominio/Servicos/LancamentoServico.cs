@@ -142,7 +142,16 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             var anexo = new Anexo(cadastroEntrada);
 
+            var lancamento = await _lancamentoRepositorio.ObterPorId(cadastroEntrada.IdLancamento);
+
+            // Verifica se o lançamento existe
+            this.NotificarSeNulo(lancamento, string.Format(LancamentoMensagem.Id_Lancamento_Nao_Existe, cadastroEntrada.IdLancamento));
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             // TODO: Fazer upload do arquivo para o Google Drive
+            _gestaoAnexos.RealizarUploadAnexo(lancamento.Data, cadastroEntrada);
 
             await _anexoRepositorio.Inserir(anexo);
 
@@ -154,11 +163,6 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario)
         {
             throw new System.NotImplementedException();
-        }
-
-        public string[] ListarPastas()
-        {
-            return _gestaoAnexos.ListarPastas();
         }
     }
 }
