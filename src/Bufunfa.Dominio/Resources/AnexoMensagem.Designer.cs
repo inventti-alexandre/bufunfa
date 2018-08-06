@@ -133,6 +133,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe um arquivo armazenado com o mesmo nome, na pasta do ano / mês do lançamento no Google Drive..
+        /// </summary>
+        public static string Nome_Arquivo_Ja_Existe_Google_Drive {
+            get {
+                return ResourceManager.GetString("Nome_Arquivo_Ja_Existe_Google_Drive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome do arquivo do anexo é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Arquivo_Obrigatorio_Nao_Informado {

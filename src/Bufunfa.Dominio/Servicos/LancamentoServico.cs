@@ -7,21 +7,22 @@ using JNogueira.Bufunfa.Dominio.Interfaces.Infraestrutura;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Servicos
 {
     public class LancamentoServico : Notificavel, ILancamentoServico
     {
-        private readonly IGestaoAnexos _gestaoAnexos;
+        private readonly IGestaoAnexos _gestorAnexos;
 
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
         private readonly IAnexoRepositorio _anexoRepositorio;
         private readonly IUow _uow;
 
-        public LancamentoServico(IGestaoAnexos gestaoAnexos, ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
+        public LancamentoServico(IGestaoAnexos gestorAnexos, ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
         {
-            _gestaoAnexos = gestaoAnexos;
+            _gestorAnexos          = gestorAnexos;
             _lancamentoRepositorio = lancamentoRepositorio;
             _anexoRepositorio      = anexoRepositorio;
             _uow                   = uow;
@@ -150,8 +151,11 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // TODO: Fazer upload do arquivo para o Google Drive
-            _gestaoAnexos.RealizarUploadAnexo(lancamento.Data, cadastroEntrada);
+            // Realiza o upload do arquivo do anexo para o Google Drive
+            await _gestorAnexos.RealizarUploadAnexo(lancamento.Data, cadastroEntrada);
+
+            if (_gestorAnexos.ObterNotificacoes().Any())
+                return new Saida(false, _gestorAnexos.ObterNotificacoes().Select(x => x.Mensagem), null);
 
             await _anexoRepositorio.Inserir(anexo);
 

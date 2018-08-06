@@ -5,12 +5,23 @@ using JNogueira.Infraestrutura.NotifiqueMe;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using GoogleApiV3Data = Google.Apis.Drive.v3.Data;
 
 namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
 {
+    /// <summary>
+    /// Classe que permite a integração com o Google Drive
+    /// </summary>
     public class GoogleDriveUtil : Notificavel
     {
+        public enum TipoGoogleDriveFile
+        {
+            Arquivo,
+            Pasta
+        }
+
         private readonly DriveService _driveService;
 
         public GoogleDriveUtil()
@@ -46,74 +57,48 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
             }
         }
 
-        public GoogleApiV3Data.File ObterArquivoPorNome(string nome, GoogleApiV3Data.File pastaPai = null)
+        /// <summary>
+        /// Realiza a procura de um item pelo nome
+        /// </summary>
+        public async Task<GoogleApiV3Data.File> ProcurarPorNome(TipoGoogleDriveFile tipo, string nome, GoogleApiV3Data.File pastaProcura = null)
         {
             FilesResource.ListRequest list = _driveService.Files.List();
             list.Fields = "files(id, name, trashed, parents)";
             list.PageSize = 5;
-            list.Q = $"trashed = false and name = '{nome}'";
+            list.Q = $"name = '{nome}' and trashed = false";
 
-            if (pastaPai != null)
-                list.Q += " and '" + pastaPai.Id + "' in parents";
+            if (tipo == TipoGoogleDriveFile.Pasta)
+                list.Q += " and mimeType = 'application/vnd.google-apps.folder'";
 
-            GoogleApiV3Data.FileList filesFeed = list.Execute();
+            if (pastaProcura != null)
+                list.Q += " and '" + pastaProcura.Id + "' in parents";
+
+            var filesFeed = await list.ExecuteAsync();
 
             while (filesFeed.Files != null)
             {
-                foreach (GoogleApiV3Data.File item in filesFeed.Files)
-                {
-                    if (item.Name == nome)
-                        return item;
-                }
+                var encontrado = filesFeed.Files.FirstOrDefault(x => string.Equals(x.Name, nome, StringComparison.InvariantCultureIgnoreCase));
+
+                if (encontrado != null)
+                    return encontrado;
 
                 if (filesFeed.NextPageToken == null)
-                {
                     break;
-                }
 
                 list.PageToken = filesFeed.NextPageToken;
 
-                filesFeed = list.Execute();
+                filesFeed = await list.ExecuteAsync();
             }
 
             return null;
         }
 
-        public GoogleApiV3Data.File ObterPastaPorNome(string nome)
+        /// <summary>
+        /// Cria uma nova pasta
+        /// </summary>
+        public async Task<GoogleApiV3Data.File> CriarPasta(string nome, GoogleApiV3Data.File pastaPai = null)
         {
-            FilesResource.ListRequest list = _driveService.Files.List();
-            list.Fields = "files(id, name, trashed)";
-            list.PageSize = 5;
-            list.Q = $"mimeType = 'application/vnd.google-apps.folder' and trashed = false and name = '{nome}'";
-
-            GoogleApiV3Data.FileList filesFeed = list.Execute();
-
-            while (filesFeed.Files != null)
-            {
-                foreach (GoogleApiV3Data.File item in filesFeed.Files)
-                {
-                    if (item.Name == nome)
-                        return item;
-                }
-
-                if (filesFeed.NextPageToken == null)
-                {
-                    break;
-                }
-
-                // Prepare the next page of results
-                list.PageToken = filesFeed.NextPageToken;
-
-                // Execute and process the next page request
-                filesFeed = list.Execute();
-            }
-
-            return null;
-        }
-
-        public GoogleApiV3Data.File CriarPasta(string nome, GoogleApiV3Data.File pastaPai = null)
-        {
-            var pasta = ObterPastaPorNome(nome);
+            var pasta = await ProcurarPorNome(TipoGoogleDriveFile.Pasta, nome, pastaPai);
 
             if (pasta != null)
                 return pasta;
@@ -127,71 +112,41 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
 
             var request = _driveService.Files.Create(fileMetadata);
             request.Fields = "id";
-            return request.Execute();
+            return await request.ExecuteAsync();
         }
 
-        public GoogleApiV3Data.File RealizarUpload(string nome, string mimeType, byte[] arquivo, string descricao = null, GoogleApiV3Data.File pastaPai = null)
+        /// <summary>
+        /// Realiza o upload de um arquivo
+        /// </summary>
+        public async Task<GoogleApiV3Data.File> RealizarUpload(string nomeArquivo, string mimeType, byte[] conteudoArquivo, string descricaoArquivo = null, GoogleApiV3Data.File pastaPai = null)
         {
             var fileMetadata = new GoogleApiV3Data.File
             {
-                Name = nome,
-                Description = descricao,
+                Name = nomeArquivo,
+                Description = descricaoArquivo,
                 MimeType = mimeType,
                 Parents = pastaPai != null ? new List<string>() { pastaPai.Id } : null
             };
 
-            var stream = new MemoryStream(arquivo);
+            var stream = new MemoryStream(conteudoArquivo);
 
             FilesResource.CreateMediaUpload request = _driveService.Files.Create(fileMetadata, stream, mimeType);
-            request.Upload();
+            await request.UploadAsync();
             return request.ResponseBody;
         }
 
-        public void ExcluirPastaPorNome(string nome)
+        /// <summary>
+        /// Realiza a exclusão de um item a partir do seu nome.
+        /// </summary>
+        public async Task ExcluirPorNome(TipoGoogleDriveFile tipo, string nome, GoogleApiV3Data.File pastaPai = null)
         {
-            var pasta = ObterPastaPorNome(nome);
+            var file = await ProcurarPorNome(tipo, nome, pastaPai);
 
-            if (pasta == null)
+            if (file == null)
                 return;
 
-            FilesResource.DeleteRequest deleteRequest = _driveService.Files.Delete(pasta.Id);
-            deleteRequest.Execute();
+            FilesResource.DeleteRequest deleteRequest = _driveService.Files.Delete(file.Id);
+            await deleteRequest.ExecuteAsync();
         }
-
-        //public List<string> ListarPastas()
-        //{
-        //    FilesResource.ListRequest list = _driveService.Files.List();
-        //    list.PageSize = 50;
-        //    list.Q = "mimeType = 'application/vnd.google-apps.folder' and trashed = false and name != 'Bufunfa - Anexos'";
-
-        //    GoogleApiV3Data.FileList filesFeed = list.Execute();
-
-        //    var pastas = new List<string>();
-
-        //    while (filesFeed.Files != null)
-        //    {
-        //        // Adding each item to the list.
-        //        foreach (GoogleApiV3Data.File item in filesFeed.Files)
-        //        {
-        //            pastas.Add(item.Name);
-        //        }
-
-        //        // We will know we are on the last page when the next page token is
-        //        // null.
-        //        // If this is the case, break.
-        //        if (filesFeed.NextPageToken == null)
-        //        {
-        //            break;
-        //        }
-
-        //        // Prepare the next page of results
-        //        list.PageToken = filesFeed.NextPageToken;
-
-        //        // Execute and process the next page request
-        //        filesFeed = list.Execute();
-        //    }
-
-        //    return pastas;
-        //}
     }
 }

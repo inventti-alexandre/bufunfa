@@ -141,6 +141,9 @@
   <data name="Id_Lancamento_Invalido" xml:space="preserve">
     <value>O ID do lançamento informado ({0}) é inválido.</value>
   </data>
+  <data name="Nome_Arquivo_Ja_Existe_Google_Drive" xml:space="preserve">
+    <value>Já existe um arquivo armazenado com o mesmo nome, na pasta do ano / mês do lançamento no Google Drive.</value>
+  </data>
   <data name="Nome_Arquivo_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O nome do arquivo do anexo é obrigatório e não foi informado.</value>
   </data>
