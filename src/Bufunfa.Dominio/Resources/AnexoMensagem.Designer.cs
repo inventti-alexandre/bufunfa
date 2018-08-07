@@ -79,6 +79,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O anexo que se deseja excluir, não pertence ao usuário autenticado..
+        /// </summary>
+        public static string Anexo_Excluir_Nao_Pertence_Usuario {
+            get {
+                return ResourceManager.GetString("Anexo_Excluir_Nao_Pertence_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O conteúdo do arquivo do anexo não foi informado..
         /// </summary>
         public static string Arquivo_Conteudo_Nao_Informado {
@@ -115,6 +124,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ID do anexo informado ({0}) é inválido..
+        /// </summary>
+        public static string Id_Anexo_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Anexo_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O anexo de ID {0} não existe..
         /// </summary>
         public static string Id_Anexo_Nao_Existe {
@@ -124,16 +142,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do lançamento informado ({0}) é inválido..
-        /// </summary>
-        public static string Id_Lancamento_Invalido {
-            get {
-                return ResourceManager.GetString("Id_Lancamento_Invalido", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Já existe um arquivo armazenado com o mesmo nome, na pasta do ano / mês do lançamento no Google Drive..
+        ///   Looks up a localized string similar to Já existe um arquivo armazenado com o mesmo nome, na pasta do ano/mês do lançamento no Google Drive..
         /// </summary>
         public static string Nome_Arquivo_Ja_Existe_Google_Drive {
             get {

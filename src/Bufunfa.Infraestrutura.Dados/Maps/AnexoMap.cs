@@ -12,6 +12,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("IdAnexo");
             builder.Property(x => x.IdLancamento);
+            builder.Property(x => x.IdGoogleDrive);
             builder.Property(x => x.Descricao);
             builder.Property(x => x.NomeArquivo);
         }

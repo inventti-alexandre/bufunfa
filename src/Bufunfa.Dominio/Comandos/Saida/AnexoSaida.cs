@@ -18,6 +18,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
         public int IdLancamento { get; }
 
         /// <summary>
+        /// Id do arquivo no Google Drive
+        /// </summary>
+        public string IdGoogleDrive { get; }
+
+        /// <summary>
         /// Descrição do anexo
         /// </summary>
         public string Descricao { get; }
@@ -32,10 +37,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Saida
             if (anexo == null)
                 return;
 
-            this.Id           = anexo.Id;
-            this.IdLancamento = anexo.IdLancamento;
-            this.Descricao    = anexo.Descricao;
-            this.NomeArquivo  = anexo.NomeArquivo;
+            this.Id            = anexo.Id;
+            this.IdLancamento  = anexo.IdLancamento;
+            this.IdGoogleDrive = anexo.IdGoogleDrive;
+            this.Descricao     = anexo.Descricao;
+            this.NomeArquivo   = anexo.NomeArquivo;
         }
 
         public override string ToString()

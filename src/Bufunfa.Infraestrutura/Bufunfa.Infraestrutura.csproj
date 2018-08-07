@@ -11,8 +11,4 @@
     <PackageReference Include="NotifiqueMe" Version="1.0.32" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
-  </ItemGroup>
-
 </Project>

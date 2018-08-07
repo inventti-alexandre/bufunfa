@@ -54,7 +54,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         {
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
-                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, string.Format(AnexoMensagem.Id_Lancamento_Invalido, this.IdLancamento))
+                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, string.Format(LancamentoMensagem.Id_Lancamento_Invalido, this.IdLancamento))
                 .NotificarSeNuloOuVazio(this.Descricao, AnexoMensagem.Descricao_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.NomeArquivo, AnexoMensagem.Nome_Arquivo_Obrigatorio_Nao_Informado)
                 .NotificarSeIguais(this.ConteudoArquivo.Length, 0, AnexoMensagem.Arquivo_Conteudo_Nao_Informado);

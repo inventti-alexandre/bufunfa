@@ -3,10 +3,8 @@ using JNogueira.Bufunfa.Api.Attributes;
 using JNogueira.Bufunfa.Api.Middlewares;
 using JNogueira.Bufunfa.Dominio;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
-using JNogueira.Bufunfa.Dominio.Interfaces.Infraestrutura;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Servicos;
-using JNogueira.Bufunfa.Infraestrutura;
 using JNogueira.Bufunfa.Infraestrutura.Dados;
 using JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -64,8 +62,6 @@ namespace Bufunfa.Api
             services.AddTransient<ICategoriaServico, CategoriaServico>();
             services.AddTransient<IAgendamentoServico, AgendamentoServico>();
             services.AddTransient<ILancamentoServico, LancamentoServico>();
-
-            services.AddScoped<IGestaoAnexos, GestaoAnexos>();
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)

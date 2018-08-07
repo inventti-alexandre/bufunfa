@@ -85,7 +85,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [HttpPost]
         [Route("v1/lancamentos/cadastrar")]
         [SwaggerRequestExample(typeof(CadastrarLancamentoViewModel), typeof(CadastrarLancamentoRequestExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento cadastrado com sucesso.", typeof(Response))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento cadastrado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarLancamentoResponseExemplo))]
         public async Task<ISaida> CadastrarLancamento([FromBody, SwaggerParameter("Informações de cadastro do lançamento.", Required = true)] CadastrarLancamentoViewModel model)
         {
@@ -110,7 +110,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [HttpPut]
         [Route("v1/lancamentos/alterar")]
         [SwaggerRequestExample(typeof(AlterarLancamentoViewModel), typeof(AlterarLancamentoRequestExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento alterada com sucesso.", typeof(Response))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento alterada com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(AlterarLancamentoResponseExemplo))]
         public async Task<ISaida> AlterarLancamento([FromBody, SwaggerParameter("Informações para alteração de um lançamento.", Required = true)] AlterarLancamentoViewModel model)
         {
@@ -134,7 +134,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Consumes("application/json")]
         [HttpDelete]
         [Route("v1/lancamentos/excluir/{idLancamento:int}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento excluído com sucesso.", typeof(Response))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento excluído com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirLancamentoResponseExemplo))]
         public async Task<ISaida> ExcluirLancamento([SwaggerParameter("ID do lançamento que deverá ser excluído.", Required = true)] int idLancamento)
         {
@@ -147,8 +147,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Authorize(PermissaoAcesso.Lancamentos)]
         [HttpPost]
         [Route("v1/lancamentos/cadastrar-anexo")]
-        [SwaggerRequestExample(typeof(CadastrarAnexoViewModel), typeof(CadastrarAnexoRequestExemplo))]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Lancamento cadastrado com sucesso.", typeof(Response))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Anexo cadastrado com sucesso.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(CadastrarAnexoResponseExemplo))]
         public async Task<ISaida> CadastrarAnexo([FromForm, SwaggerParameter("Informações de cadastro do anexo.", Required = true)] CadastrarAnexoViewModel model)
         {
@@ -168,6 +167,20 @@ namespace JNogueira.Bufunfa.Api.Controllers
             }
 
             return await _lancamentoServico.CadastrarAnexo(cadastrarEntrada);
+        }
+
+        /// <summary>
+        /// Realiza a exclusão de um anexo.
+        /// </summary>
+        [Authorize(PermissaoAcesso.Lancamentos)]
+        [Consumes("application/json")]
+        [HttpDelete]
+        [Route("v1/lancamentos/excluir-anexo/{idAnexo:int}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Anexo excluído com sucesso.", typeof(Response))]
+        [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ExcluirAnexoResponseExemplo))]
+        public async Task<ISaida> ExcluirAnexo([SwaggerParameter("ID do anexo que deverá ser excluído.", Required = true)] int idAnexo)
+        {
+            return await _lancamentoServico.ExcluirAnexo(idAnexo, base.ObterIdUsuarioClaim());
         }
     }
 }

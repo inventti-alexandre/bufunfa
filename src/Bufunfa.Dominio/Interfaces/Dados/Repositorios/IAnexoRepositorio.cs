@@ -1,4 +1,7 @@
-﻿using JNogueira.Bufunfa.Dominio.Entidades;
+﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+using JNogueira.Bufunfa.Dominio.Entidades;
+using JNogueira.Infraestrutura.NotifiqueMe;
+using System;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
@@ -6,7 +9,7 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
     /// <summary>
     /// Define o contrato do repositório de anexos
     /// </summary>
-    public interface IAnexoRepositorio
+    public interface IAnexoRepositorio : INotificavel
     {
         /// <summary>
         /// Obtém um anexo a partir do seu ID
@@ -15,13 +18,13 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<Anexo> ObterPorId(int idAnexo, bool habilitarTracking = false);
 
         /// <summary>
-        /// Insere um novo anexo
+        /// Insere um novo anexo no banco de dados e realiza o upload do arquivo para o Google Drive.
         /// </summary>
-        Task Inserir(Anexo anexo);
+        Task<Anexo> Inserir(DateTime dataLancamento, CadastrarAnexoEntrada cadastroEntrada);
 
         /// <summary>
         /// Deleta um anexo
         /// </summary>
-        void Deletar(Anexo anexo);
+        Task Deletar(Anexo anexo);
     }
 }

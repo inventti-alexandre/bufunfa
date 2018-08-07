@@ -3,26 +3,21 @@ using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
 using JNogueira.Bufunfa.Dominio.Interfaces.Dados;
-using JNogueira.Bufunfa.Dominio.Interfaces.Infraestrutura;
 using JNogueira.Bufunfa.Dominio.Interfaces.Servicos;
 using JNogueira.Bufunfa.Dominio.Resources;
 using JNogueira.Infraestrutura.NotifiqueMe;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JNogueira.Bufunfa.Dominio.Servicos
 {
     public class LancamentoServico : Notificavel, ILancamentoServico
     {
-        private readonly IGestaoAnexos _gestorAnexos;
-
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
         private readonly IAnexoRepositorio _anexoRepositorio;
         private readonly IUow _uow;
 
-        public LancamentoServico(IGestaoAnexos gestorAnexos, ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
+        public LancamentoServico(ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
         {
-            _gestorAnexos          = gestorAnexos;
             _lancamentoRepositorio = lancamentoRepositorio;
             _anexoRepositorio      = anexoRepositorio;
             _uow                   = uow;
@@ -73,6 +68,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             await _lancamentoRepositorio.Inserir(lancamento);
 
             await _uow.Commit();
+
+            lancamento = await _lancamentoRepositorio.ObterPorId(lancamento.Id);
 
             return new Saida(true, new[] { LancamentoMensagem.Lancamento_Cadastrado_Com_Sucesso }, new LancamentoSaida(lancamento));
         }
@@ -128,6 +125,11 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            foreach(var anexo in lancamento.Anexos)
+            {
+                await _anexoRepositorio.Deletar(anexo);
+            }
+
             _lancamentoRepositorio.Deletar(lancamento);
 
             await _uow.Commit();
@@ -141,8 +143,6 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (!cadastroEntrada.Valido())
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
-            var anexo = new Anexo(cadastroEntrada);
-
             var lancamento = await _lancamentoRepositorio.ObterPorId(cadastroEntrada.IdLancamento);
 
             // Verifica se o lançamento existe
@@ -151,22 +151,49 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Realiza o upload do arquivo do anexo para o Google Drive
-            await _gestorAnexos.RealizarUploadAnexo(lancamento.Data, cadastroEntrada);
+            // Insere as informações do anexo no banco de dados e realiza o upload do arquivo para o Google Drive
+            var anexo = await _anexoRepositorio.Inserir(lancamento.Data, cadastroEntrada);
 
-            if (_gestorAnexos.ObterNotificacoes().Any())
-                return new Saida(false, _gestorAnexos.ObterNotificacoes().Select(x => x.Mensagem), null);
+            if (_anexoRepositorio.Invalido)
+            {
+                this.AdicionarNotificacoes(_anexoRepositorio.Notificacoes);
 
-            await _anexoRepositorio.Inserir(anexo);
+                return new Saida(false, this.Mensagens, null);
+            }
 
             await _uow.Commit();
 
             return new Saida(true, new[] { AnexoMensagem.Anexo_Cadastrado_Com_Sucesso }, new AnexoSaida(anexo));
         }
 
-        public Task<ISaida> ExcluirAnexo(int idLancamento, int idUsuario)
+        public async Task<ISaida> ExcluirAnexo(int idAnexo, int idUsuario)
         {
-            throw new System.NotImplementedException();
+            this.NotificarSeMenorOuIgualA(idAnexo, 0, string.Format(AnexoMensagem.Id_Anexo_Invalido, idAnexo));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var anexo = await _anexoRepositorio.ObterPorId(idAnexo);
+
+            // Verifica se o anexo existe
+            this.NotificarSeNulo(anexo, string.Format(AnexoMensagem.Id_Anexo_Nao_Existe, idAnexo));
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se o anexo pertece a um lançamento ao usuário informado.
+            this.NotificarSeDiferentes(anexo.Lancamento.IdUsuario, idUsuario, AnexoMensagem.Anexo_Excluir_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Exclui o anexo do banco de dados e também o arquivo do Google Drive.
+            await _anexoRepositorio.Deletar(anexo);
+
+            await _uow.Commit();
+
+            return new Saida(true, new[] { AnexoMensagem.Anexo_Excluido_Com_Sucesso }, new AnexoSaida(anexo));
         }
     }
 }

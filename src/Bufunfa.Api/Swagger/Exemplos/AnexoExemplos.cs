@@ -5,19 +5,6 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
 {
-    public class CadastrarAnexoRequestExemplo : IExamplesProvider
-    {
-        public object GetExamples()
-        {
-            return new CadastrarAnexoViewModel
-            {
-                IdLancamento = 1,
-                Descricao = "Comprovante de pagamento",
-                NomeArquivo = "net_082018_comprovante"
-            };
-        }
-    }
-
     public class CadastrarAnexoResponseExemplo : IExamplesProvider
     {
         public object GetExamples()
@@ -28,10 +15,11 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Mensagens = new[] { AnexoMensagem.Anexo_Cadastrado_Com_Sucesso },
                 Retorno = new
                 {
-                    Id = 1,
-                    IdLancamento = 1,
-                    Descricao = "Comprovante de pagamento",
-                    NomeArquivo = "net_082018_comprovante"
+                    Id            = 1,
+                    IdLancamento  = 1,
+                    IdGoogleDrive = "1MFSB95CKK2vxjNnNJ_H0W1A3ShQUCyUq",
+                    Descricao     = "Comprovante de pagamento",
+                    NomeArquivo   = "net_082018_comprovante.pdf"
                 }
             };
         }
@@ -66,20 +54,23 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
     //    }
     //}
 
-    //public class ExcluirPessoaResponseExemplo : IExamplesProvider
-    //{
-    //    public object GetExamples()
-    //    {
-    //        return new Saida
-    //        {
-    //            Sucesso = true,
-    //            Mensagens = new[] { PessoaMensagem.Pessoa_Excluida_Com_Sucesso },
-    //            Retorno = new
-    //            {
-    //                Id = 1,
-    //                Nome = "Supermecado Carone"
-    //            }
-    //        };
-    //    }
-    //}
+    public class ExcluirAnexoResponseExemplo : IExamplesProvider
+    {
+        public object GetExamples()
+        {
+            return new Saida
+            {
+                Sucesso = true,
+                Mensagens = new[] { AnexoMensagem.Anexo_Excluido_Com_Sucesso },
+                Retorno = new
+                {
+                    Id            = 1,
+                    IdLancamento  = 1,
+                    IdGoogleDrive = "1MFSB95CKK2vxjNnNJ_H0W1A3ShQUCyUq",
+                    Descricao     = "Comprovante de pagamento",
+                    NomeArquivo   = "net_082018_comprovante.pdf"
+                }
+            };
+        }
+    }
 }

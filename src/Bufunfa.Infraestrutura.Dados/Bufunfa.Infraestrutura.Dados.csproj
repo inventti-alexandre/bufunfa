@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bufunfa.Dominio\Bufunfa.Dominio.csproj" />
+    <ProjectReference Include="..\Bufunfa.Infraestrutura\Bufunfa.Infraestrutura.csproj" />
   </ItemGroup>
 
 </Project>

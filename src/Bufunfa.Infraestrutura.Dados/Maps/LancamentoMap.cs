@@ -30,7 +30,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Maps
                 .HasForeignKey(x => x.IdPessoa);
 
             builder.HasMany(x => x.Anexos)
-                .WithOne()
+                .WithOne(x => x.Lancamento)
                 .HasForeignKey(x => x.IdLancamento)
                 .OnDelete(DeleteBehavior.Cascade);
         }

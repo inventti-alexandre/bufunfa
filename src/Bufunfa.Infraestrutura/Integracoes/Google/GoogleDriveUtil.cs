@@ -60,7 +60,10 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
         /// <summary>
         /// Realiza a procura de um item pelo nome
         /// </summary>
-        public async Task<GoogleApiV3Data.File> ProcurarPorNome(TipoGoogleDriveFile tipo, string nome, GoogleApiV3Data.File pastaProcura = null)
+        /// <param name="tipo">Tipo do item (pasta ou arquivo).</param>
+        /// <param name="nome">Nome do item que deverá ser procurado.</param>
+        /// <param name="idPastaProcura">ID da pasta onde a procura deverá ser realizada.</param>
+        public async Task<GoogleApiV3Data.File> ProcurarPorNome(TipoGoogleDriveFile tipo, string nome, string idPastaProcura = null)
         {
             FilesResource.ListRequest list = _driveService.Files.List();
             list.Fields = "files(id, name, trashed, parents)";
@@ -70,8 +73,8 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
             if (tipo == TipoGoogleDriveFile.Pasta)
                 list.Q += " and mimeType = 'application/vnd.google-apps.folder'";
 
-            if (pastaProcura != null)
-                list.Q += " and '" + pastaProcura.Id + "' in parents";
+            if (!string.IsNullOrEmpty(idPastaProcura))
+                list.Q += " and '" + idPastaProcura + "' in parents";
 
             var filesFeed = await list.ExecuteAsync();
 
@@ -96,9 +99,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
         /// <summary>
         /// Cria uma nova pasta
         /// </summary>
-        public async Task<GoogleApiV3Data.File> CriarPasta(string nome, GoogleApiV3Data.File pastaPai = null)
+        /// <param name="nome">Nome da pasta</param>
+        /// <param name="idPastaPai">ID da pasta onde a pasta deverá ser criada.</param>
+        public async Task<GoogleApiV3Data.File> CriarPasta(string nome, string idPastaPai = null)
         {
-            var pasta = await ProcurarPorNome(TipoGoogleDriveFile.Pasta, nome, pastaPai);
+            var pasta = await ProcurarPorNome(TipoGoogleDriveFile.Pasta, nome, idPastaPai);
 
             if (pasta != null)
                 return pasta;
@@ -107,7 +112,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
             {
                 Name = nome,
                 MimeType = "application/vnd.google-apps.folder",
-                Parents = pastaPai != null ? new List<string>() { pastaPai.Id } : null
+                Parents = !string.IsNullOrEmpty(idPastaPai) ? new List<string>() { idPastaPai } : null
             };
 
             var request = _driveService.Files.Create(fileMetadata);
@@ -118,34 +123,52 @@ namespace JNogueira.Bufunfa.Infraestrutura.Integracoes.Google
         /// <summary>
         /// Realiza o upload de um arquivo
         /// </summary>
-        public async Task<GoogleApiV3Data.File> RealizarUpload(string nomeArquivo, string mimeType, byte[] conteudoArquivo, string descricaoArquivo = null, GoogleApiV3Data.File pastaPai = null)
+        /// <param name="nomeArquivo">Nome do arquivo com a extensão.</param>
+        /// <param name="mimeType">Mime type do arquivo</param>
+        /// <param name="conteudoArquivo">Conteúdo do arquivo qu será feito upload.</param>
+        /// <param name="descricaoArquivo">Descrição do arquivo.</param>
+        /// <param name="idPastaPai">ID da pasta onde o arquivo será armazenado.</param>
+        public async Task<string> RealizarUpload(string nomeArquivo, string mimeType, byte[] conteudoArquivo, string descricaoArquivo = null, string idPastaPai = null)
         {
             var fileMetadata = new GoogleApiV3Data.File
             {
                 Name = nomeArquivo,
                 Description = descricaoArquivo,
                 MimeType = mimeType,
-                Parents = pastaPai != null ? new List<string>() { pastaPai.Id } : null
+                Parents = !string.IsNullOrEmpty(idPastaPai) ? new List<string>() { idPastaPai } : null
             };
 
             var stream = new MemoryStream(conteudoArquivo);
 
             FilesResource.CreateMediaUpload request = _driveService.Files.Create(fileMetadata, stream, mimeType);
             await request.UploadAsync();
-            return request.ResponseBody;
+            return request.ResponseBody.Id;
         }
 
         /// <summary>
         /// Realiza a exclusão de um item a partir do seu nome.
         /// </summary>
-        public async Task ExcluirPorNome(TipoGoogleDriveFile tipo, string nome, GoogleApiV3Data.File pastaPai = null)
+        /// <param name="tipo">Tipo do item (pasta ou arquivo).</param>
+        /// <param name="nome">Nome do arquivo.</param>
+        /// <param name="idPastaPai">ID da pasta onde o arquivo está armazenado.</param>
+        public async Task ExcluirPorNome(TipoGoogleDriveFile tipo, string nome, string idPastaPai = null)
         {
-            var file = await ProcurarPorNome(tipo, nome, pastaPai);
+            var file = await ProcurarPorNome(tipo, nome, idPastaPai);
 
             if (file == null)
                 return;
 
             FilesResource.DeleteRequest deleteRequest = _driveService.Files.Delete(file.Id);
+            await deleteRequest.ExecuteAsync();
+        }
+
+        /// <summary>
+        /// Realiza a exclusão de um item a partir do seu ID.
+        /// </summary>
+        /// <param name="id">ID do arquivo que será excluído.</param>
+        public async Task ExcluirPorId(string id)
+        {
+            FilesResource.DeleteRequest deleteRequest = _driveService.Files.Delete(id);
             await deleteRequest.ExecuteAsync();
         }
     }

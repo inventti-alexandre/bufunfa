@@ -21,7 +21,12 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 
         public async Task<Lancamento> ObterPorId(int idLancamento, bool habilitarTracking = false)
         {
-            var query = _efContext.Lancamentos.AsQueryable();
+            var query = _efContext.Lancamentos
+                .Include(x => x.Conta)
+                .Include(x => x.Categoria)
+                .Include(x => x.Pessoa)
+                .Include(x => x.Anexos)
+                .AsQueryable();
 
             if (!habilitarTracking)
                 query = query.AsNoTracking();
