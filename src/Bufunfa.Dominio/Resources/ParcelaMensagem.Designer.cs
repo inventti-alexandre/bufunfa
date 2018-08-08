@@ -88,7 +88,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do agendamento da parcela informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID do agendamento da parcela informado é inválido..
         /// </summary>
         public static string Id_Agendamento_Invalido {
             get {
@@ -97,7 +97,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da categoria do lançamento da parcela ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da categoria do lançamento da parcela é inválido..
         /// </summary>
         public static string Id_Categoria_Lancar_Parcela_Invalido {
             get {
@@ -106,7 +106,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da conta onde o lançamento da parcela será cadastrado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da conta onde o lançamento da parcela será cadastrado é inválido..
         /// </summary>
         public static string Id_Conta_Lancar_Parcela_Invalido {
             get {
@@ -115,7 +115,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da fatura da parcela informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da fatura da parcela informado é inválido..
         /// </summary>
         public static string Id_Fatura_Invalido {
             get {
@@ -124,7 +124,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da parcela informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da parcela informado é inválido..
         /// </summary>
         public static string Id_Parcela_Invalido {
             get {
@@ -133,7 +133,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A parcela de ID {0} não existe..
+        ///   Looks up a localized string similar to A parcela com o ID informado não existe..
         /// </summary>
         public static string Id_Parcela_Nao_Existe {
             get {
@@ -142,7 +142,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da pessoa do lançamento da parcela ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da pessoa do lançamento da parcela é inválido..
         /// </summary>
         public static string Id_Pessoa_Lancar_Parcela_Invalido {
             get {
@@ -180,9 +180,9 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Não é possível alterar uma parcela já lançada ou descartada..
         /// </summary>
-        public static string Parcela_Alterar_Ja_Desacartada_Lancada {
+        public static string Parcela_Alterar_Ja_Fechada {
             get {
-                return ResourceManager.GetString("Parcela_Alterar_Ja_Desacartada_Lancada", resourceCulture);
+                return ResourceManager.GetString("Parcela_Alterar_Ja_Fechada", resourceCulture);
             }
         }
         
@@ -246,6 +246,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Parcela_Excluida_Com_Sucesso {
             get {
                 return ResourceManager.GetString("Parcela_Excluida_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível excluir uma parcela já lançada ou descartada..
+        /// </summary>
+        public static string Parcela_Excluir_Ja_Fechada {
+            get {
+                return ResourceManager.GetString("Parcela_Excluir_Ja_Fechada", resourceCulture);
             }
         }
         

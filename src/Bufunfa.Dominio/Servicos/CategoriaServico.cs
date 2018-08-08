@@ -25,7 +25,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ObterCategoriaPorId(int idCategoria, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idCategoria, 0, string.Format(CategoriaMensagem.Id_Categoria_Invalido, idCategoria));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -33,7 +33,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var categoria = await _categoriaRepositorio.ObterPorId(idCategoria);
 
             // Verifica se a categoria existe
-            this.NotificarSeNulo(categoria, string.Format(CategoriaMensagem.Id_Categoria_Nao_Existe, idCategoria));
+            this.NotificarSeNulo(categoria, CategoriaMensagem.Id_Categoria_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -49,7 +49,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterCategoriasPorUsuario(int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -118,7 +118,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var categoria = await _categoriaRepositorio.ObterPorId(alterarEntrada.IdCategoria, true);
 
             // Verifica se a categoria existe
-            this.NotificarSeNulo(categoria, string.Format(CategoriaMensagem.Id_Categoria_Nao_Existe, alterarEntrada.IdCategoria));
+            this.NotificarSeNulo(categoria, CategoriaMensagem.Id_Categoria_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -165,7 +165,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ExcluirCategoria(int idCategoria, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idCategoria, 0, string.Format(CategoriaMensagem.Id_Categoria_Invalido, idCategoria));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -173,7 +173,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var categoria = await _categoriaRepositorio.ObterPorId(idCategoria);
 
             // Verifica se a categoria existe
-            this.NotificarSeNulo(categoria, string.Format(CategoriaMensagem.Id_Categoria_Nao_Existe, idCategoria));
+            this.NotificarSeNulo(categoria, CategoriaMensagem.Id_Categoria_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

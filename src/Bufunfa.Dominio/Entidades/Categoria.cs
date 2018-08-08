@@ -17,7 +17,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         /// <summary>
         /// Id do usuário proprietário
         /// </summary>
-        public int IdUsuario { get; private set; }
+        public int? IdUsuario { get; private set; }
 
         /// <summary>
         /// ID da categoria pai

@@ -41,7 +41,7 @@ namespace JNogueira.Bufunfa.Api.Controllers
         [Route("v1/lancamentos/obter-por-id/{idLancamento:int}")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Lançamento encontrado.", typeof(Response))]
         [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ObterLancamentoPorIdResponseExemplo))]
-        public async Task<ISaida> ObterContaPorId([SwaggerParameter("ID do lançamento.", Required = true)] int idLancamento)
+        public async Task<ISaida> ObterLancamentoPorId([SwaggerParameter("ID do lançamento.", Required = true)] int idLancamento)
         {
             return await _lancamentoServico.ObterLancamentoPorId(
                 idLancamento,

@@ -145,10 +145,10 @@
     <value>A conta não pertence ao usuário autenticado.</value>
   </data>
   <data name="Id_Conta_Invalido" xml:space="preserve">
-    <value>O ID da conta informado ({0}) é inválido.</value>
+    <value>O ID da conta informado é inválido.</value>
   </data>
   <data name="Id_Conta_Nao_Existe" xml:space="preserve">
-    <value>A conta de ID {0} não existe.</value>
+    <value>A conta com o ID informado não existe.</value>
   </data>
   <data name="Nenhuma_Conta_Encontrada" xml:space="preserve">
     <value>Nenhuma conta do usuário foi encontrada.</value>
@@ -167,5 +167,8 @@
   </data>
   <data name="Numero_Tamanho_Maximo_Excedido" xml:space="preserve">
     <value>O número da conta deve possuir no máximo 20 caracteres.</value>
+  </data>
+  <data name="Conta_Excluir_Erro_FK" xml:space="preserve">
+    <value>Existem outras informações relacionadas a essa conta, por isso não é possível excluí-la.</value>
   </data>
 </root>

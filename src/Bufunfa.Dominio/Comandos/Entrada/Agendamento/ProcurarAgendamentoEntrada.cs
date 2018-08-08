@@ -37,13 +37,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 paginaIndex,
                 paginaTamanho)
         {
-            
+            this.Validar();
         }
 
-        public override bool Valido()
+        public void Validar()
         {
-            base.Valido();
-
             this.NotificarSeNulo(typeof(Agendamento).GetProperty(this.OrdenarPor), string.Format(Mensagem.Paginacao_OrdernarPor_Propriedade_Nao_Existe, this.OrdenarPor));
 
             if (this.DataInicioParcela.HasValue && this.DataFimParcela.HasValue)
@@ -51,8 +49,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (this.DataInicioParcela.HasValue && !this.DataFimParcela.HasValue || !this.DataInicioParcela.HasValue && this.DataFimParcela.HasValue)
                 this.AdicionarNotificacao(AgendamentoMensagem.Agendamento_Procurar_Periodo_Invalido);
-
-            return !this.Invalido;
         }
     }
 }

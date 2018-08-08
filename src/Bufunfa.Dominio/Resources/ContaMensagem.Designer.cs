@@ -115,6 +115,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existem outras informações relacionadas a essa conta, por isso não é possível excluí-la..
+        /// </summary>
+        public static string Conta_Excluir_Erro_FK {
+            get {
+                return ResourceManager.GetString("Conta_Excluir_Erro_FK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A conta que se deseja excluir, não pertence ao usuário autenticado..
         /// </summary>
         public static string Conta_Excluir_Nao_Pertence_Usuario {
@@ -142,7 +151,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da conta informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da conta informado é inválido..
         /// </summary>
         public static string Id_Conta_Invalido {
             get {
@@ -151,7 +160,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A conta de ID {0} não existe..
+        ///   Looks up a localized string similar to A conta com o ID informado não existe..
         /// </summary>
         public static string Id_Conta_Nao_Existe {
             get {

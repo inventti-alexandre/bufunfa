@@ -1,4 +1,5 @@
-﻿using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
+﻿
+using JNogueira.Bufunfa.Dominio.Comandos.Entrada;
 using JNogueira.Bufunfa.Dominio.Comandos.Saida;
 using JNogueira.Bufunfa.Dominio.Entidades;
 using JNogueira.Bufunfa.Dominio.Interfaces.Comandos;
@@ -24,8 +25,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterContaPorId(int idConta, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idConta, 0, string.Format(ContaMensagem.Id_Conta_Invalido, idConta));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idConta, 0, ContaMensagem.Id_Conta_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -33,7 +34,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var conta = await _contaRepositorio.ObterPorId(idConta);
 
             // Verifica se a conta existe
-            this.NotificarSeNulo(conta, string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta));
+            this.NotificarSeNulo(conta, ContaMensagem.Id_Conta_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -49,7 +50,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterContasPorUsuario(int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -119,8 +120,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ExcluirConta(int idConta, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idConta, 0, string.Format(ContaMensagem.Id_Conta_Invalido, idConta));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idConta, 0, ContaMensagem.Id_Conta_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -128,17 +129,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var conta = await _contaRepositorio.ObterPorId(idConta);
 
             // Verifica se a conta existe
-            this.NotificarSeNulo(conta, string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta));
+            this.NotificarSeNulo(conta, ContaMensagem.Id_Conta_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se a conta pertece ao usuário informado.
             this.NotificarSeDiferentes(conta.IdUsuario, idUsuario, ContaMensagem.Conta_Excluir_Nao_Pertence_Usuario);
-
-            //TODO: Verificar se possui agendamentos
-            //TODO: Verificar se possui lançamentos
-            //TODO: Verificar se possui parcelas
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -147,7 +144,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ContaMensagem.Conta_Excluida_Com_Sucesso }, new ContaSaida(conta));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ContaMensagem.Conta_Excluida_Com_Sucesso }, new ContaSaida(conta));
         }
     }
 }

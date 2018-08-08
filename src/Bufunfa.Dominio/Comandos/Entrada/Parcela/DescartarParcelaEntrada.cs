@@ -32,9 +32,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.IdParcela      = idParcela;
             this.IdUsuario      = idUsuario;
             this.MotivoDescarte = motivoDescarte;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
@@ -42,8 +44,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (!string.IsNullOrEmpty(this.MotivoDescarte))
                 this.NotificarSePossuirTamanhoSuperiorA(this.MotivoDescarte, 500, ParcelaMensagem.Motivo_Descarte_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

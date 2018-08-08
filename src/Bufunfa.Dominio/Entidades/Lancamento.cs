@@ -82,7 +82,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public Lancamento(CadastrarLancamentoEntrada cadastrarEntrada)
             : this()
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario   = cadastrarEntrada.IdUsuario;

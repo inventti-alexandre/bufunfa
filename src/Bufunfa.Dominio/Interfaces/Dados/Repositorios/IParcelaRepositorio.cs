@@ -39,5 +39,10 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Deleta uma parcela
         /// </summary>
         void Deletar(Parcela parcela);
+
+        /// <summary>
+        /// Deleta várias parcelas
+        /// </summary>
+        void Deletar(IEnumerable<Parcela> parcelas);
     }
 }

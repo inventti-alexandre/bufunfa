@@ -54,22 +54,22 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.Data          = data;
             this.Valor         = valor;
             this.Observacao    = observacao;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
                 .NotificarSeVerdadeiro(!this.IdAgendamento.HasValue && !this.IdFatura.HasValue, ParcelaMensagem.Id_Agendamento_Id_Fatura_Nao_Informados)
                 .NotificarSeVerdadeiro(this.IdAgendamento.HasValue && this.IdFatura.HasValue, ParcelaMensagem.Id_Agendamento_Id_Fatura_Informados);
 
             if (this.IdFatura.HasValue)
-                this.NotificarSeMenorQue(this.IdFatura.Value, 1, string.Format(ParcelaMensagem.Id_Fatura_Invalido, this.IdFatura.Value));
+                this.NotificarSeMenorQue(this.IdFatura.Value, 1, ParcelaMensagem.Id_Fatura_Invalido);
 
             if (!string.IsNullOrEmpty(this.Observacao))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Observacao, 500, ParcelaMensagem.Observacao_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

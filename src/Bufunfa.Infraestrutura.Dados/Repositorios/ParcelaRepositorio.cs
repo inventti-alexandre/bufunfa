@@ -57,5 +57,10 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         {
             _efContext.Parcelas.Remove(parcela);
         }
+
+        public void Deletar(IEnumerable<Parcela> parcelas)
+        {
+            _efContext.Parcelas.RemoveRange(parcelas);
+        }
     }
 }

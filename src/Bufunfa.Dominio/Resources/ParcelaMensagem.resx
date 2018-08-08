@@ -127,25 +127,25 @@
     <value>O ID do agendamento e o ID da fatura da parcela não foi informado. Informe pelo menos um dos dois.</value>
   </data>
   <data name="Id_Agendamento_Invalido" xml:space="preserve">
-    <value>O ID do agendamento da parcela informado ({0}) é inválido.</value>
+    <value>O ID do agendamento da parcela informado é inválido.</value>
   </data>
   <data name="Id_Categoria_Lancar_Parcela_Invalido" xml:space="preserve">
-    <value>O ID da categoria do lançamento da parcela ({0}) é inválido.</value>
+    <value>O ID da categoria do lançamento da parcela é inválido.</value>
   </data>
   <data name="Id_Conta_Lancar_Parcela_Invalido" xml:space="preserve">
-    <value>O ID da conta onde o lançamento da parcela será cadastrado ({0}) é inválido.</value>
+    <value>O ID da conta onde o lançamento da parcela será cadastrado é inválido.</value>
   </data>
   <data name="Id_Fatura_Invalido" xml:space="preserve">
-    <value>O ID da fatura da parcela informado ({0}) é inválido.</value>
+    <value>O ID da fatura da parcela informado é inválido.</value>
   </data>
   <data name="Id_Parcela_Invalido" xml:space="preserve">
-    <value>O ID da parcela informado ({0}) é inválido.</value>
+    <value>O ID da parcela informado é inválido.</value>
   </data>
   <data name="Id_Parcela_Nao_Existe" xml:space="preserve">
-    <value>A parcela de ID {0} não existe.</value>
+    <value>A parcela com o ID informado não existe.</value>
   </data>
   <data name="Id_Pessoa_Lancar_Parcela_Invalido" xml:space="preserve">
-    <value>O ID da pessoa do lançamento da parcela ({0}) é inválido.</value>
+    <value>O ID da pessoa do lançamento da parcela é inválido.</value>
   </data>
   <data name="Motivo_Descarte_Tamanho_Maximo_Excedido" xml:space="preserve">
     <value>A descrição do motivo do descarte da parcela deve possuir no máximo 500 caracteres.</value>
@@ -156,7 +156,7 @@
   <data name="Parcela_Alterada_Com_Sucesso" xml:space="preserve">
     <value>Parcela alterada com sucesso.</value>
   </data>
-  <data name="Parcela_Alterar_Ja_Desacartada_Lancada" xml:space="preserve">
+  <data name="Parcela_Alterar_Ja_Fechada" xml:space="preserve">
     <value>Não é possível alterar uma parcela já lançada ou descartada.</value>
   </data>
   <data name="Parcela_Alterar_Nao_Pertence_Usuario" xml:space="preserve">
@@ -179,6 +179,9 @@
   </data>
   <data name="Parcela_Excluida_Com_Sucesso" xml:space="preserve">
     <value>Parcela excluída com sucesso.</value>
+  </data>
+  <data name="Parcela_Excluir_Ja_Fechada" xml:space="preserve">
+    <value>Não é possível excluir uma parcela já lançada ou descartada.</value>
   </data>
   <data name="Parcela_Lancada_Com_Sucesso" xml:space="preserve">
     <value>Parcela lançada com sucesso.</value>

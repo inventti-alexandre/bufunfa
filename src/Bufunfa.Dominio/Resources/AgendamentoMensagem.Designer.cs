@@ -115,6 +115,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O agendamento não pode ser excluído pois possui pelo menos uma parcela já lançada..
+        /// </summary>
+        public static string Agendamento_Excluir_Possui_Parcela_Lancada {
+            get {
+                return ResourceManager.GetString("Agendamento_Excluir_Possui_Parcela_Lancada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O agendamento não pertence ao usuário autenticado..
         /// </summary>
         public static string Agendamento_Nao_Pertence_Usuario {
@@ -151,7 +160,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do agendamento informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID do agendamento informado é inválido..
         /// </summary>
         public static string Id_Agendamento_Invalido {
             get {
@@ -160,7 +169,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O agendamento de ID {0} não existe..
+        ///   Looks up a localized string similar to O agendamento com o ID informado não existe..
         /// </summary>
         public static string Id_Agendamento_Nao_Existe {
             get {

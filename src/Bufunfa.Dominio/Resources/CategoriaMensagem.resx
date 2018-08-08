@@ -145,7 +145,7 @@
     <value>O ID da categoria informado ({0}) é inválido.</value>
   </data>
   <data name="Id_Categoria_Nao_Existe" xml:space="preserve">
-    <value>A categoria de ID {0} não existe.</value>
+    <value>A categoria com o ID informado não existe.</value>
   </data>
   <data name="Nenhuma_categoria_encontrada" xml:space="preserve">
     <value>Nenhuma categoria do usuário foi encontrado.</value>

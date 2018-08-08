@@ -28,8 +28,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterAgendamentoPorId(int idAgendamento, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idAgendamento, 0, string.Format(AgendamentoMensagem.Id_Agendamento_Invalido, idAgendamento));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idAgendamento, 0, AgendamentoMensagem.Id_Agendamento_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -37,7 +37,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var agendamento = await _agendamentoRepositorio.ObterPorId(idAgendamento);
 
             // Verifica se o agendamento existe
-            this.NotificarSeNulo(agendamento, string.Format(AgendamentoMensagem.Id_Agendamento_Nao_Existe, idAgendamento));
+            this.NotificarSeNulo(agendamento, AgendamentoMensagem.Id_Agendamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -45,25 +45,23 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o agendamento pertece ao usuário informado.
             this.NotificarSeDiferentes(agendamento.IdUsuario, idUsuario, AgendamentoMensagem.Agendamento_Nao_Pertence_Usuario);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Encontrado_Com_Sucesso }, new AgendamentoSaida(agendamento));
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { AgendamentoMensagem.Agendamento_Encontrado_Com_Sucesso }, new AgendamentoSaida(agendamento));
         }
 
         public async Task<ISaida> ProcurarAgendamentos(ProcurarAgendamentoEntrada procurarEntrada)
         {
             // Verifica se os parâmetros para a procura foram informadas corretamente
-            if (!procurarEntrada.Valido())
-                return new Saida(false, procurarEntrada.Mensagens, null);
-
-            return await _agendamentoRepositorio.Procurar(procurarEntrada);
+            return procurarEntrada.Invalido
+                ? new Saida(false, procurarEntrada.Mensagens, null)
+                : await _agendamentoRepositorio.Procurar(procurarEntrada);
         }
 
         public async Task<ISaida> CadastrarAgendamento(CadastrarAgendamentoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             var agendamento = new Agendamento(cadastroEntrada);
@@ -72,15 +70,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            agendamento = await _agendamentoRepositorio.ObterPorId(agendamento.Id);
-
-            return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Cadastrado_Com_Sucesso }, new AgendamentoSaida(agendamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { AgendamentoMensagem.Agendamento_Cadastrado_Com_Sucesso }, new AgendamentoSaida(await _agendamentoRepositorio.ObterPorId(agendamento.Id)));
         }
 
         public async Task<ISaida> AlterarAgendamento(AlterarAgendamentoEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var agendamento = await _agendamentoRepositorio.ObterPorId(alterarEntrada.IdAgendamento, true);
@@ -97,8 +95,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Exclui todas as parcelas agendamento.
-            foreach (var parcelaAberta in agendamento.Parcelas)
+            // Exclui todas as parcelas abertas do agendamento.
+            foreach (var parcelaAberta in agendamento.Parcelas.Where(x => x.Status == StatusParcela.Aberta))
             {
                 _parcelaRepositorio.Deletar(parcelaAberta);
             }
@@ -109,13 +107,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Alterado_Com_Sucesso }, new AgendamentoSaida(agendamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { AgendamentoMensagem.Agendamento_Alterado_Com_Sucesso }, new AgendamentoSaida(agendamento));
         }
 
         public async Task<ISaida> ExcluirAgendamento(int idAgendamento, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idAgendamento, 0, string.Format(AgendamentoMensagem.Id_Agendamento_Invalido, idAgendamento));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idAgendamento, 0, AgendamentoMensagem.Id_Agendamento_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -123,7 +123,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var agendamento = await _agendamentoRepositorio.ObterPorId(idAgendamento);
 
             // Verifica se o agendamento existe
-            this.NotificarSeNulo(agendamento, string.Format(AgendamentoMensagem.Id_Agendamento_Nao_Existe, idAgendamento));
+            this.NotificarSeNulo(agendamento, AgendamentoMensagem.Id_Agendamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -134,17 +134,28 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            // Verifica se o agendamento possui alguma parcela lançada.
+            this.NotificarSeVerdadeiro(agendamento.Parcelas.Any(x => x.Lancada), AgendamentoMensagem.Agendamento_Excluir_Possui_Parcela_Lancada);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Exclui todas as parcelas do agendamento.
+            _parcelaRepositorio.Deletar(agendamento.Parcelas);
+
             _agendamentoRepositorio.Deletar(agendamento);
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { AgendamentoMensagem.Agendamento_Excluido_Com_Sucesso }, new AgendamentoSaida(agendamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { AgendamentoMensagem.Agendamento_Excluido_Com_Sucesso }, new AgendamentoSaida(agendamento));
         }
 
         public async Task<ISaida> CadastrarParcela(CadastrarParcelaEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             var parcela = new Parcela(cadastroEntrada);
@@ -153,25 +164,21 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ParcelaMensagem.Parcela_Cadastrada_Com_Sucesso }, new ParcelaSaida(parcela));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ParcelaMensagem.Parcela_Cadastrada_Com_Sucesso }, new ParcelaSaida(parcela));
         }
 
         public async Task<ISaida> AlterarParcela(AlterarParcelaEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var parcela = await _parcelaRepositorio.ObterPorId(alterarEntrada.IdParcela, true);
 
             // Verifica se a parcela existe
-            this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, alterarEntrada.IdParcela));
-
-            if (parcela != null)
-            {
-                // Verifica se a parcela já foi lançada ou descartada
-                this.NotificarSeVerdadeiro(parcela.Lancada || parcela.Descartada, ParcelaMensagem.Parcela_Alterar_Ja_Desacartada_Lancada);
-            }
+            this.NotificarSeNulo(parcela, ParcelaMensagem.Id_Parcela_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -182,38 +189,46 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            // Verifica se a parcela está fechada (lançada ou descartada)
+            this.NotificarSeVerdadeiro(parcela.Status == StatusParcela.Fechada, ParcelaMensagem.Parcela_Alterar_Ja_Fechada);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             parcela.Alterar(alterarEntrada);
 
             _parcelaRepositorio.Atualizar(parcela);
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ParcelaMensagem.Parcela_Alterada_Com_Sucesso }, new ParcelaSaida(parcela));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ParcelaMensagem.Parcela_Alterada_Com_Sucesso }, new ParcelaSaida(parcela));
         }
 
         public async Task<ISaida> LancarParcela(LancarParcelaEntrada lancarEntrada)
         {
             // Verifica se as informações para o lançamento foram informadas corretamente
-            if (!lancarEntrada.Valido())
+            if (lancarEntrada.Invalido)
                 return new Saida(false, lancarEntrada.Mensagens, null);
 
             var parcela = await _parcelaRepositorio.ObterPorId(lancarEntrada.IdParcela, true);
 
             // Verifica se a parcela existe
-            this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, lancarEntrada.IdParcela));
-
-            if (parcela != null)
-            {
-                // Verifica se a parcela já foi lançada ou descartada
-                this.NotificarSeVerdadeiro(parcela.Lancada, ParcelaMensagem.Parcela_Lancar_Ja_Lancada);
-                this.NotificarSeVerdadeiro(parcela.Descartada, ParcelaMensagem.Parcela_Lancar_Ja_Descartada);
-            }
+            this.NotificarSeNulo(parcela, ParcelaMensagem.Id_Parcela_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se a parcela pertece a um agendamento do usuário informado.
             this.NotificarSeDiferentes(parcela.Agendamento.IdUsuario, lancarEntrada.IdUsuario, ParcelaMensagem.Parcela_Lancar_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se a parcela já foi lançada ou descartada
+            this.NotificarSeVerdadeiro(parcela.Lancada, ParcelaMensagem.Parcela_Lancar_Ja_Lancada);
+            this.NotificarSeVerdadeiro(parcela.Descartada, ParcelaMensagem.Parcela_Lancar_Ja_Descartada);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -239,13 +254,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ParcelaMensagem.Parcela_Lancada_Com_Sucesso }, new ParcelaSaida(parcela));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ParcelaMensagem.Parcela_Lancada_Com_Sucesso }, new ParcelaSaida(parcela));
         }
 
         public async Task<ISaida> DescartarParcela(DescartarParcelaEntrada descartarEntrada)
         {
             // Verifica se as informações para descartar foram informadas corretamente
-            if (!descartarEntrada.Valido())
+            if (descartarEntrada.Invalido)
                 return new Saida(false, descartarEntrada.Mensagens, null);
 
             var parcela = await _parcelaRepositorio.ObterPorId(descartarEntrada.IdParcela, true);
@@ -275,13 +292,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ParcelaMensagem.Parcela_Descartada_Com_Sucesso }, new ParcelaSaida(parcela));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ParcelaMensagem.Parcela_Descartada_Com_Sucesso }, new ParcelaSaida(parcela));
         }
 
         public async Task<ISaida> ExcluirParcela(int idParcela, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idParcela, 0, string.Format(ParcelaMensagem.Id_Parcela_Invalido, idParcela));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idParcela, 0, ParcelaMensagem.Id_Parcela_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -289,7 +308,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var parcela = await _parcelaRepositorio.ObterPorId(idParcela);
 
             // Verifica se a parcela existe
-            this.NotificarSeNulo(parcela, string.Format(ParcelaMensagem.Id_Parcela_Nao_Existe, idParcela));
+            this.NotificarSeNulo(parcela, ParcelaMensagem.Id_Parcela_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -300,11 +319,19 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            // Verifica se a parcela está fechada (lançada ou descartada)
+            this.NotificarSeVerdadeiro(parcela.Status == StatusParcela.Fechada, ParcelaMensagem.Parcela_Excluir_Ja_Fechada);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             _parcelaRepositorio.Deletar(parcela);
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ParcelaMensagem.Parcela_Excluida_Com_Sucesso }, new ParcelaSaida(parcela));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ParcelaMensagem.Parcela_Excluida_Com_Sucesso }, new ParcelaSaida(parcela));
         }
     }
 }

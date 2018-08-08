@@ -24,7 +24,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ObterPessoaPorId(int idPessoa, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idPessoa, 0, string.Format(PessoaMensagem.Id_Pessoa_Invalido, idPessoa));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -114,7 +114,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ExcluirPessoa(int idPessoa, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idPessoa, 0, string.Format(PessoaMensagem.Id_Pessoa_Invalido, idPessoa));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

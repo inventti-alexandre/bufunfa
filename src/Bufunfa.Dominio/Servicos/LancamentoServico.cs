@@ -25,8 +25,8 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterLancamentoPorId(int idLancamento, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idLancamento, 0, string.Format(LancamentoMensagem.Id_Lancamento_Invalido, idLancamento));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idLancamento, 0, LancamentoMensagem.Id_Lancamento_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -34,7 +34,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var lancamento = await _lancamentoRepositorio.ObterPorId(idLancamento);
 
             // Verifica se o lançamento existe
-            this.NotificarSeNulo(lancamento, string.Format(LancamentoMensagem.Id_Lancamento_Nao_Existe, idLancamento));
+            this.NotificarSeNulo(lancamento, LancamentoMensagem.Id_Lancamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -42,25 +42,23 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o lançamento pertece ao usuário informado.
             this.NotificarSeDiferentes(lancamento.IdUsuario, idUsuario, LancamentoMensagem.Lancamento_Nao_Pertence_Usuario);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            return new Saida(true, new[] { LancamentoMensagem.Lancamento_Encontrado_Com_Sucesso }, new LancamentoSaida(lancamento));
+            return (this.Invalido)
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { LancamentoMensagem.Lancamento_Encontrado_Com_Sucesso }, new LancamentoSaida(lancamento));
         }
 
         public async Task<ISaida> ProcurarLancamentos(ProcurarLancamentoEntrada procurarEntrada)
         {
             // Verifica se os parâmetros para a procura foram informadas corretamente
-            if (!procurarEntrada.Valido())
-                return new Saida(false, procurarEntrada.Mensagens, null);
-
-            return await _lancamentoRepositorio.Procurar(procurarEntrada);
+            return (procurarEntrada.Invalido)
+                ? new Saida(false, procurarEntrada.Mensagens, null)
+                : await _lancamentoRepositorio.Procurar(procurarEntrada);
         }
 
         public async Task<ISaida> CadastrarLancamento(CadastrarLancamentoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             var lancamento = new Lancamento(cadastroEntrada);
@@ -68,6 +66,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             await _lancamentoRepositorio.Inserir(lancamento);
 
             await _uow.Commit();
+
+            if (_uow.Invalido)
+                return new Saida(false, _uow.Mensagens, null);
 
             lancamento = await _lancamentoRepositorio.ObterPorId(lancamento.Id);
 
@@ -77,13 +78,13 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> AlterarLancamento(AlterarLancamentoEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var lancamento = await _lancamentoRepositorio.ObterPorId(alterarEntrada.IdLancamento, true);
 
             // Verifica se o lançamento existe
-            this.NotificarSeNulo(lancamento, string.Format(LancamentoMensagem.Id_Lancamento_Nao_Existe, alterarEntrada.IdLancamento));
+            this.NotificarSeNulo(lancamento, LancamentoMensagem.Id_Lancamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -100,13 +101,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { LancamentoMensagem.Lancamento_Alterado_Com_Sucesso }, new LancamentoSaida(lancamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { LancamentoMensagem.Lancamento_Alterado_Com_Sucesso }, new LancamentoSaida(lancamento));
         }
 
         public async Task<ISaida> ExcluirLancamento(int idLancamento, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idLancamento, 0, string.Format(LancamentoMensagem.Id_Lancamento_Invalido, idLancamento));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idLancamento, 0, LancamentoMensagem.Id_Lancamento_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -114,7 +117,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var lancamento = await _lancamentoRepositorio.ObterPorId(idLancamento);
 
             // Verifica se o lançamento existe
-            this.NotificarSeNulo(lancamento, string.Format(LancamentoMensagem.Id_Lancamento_Nao_Existe, idLancamento));
+            this.NotificarSeNulo(lancamento, LancamentoMensagem.Id_Lancamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -127,6 +130,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             foreach(var anexo in lancamento.Anexos)
             {
+                // Exclui os anexos do banco de dados e os arquivos do Google Drive
                 await _anexoRepositorio.Deletar(anexo);
             }
 
@@ -134,7 +138,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { LancamentoMensagem.Lancamento_Excluido_Com_Sucesso }, new LancamentoSaida(lancamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { LancamentoMensagem.Lancamento_Excluido_Com_Sucesso }, new LancamentoSaida(lancamento));
         }
 
         public async Task<ISaida> CadastrarAnexo(CadastrarAnexoEntrada cadastroEntrada)
@@ -146,7 +152,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var lancamento = await _lancamentoRepositorio.ObterPorId(cadastroEntrada.IdLancamento);
 
             // Verifica se o lançamento existe
-            this.NotificarSeNulo(lancamento, string.Format(LancamentoMensagem.Id_Lancamento_Nao_Existe, cadastroEntrada.IdLancamento));
+            this.NotificarSeNulo(lancamento, LancamentoMensagem.Id_Lancamento_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -163,13 +169,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { AnexoMensagem.Anexo_Cadastrado_Com_Sucesso }, new AnexoSaida(anexo));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { AnexoMensagem.Anexo_Cadastrado_Com_Sucesso }, new AnexoSaida(anexo));
         }
 
         public async Task<ISaida> ExcluirAnexo(int idAnexo, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idAnexo, 0, string.Format(AnexoMensagem.Id_Anexo_Invalido, idAnexo));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idAnexo, 0, AnexoMensagem.Id_Anexo_Invalido);
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -177,7 +185,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var anexo = await _anexoRepositorio.ObterPorId(idAnexo);
 
             // Verifica se o anexo existe
-            this.NotificarSeNulo(anexo, string.Format(AnexoMensagem.Id_Anexo_Nao_Existe, idAnexo));
+            this.NotificarSeNulo(anexo, AnexoMensagem.Id_Anexo_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -193,7 +201,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { AnexoMensagem.Anexo_Excluido_Com_Sucesso }, new AnexoSaida(anexo));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { AnexoMensagem.Anexo_Excluido_Com_Sucesso }, new AnexoSaida(anexo));
         }
     }
 }

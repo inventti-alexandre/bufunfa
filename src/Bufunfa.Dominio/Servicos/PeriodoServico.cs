@@ -25,7 +25,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ObterPeriodoPorId(int idPeriodo, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -49,7 +49,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterPeriodosPorUsuario(int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -133,7 +133,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ExcluirPeriodo(int idPeriodo, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

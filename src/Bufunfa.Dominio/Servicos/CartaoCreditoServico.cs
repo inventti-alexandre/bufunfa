@@ -22,10 +22,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             _uow = uow;
         }
 
+        // TODO: Continuar refatoração daqui.
+
         public async Task<ISaida> ObterCartaoCreditoPorId(int idCartao, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idCartao, 0, string.Format(CartaoCreditoMensagem.Id_Cartao_Invalido, idCartao));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -49,7 +51,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
         public async Task<ISaida> ObterCartoesCreditoPorUsuario(int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -120,7 +122,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ExcluirCartaoCredito(int idCartao, int idUsuario)
         {
             this.NotificarSeMenorOuIgualA(idCartao, 0, string.Format(CartaoCreditoMensagem.Id_Cartao_Invalido, idCartao));
-            this.NotificarSeMenorOuIgualA(idUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, idUsuario));
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

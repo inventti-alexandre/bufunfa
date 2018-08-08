@@ -68,9 +68,11 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.Valor       = valor;
             this.IdPessoa    = idPessoa;
             this.Observacao  = observacao;
+
+            Validar();
         }
 
-        public bool Valido()
+        public void Validar()
         {
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
@@ -86,8 +88,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (!string.IsNullOrEmpty(this.Observacao))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Observacao, 500, LancamentoMensagem.Observacao_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

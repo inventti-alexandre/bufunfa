@@ -49,7 +49,7 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.Observacao  = observacao;
         }
 
-        public bool Valido()
+        private void Valido()
         {
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))

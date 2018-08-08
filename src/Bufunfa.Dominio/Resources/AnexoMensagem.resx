@@ -139,10 +139,10 @@
     <value>A descrição do anexo deve possuir no máximo 200 caracteres.</value>
   </data>
   <data name="Id_Anexo_Invalido" xml:space="preserve">
-    <value>O ID do anexo informado ({0}) é inválido.</value>
+    <value>O ID do anexo informado é inválido.</value>
   </data>
   <data name="Id_Anexo_Nao_Existe" xml:space="preserve">
-    <value>O anexo de ID {0} não existe.</value>
+    <value>O anexo com o ID informado não existe.</value>
   </data>
   <data name="Nome_Arquivo_Ja_Existe_Google_Drive" xml:space="preserve">
     <value>Já existe um arquivo armazenado com o mesmo nome, na pasta do ano/mês do lançamento no Google Drive.</value>

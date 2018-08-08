@@ -75,7 +75,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .Include(x => x.CategoriasFilha)
                         .ThenInclude(y => y.CategoriasFilha)
                    .AsNoTracking()
-                   .Where(x => x.IdUsuario == idUsuario && x.IdCategoriaPai == null)
+                   .Where(x => (x.IdUsuario == idUsuario || x.IdUsuario == null) && x.IdCategoriaPai == null)
                    .OrderBy(x => x.Tipo)
                    .ThenBy(x => x.Nome)
                    .ToListAsync();

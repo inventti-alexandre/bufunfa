@@ -70,7 +70,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do usuário informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID do usuário informado é inválido..
         /// </summary>
         public static string Id_Usuario_Invalido {
             get {
@@ -88,7 +88,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O index da página informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O index da página informado é inválido..
         /// </summary>
         public static string Paginacao_Pagina_Index_Invalido {
             get {
@@ -97,7 +97,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O tamanho da página informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O tamanho da página informado é inválido..
         /// </summary>
         public static string Paginacao_Pagina_Tamanho_Invalido {
             get {

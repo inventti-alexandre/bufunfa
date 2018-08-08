@@ -169,7 +169,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A categoria de ID {0} não existe..
+        ///   Looks up a localized string similar to A categoria com o ID informado não existe..
         /// </summary>
         public static string Id_Categoria_Nao_Existe {
             get {

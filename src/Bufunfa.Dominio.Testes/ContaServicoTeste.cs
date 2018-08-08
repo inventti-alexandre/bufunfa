@@ -56,7 +56,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.ObterContaPorId(idConta, idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == ContaMensagem.Id_Conta_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.ObterContaPorId(idConta, idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(ContaMensagem.Id_Conta_Invalido, idConta)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == ContaMensagem.Id_Conta_Invalido), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.ObterContasPorUsuario(idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == Mensagem.Id_Usuario_Invalido), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -156,7 +156,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.AlterarConta(alterarEntrada).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == Mensagem.Id_Usuario_Invalido), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.AlterarConta(alterarEntrada).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == ContaMensagem.Id_Conta_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -266,7 +266,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _contaServico.ExcluirConta(idConta, idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(ContaMensagem.Id_Conta_Nao_Existe, idConta)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == ContaMensagem.Id_Conta_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]

@@ -96,7 +96,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _cartaoCreditoServico.ObterCartoesCreditoPorUsuario(idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == Mensagem.Id_Usuario_Invalido), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -155,7 +155,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _cartaoCreditoServico.AlterarCartaoCredito(alterarEntrada).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(Mensagem.Id_Usuario_Invalido, idUsuario)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == Mensagem.Id_Usuario_Invalido), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]

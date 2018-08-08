@@ -127,10 +127,10 @@
     <value>O ID da conta do lançamento informado ({0}) é inválido.</value>
   </data>
   <data name="Id_Lancamento_Invalido" xml:space="preserve">
-    <value>O ID do lançamento informado ({0}) é inválido.</value>
+    <value>O ID do lançamento informado é inválido.</value>
   </data>
   <data name="Id_Lancamento_Nao_Existe" xml:space="preserve">
-    <value>O lançamento de ID {0} não existe.</value>
+    <value>O lançamento com o ID informado não existe.</value>
   </data>
   <data name="Id_Pessoa_Invalido" xml:space="preserve">
     <value>O ID da pessoa do lançamento informado ({0}) é inválido.</value>

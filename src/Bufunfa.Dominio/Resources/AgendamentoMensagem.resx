@@ -142,10 +142,10 @@
     <value>O agendamento não pertence ao usuário autenticado.</value>
   </data>
   <data name="Id_Agendamento_Invalido" xml:space="preserve">
-    <value>O ID do agendamento informado ({0}) é inválido.</value>
+    <value>O ID do agendamento informado é inválido.</value>
   </data>
   <data name="Id_Agendamento_Nao_Existe" xml:space="preserve">
-    <value>O agendamento de ID {0} não existe.</value>
+    <value>O agendamento com o ID informado não existe.</value>
   </data>
   <data name="Id_Categoria_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O ID da categoria do agendamento é obrigatório e não foi informado.</value>
@@ -179,5 +179,8 @@
   </data>
   <data name="Agendamento_Procurar_Periodo_Invalido" xml:space="preserve">
     <value>O período informado para é inválido. Verifique as datas informadas.</value>
+  </data>
+  <data name="Agendamento_Excluir_Possui_Parcela_Lancada" xml:space="preserve">
+    <value>O agendamento não pode ser excluído pois possui pelo menos uma parcela já lançada.</value>
   </data>
 </root>
