@@ -13,13 +13,28 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
     public class LancamentoServico : Notificavel, ILancamentoServico
     {
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
+        private readonly ICategoriaRepositorio _categoriaRepositorio;
+        private readonly IContaRepositorio _contaRepositorio;
         private readonly IAnexoRepositorio _anexoRepositorio;
+        private readonly IPessoaRepositorio _pessoaRepositorio;
+        private readonly IParcelaRepositorio _parcelaRepositorio;
         private readonly IUow _uow;
 
-        public LancamentoServico(ILancamentoRepositorio lancamentoRepositorio, IAnexoRepositorio anexoRepositorio, IUow uow)
+        public LancamentoServico(
+            ILancamentoRepositorio lancamentoRepositorio,
+            ICategoriaRepositorio categoriaRepositorio,
+            IContaRepositorio contaRepositorio,
+            IAnexoRepositorio anexoRepositorio,
+            IPessoaRepositorio pessoaRepositorio,
+            IParcelaRepositorio parcelaRepositorio,
+            IUow uow)
         {
             _lancamentoRepositorio = lancamentoRepositorio;
+            _categoriaRepositorio  = categoriaRepositorio;
+            _contaRepositorio      = contaRepositorio;
             _anexoRepositorio      = anexoRepositorio;
+            _pessoaRepositorio     = pessoaRepositorio;
+            _parcelaRepositorio    = parcelaRepositorio;
             _uow                   = uow;
         }
 
@@ -42,7 +57,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o lançamento pertece ao usuário informado.
             this.NotificarSeDiferentes(lancamento.IdUsuario, idUsuario, LancamentoMensagem.Lancamento_Nao_Pertence_Usuario);
 
-            return (this.Invalido)
+            return this.Invalido
                 ? new Saida(false, this.Mensagens, null)
                 : new Saida(true, new[] { LancamentoMensagem.Lancamento_Encontrado_Com_Sucesso }, new LancamentoSaida(lancamento));
         }
@@ -50,7 +65,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ProcurarLancamentos(ProcurarLancamentoEntrada procurarEntrada)
         {
             // Verifica se os parâmetros para a procura foram informadas corretamente
-            return (procurarEntrada.Invalido)
+            return procurarEntrada.Invalido
                 ? new Saida(false, procurarEntrada.Mensagens, null)
                 : await _lancamentoRepositorio.Procurar(procurarEntrada);
         }
@@ -61,18 +76,32 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
+            // Verifica se a categoria existe a partir do ID informado.
+            this.NotificarSeFalso(await _categoriaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdCategoria), CategoriaMensagem.Id_Categoria_Nao_Existe);
+
+            // Verifica se a conta existe a partir do ID informado.
+            this.NotificarSeFalso(await _contaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdConta), ContaMensagem.Id_Conta_Nao_Existe);
+
+            // Verifica se a pessoa existe a partir do ID informado.
+            if (cadastroEntrada.IdPessoa.HasValue)
+                this.NotificarSeFalso(await _pessoaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdPessoa.Value), PessoaMensagem.Id_Pessoa_Nao_Existe);
+
+            // Verifica se a parcela existe a partir do ID informado.
+            if (cadastroEntrada.IdParcela.HasValue)
+                this.NotificarSeFalso(await _parcelaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdParcela.Value), ParcelaMensagem.Id_Parcela_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             var lancamento = new Lancamento(cadastroEntrada);
 
             await _lancamentoRepositorio.Inserir(lancamento);
 
             await _uow.Commit();
 
-            if (_uow.Invalido)
-                return new Saida(false, _uow.Mensagens, null);
-
-            lancamento = await _lancamentoRepositorio.ObterPorId(lancamento.Id);
-
-            return new Saida(true, new[] { LancamentoMensagem.Lancamento_Cadastrado_Com_Sucesso }, new LancamentoSaida(lancamento));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { LancamentoMensagem.Lancamento_Cadastrado_Com_Sucesso }, new LancamentoSaida(await _lancamentoRepositorio.ObterPorId(lancamento.Id)));
         }
 
         public async Task<ISaida> AlterarLancamento(AlterarLancamentoEntrada alterarEntrada)
@@ -91,6 +120,21 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             // Verifica se o lançamento pertece ao usuário informado.
             this.NotificarSeDiferentes(lancamento.IdUsuario, alterarEntrada.IdUsuario, LancamentoMensagem.Lancamento_Alterar_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se a categoria existe a partir do ID informado.
+            if (lancamento.IdCategoria != alterarEntrada.IdCategoria)
+                this.NotificarSeFalso(await _categoriaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdCategoria), CategoriaMensagem.Id_Categoria_Nao_Existe);
+
+            // Verifica se a conta existe a partir do ID informado.
+            if (lancamento.IdConta != alterarEntrada.IdConta)
+                this.NotificarSeFalso(await _contaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdConta), ContaMensagem.Id_Conta_Nao_Existe);
+
+            // Verifica se a pessoa existe a partir do ID informado.
+            if (lancamento.IdPessoa != alterarEntrada.IdPessoa && alterarEntrada.IdPessoa.HasValue)
+                this.NotificarSeFalso(await _pessoaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdPessoa.Value), PessoaMensagem.Id_Pessoa_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -161,11 +205,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var anexo = await _anexoRepositorio.Inserir(lancamento.Data, cadastroEntrada);
 
             if (_anexoRepositorio.Invalido)
-            {
-                this.AdicionarNotificacoes(_anexoRepositorio.Notificacoes);
-
-                return new Saida(false, this.Mensagens, null);
-            }
+                return new Saida(false, _anexoRepositorio.Mensagens, null);
 
             await _uow.Commit();
 
@@ -198,6 +238,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             // Exclui o anexo do banco de dados e também o arquivo do Google Drive.
             await _anexoRepositorio.Deletar(anexo);
+
+            if (_anexoRepositorio.Invalido)
+                return new Saida(false, _anexoRepositorio.Mensagens, null);
 
             await _uow.Commit();
 

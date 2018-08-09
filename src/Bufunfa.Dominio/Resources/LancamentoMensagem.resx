@@ -120,20 +120,11 @@
   <data name="Data_Lancamento_Maior_Data_Corrente" xml:space="preserve">
     <value>A data do lançamento pode ser superior a data atual.</value>
   </data>
-  <data name="Id_Categoria_Invalido" xml:space="preserve">
-    <value>O ID da categoria do lançamento informado ({0}) é inválido.</value>
-  </data>
-  <data name="Id_Conta_Invalido" xml:space="preserve">
-    <value>O ID da conta do lançamento informado ({0}) é inválido.</value>
-  </data>
   <data name="Id_Lancamento_Invalido" xml:space="preserve">
     <value>O ID do lançamento informado é inválido.</value>
   </data>
   <data name="Id_Lancamento_Nao_Existe" xml:space="preserve">
     <value>O lançamento com o ID informado não existe.</value>
-  </data>
-  <data name="Id_Pessoa_Invalido" xml:space="preserve">
-    <value>O ID da pessoa do lançamento informado ({0}) é inválido.</value>
   </data>
   <data name="Lancamentos_Encontrados_Com_Sucesso" xml:space="preserve">
     <value>Lançamento(s) do usuário encontrado(s) com sucesso.</value>
@@ -167,8 +158,5 @@
   </data>
   <data name="Lancamento_Procurar_Periodo_Invalido" xml:space="preserve">
     <value>O período informado para é inválido. Verifique as datas informadas.</value>
-  </data>
-  <data name="Id_Parcela_Invalido" xml:space="preserve">
-    <value>O ID da parcela do lançamento informado ({0}) é inválido.</value>
   </data>
 </root>

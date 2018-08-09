@@ -75,14 +75,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
-                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, string.Format(LancamentoMensagem.Id_Lancamento_Invalido, this.IdLancamento))
-                .NotificarSeMenorOuIgualA(this.IdConta, 0, string.Format(LancamentoMensagem.Id_Conta_Invalido, this.IdConta))
-                .NotificarSeMenorOuIgualA(this.IdCategoria, 0, string.Format(LancamentoMensagem.Id_Categoria_Invalido, this.IdCategoria))
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, LancamentoMensagem.Id_Lancamento_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdConta, 0, ContaMensagem.Id_Conta_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdCategoria, 0, CategoriaMensagem.Id_Categoria_Invalido)
                 .NotificarSeMaiorQue(this.Data, DateTime.Today, LancamentoMensagem.Data_Lancamento_Maior_Data_Corrente);
 
             if (this.IdPessoa.HasValue)
-                this.NotificarSeMenorQue(this.IdPessoa.Value, 1, string.Format(LancamentoMensagem.Id_Pessoa_Invalido, this.IdPessoa.Value));
+                this.NotificarSeMenorQue(this.IdPessoa.Value, 1, PessoaMensagem.Id_Pessoa_Invalido);
 
             if (!string.IsNullOrEmpty(this.Observacao))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Observacao, 500, LancamentoMensagem.Observacao_Tamanho_Maximo_Excedido);

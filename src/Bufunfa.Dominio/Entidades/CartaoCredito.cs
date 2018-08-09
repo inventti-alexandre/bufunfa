@@ -40,7 +40,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public CartaoCredito(CadastrarCartaoCreditoEntrada cadastrarEntrada)
             : this()
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario           = cadastrarEntrada.IdUsuario;
@@ -51,7 +51,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarCartaoCreditoEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdCartaoCredito != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdCartaoCredito != this.Id)
                 return;
 
             this.Nome                = alterarEntrada.Nome;

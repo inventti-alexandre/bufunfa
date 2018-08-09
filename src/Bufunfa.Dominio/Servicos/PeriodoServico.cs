@@ -16,15 +16,17 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         private readonly IPeriodoRepositorio _periodoRepositorio;
         private readonly IUow _uow;
 
-        public PeriodoServico(IPeriodoRepositorio periodoRepositorio, IUow uow)
+        public PeriodoServico(
+            IPeriodoRepositorio periodoRepositorio,
+            IUow uow)
         {
             _periodoRepositorio = periodoRepositorio;
-            _uow = uow;
+            _uow                = uow;
         }
 
         public async Task<ISaida> ObterPeriodoPorId(int idPeriodo, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
+            this.NotificarSeMenorOuIgualA(idPeriodo, 0, PeriodoMensagem.Id_Periodo_Invalido);
             this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
@@ -41,10 +43,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o período pertece ao usuário informado.
             this.NotificarSeDiferentes(periodo.IdUsuario, idUsuario, PeriodoMensagem.Periodo_Nao_Pertence_Usuario);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            return new Saida(true, new[] { PeriodoMensagem.Periodo_Encontrado_Com_Sucesso }, new PeriodoSaida(periodo));
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { PeriodoMensagem.Periodo_Encontrado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public async Task<ISaida> ObterPeriodosPorUsuario(int idUsuario)
@@ -64,16 +65,15 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> ProcurarPeriodos(ProcurarPeriodoEntrada procurarEntrada)
         {
             // Verifica se os parâmetros para a procura foram informadas corretamente
-            if (!procurarEntrada.Valido())
-                return new Saida(false, procurarEntrada.Mensagens, null);
-
-            return await _periodoRepositorio.Procurar(procurarEntrada);
+            return procurarEntrada.Invalido
+                ? new Saida(false, procurarEntrada.Mensagens, null)
+                : await _periodoRepositorio.Procurar(procurarEntrada);
         }
 
         public async Task<ISaida> CadastrarPeriodo(CadastrarPeriodoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se já existe um período que abrange as datas informadas
@@ -90,19 +90,21 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { PeriodoMensagem.Periodo_Cadastrado_Com_Sucesso }, new PeriodoSaida(periodo));
+            return _uow.Invalido 
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { PeriodoMensagem.Periodo_Cadastrado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public async Task<ISaida> AlterarPeriodo(AlterarPeriodoEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var periodo = await _periodoRepositorio.ObterPorId(alterarEntrada.IdPeriodo, true);
 
             // Verifica se o período existe
-            this.NotificarSeNulo(periodo, string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, alterarEntrada.IdPeriodo));
+            this.NotificarSeNulo(periodo, PeriodoMensagem.Id_Periodo_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -127,12 +129,14 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { PeriodoMensagem.Periodo_Alterado_Com_Sucesso }, new PeriodoSaida(periodo));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { PeriodoMensagem.Periodo_Alterado_Com_Sucesso }, new PeriodoSaida(periodo));
         }
 
         public async Task<ISaida> ExcluirPeriodo(int idPeriodo, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, idPeriodo));
+            this.NotificarSeMenorOuIgualA(idPeriodo, 0, PeriodoMensagem.Id_Periodo_Invalido);
             this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
@@ -141,7 +145,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var periodo = await _periodoRepositorio.ObterPorId(idPeriodo);
 
             // Verifica se o período existe
-            this.NotificarSeNulo(periodo, string.Format(PeriodoMensagem.Id_Periodo_Nao_Existe, idPeriodo));
+            this.NotificarSeNulo(periodo, PeriodoMensagem.Id_Periodo_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -156,7 +160,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { PeriodoMensagem.Periodo_Excluido_Com_Sucesso }, new PeriodoSaida(periodo));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { PeriodoMensagem.Periodo_Excluido_Com_Sucesso }, new PeriodoSaida(periodo));
         }
     }
 }

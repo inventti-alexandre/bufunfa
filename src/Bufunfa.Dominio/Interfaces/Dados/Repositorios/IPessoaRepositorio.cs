@@ -28,6 +28,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idPessoa = null);
 
         /// <summary>
+        /// Verifica a existência de uma pessoa a partir do seu ID
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int idUsuario, int idPessoa);
+
+        /// <summary>
         /// Insere uma nova pessoa
         /// </summary>
         Task Inserir(Pessoa pessoa);

@@ -67,13 +67,15 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.NomeInstituicao   = nomeInstituicao;
             this.NumeroAgencia     = numeroAgencia;
             this.Numero            = numero;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdConta, 0, string.Format(ContaMensagem.Id_Conta_Invalido, this.IdConta))
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdConta, 0, ContaMensagem.Id_Conta_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, ContaMensagem.Nome_Obrigatorio_Nao_Informado);
 
             if (!string.IsNullOrEmpty(this.Nome))
@@ -87,8 +89,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (!string.IsNullOrEmpty(this.Numero))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Numero, 20, ContaMensagem.Nome_Instituicao_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

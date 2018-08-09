@@ -245,7 +245,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _categoriaServico.AlterarCategoria(alterarEntrada).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Id_Categoria_Invalido), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Id_Categoria_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -375,7 +375,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _categoriaServico.ExcluirCategoria(0, 0).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == string.Format(CategoriaMensagem.Id_Categoria_Invalido, 0)), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Id_Categoria_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]
@@ -391,7 +391,7 @@ namespace Bufunfa.Dominio.Testes
 
             var saida = _categoriaServico.ExcluirCategoria(idCategoria, idUsuario).Result;
 
-            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Id_Categoria_Invalido), string.Join(", ", saida.Mensagens));
+            Assert.IsTrue(!saida.Sucesso && saida.Mensagens.Any(x => x == CategoriaMensagem.Id_Categoria_Nao_Existe), string.Join(", ", saida.Mensagens));
         }
 
         [TestMethod]

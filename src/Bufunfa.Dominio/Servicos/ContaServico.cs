@@ -17,10 +17,12 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         private readonly IContaRepositorio _contaRepositorio;
         private readonly IUow _uow;
 
-        public ContaServico(IContaRepositorio contaRepositorio, IUow uow)
+        public ContaServico(
+            IContaRepositorio contaRepositorio,
+            IUow uow)
         {
             _contaRepositorio = contaRepositorio;
-            _uow = uow;
+            _uow              = uow;
         }
 
         public async Task<ISaida> ObterContaPorId(int idConta, int idUsuario)
@@ -42,10 +44,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se a conta pertece ao usuário informado.
             this.NotificarSeDiferentes(conta.IdUsuario, idUsuario, ContaMensagem.Conta_Nao_Pertence_Usuario);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            return new Saida(true, new[] { ContaMensagem.Conta_Encontrada_Com_Sucesso }, new ContaSaida(conta));
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { ContaMensagem.Conta_Encontrada_Com_Sucesso }, new ContaSaida(conta));
         }
 
         public async Task<ISaida> ObterContasPorUsuario(int idUsuario)
@@ -80,7 +81,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ContaMensagem.Conta_Cadastrada_Com_Sucesso }, new ContaSaida(conta));
+            return _uow.Invalido 
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ContaMensagem.Conta_Cadastrada_Com_Sucesso }, new ContaSaida(conta));
         }
 
         public async Task<ISaida> AlterarConta(AlterarContaEntrada alterarEntrada)
@@ -115,7 +118,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { ContaMensagem.Conta_Alterada_Com_Sucesso }, new ContaSaida(conta));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ContaMensagem.Conta_Alterada_Com_Sucesso }, new ContaSaida(conta));
         }
 
         public async Task<ISaida> ExcluirConta(int idConta, int idUsuario)

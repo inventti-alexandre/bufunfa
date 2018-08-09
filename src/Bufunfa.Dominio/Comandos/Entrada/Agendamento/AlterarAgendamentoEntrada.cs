@@ -103,22 +103,22 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
-                .NotificarSeMenorOuIgualA(this.IdAgendamento, 0, string.Format(AgendamentoMensagem.Id_Agendamento_Invalido, this.IdAgendamento))
-                .NotificarSeMenorOuIgualA(this.IdCategoria, 0, string.Format(AgendamentoMensagem.Id_Categoria_Obrigatorio_Nao_Informado, this.IdCategoria))
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdAgendamento, 0, AgendamentoMensagem.Id_Agendamento_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdCategoria, 0, AgendamentoMensagem.Id_Categoria_Obrigatorio_Nao_Informado)
                 .NotificarSeVerdadeiro(!this.IdConta.HasValue && !this.IdCartaoCredito.HasValue, AgendamentoMensagem.Id_Conta_Id_Cartao_Credito_Nao_Informados)
                 .NotificarSeVerdadeiro(this.IdConta.HasValue && this.IdCartaoCredito.HasValue, AgendamentoMensagem.Id_Conta_Id_Cartao_Credito_Informados)
                 .NotificarSeMenorQue(this.DataPrimeiraParcela, DateTime.Now.Date, AgendamentoMensagem.Data_Primeira_Parcela_Menor_Data_Atual)
                 .NotificarSeMenorQue(this.QuantidadeParcelas, 1, AgendamentoMensagem.Quantidade_Parcelas_Inválida);
 
             if (this.IdConta.HasValue)
-                this.NotificarSeMenorQue(this.IdConta.Value, 1, string.Format(AgendamentoMensagem.Id_Conta_Invalido, this.IdConta.Value));
+                this.NotificarSeMenorQue(this.IdConta.Value, 1, ContaMensagem.Id_Conta_Invalido);
 
             if (this.IdCartaoCredito.HasValue)
-                this.NotificarSeMenorQue(this.IdCartaoCredito.Value, 1, string.Format(AgendamentoMensagem.Id_Cartao_Credito_Invalido, this.IdCartaoCredito.Value));
+                this.NotificarSeMenorQue(this.IdCartaoCredito.Value, 1, CartaoCreditoMensagem.Id_Cartao_Invalido);
 
             if (this.IdPessoa.HasValue)
-                this.NotificarSeMenorQue(this.IdPessoa.Value, 1, string.Format(AgendamentoMensagem.Id_Pessoa_Invalido, this.IdPessoa.Value));
+                this.NotificarSeMenorQue(this.IdPessoa.Value, 1, PessoaMensagem.Id_Pessoa_Invalido);
 
             if (!string.IsNullOrEmpty(this.Observacao))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Observacao, 500, AgendamentoMensagem.Observacao_Tamanho_Maximo_Excedido);

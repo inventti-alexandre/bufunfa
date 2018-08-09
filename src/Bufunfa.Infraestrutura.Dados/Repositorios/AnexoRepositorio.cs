@@ -56,6 +56,12 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
 
         public async Task Deletar(Anexo anexo)
         {
+            if (_googleDriveUtil.Invalido)
+            {
+                this.AdicionarNotificacoes(_googleDriveUtil.Notificacoes);
+                return;
+            }
+
             // Exclui o arquivo do anexo do Google Drive
             await _googleDriveUtil.ExcluirPorId(anexo.IdGoogleDrive);
 

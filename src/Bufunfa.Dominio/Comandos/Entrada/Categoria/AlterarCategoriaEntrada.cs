@@ -47,12 +47,14 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.Tipo = tipo?.ToUpper();
             
             this.IdUsuario = idUsuario;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, CategoriaMensagem.Nome_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Tipo, CategoriaMensagem.Tipo_Obrigatorio_Nao_Informado);
 
@@ -60,15 +62,13 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 100, CategoriaMensagem.Nome_Tamanho_Maximo_Excedido);
 
             if (!string.IsNullOrEmpty(this.Tipo))
-                this.NotificarSeVerdadeiro(this.Tipo != "D" && this.Tipo != "C", string.Format(CategoriaMensagem.Tipo_Invalido, this.Tipo));
+                this.NotificarSeVerdadeiro(this.Tipo != "D" && this.Tipo != "C", CategoriaMensagem.Tipo_Invalido);
 
             if (this.IdCategoriaPai.HasValue)
             {
-                this.NotificarSeMenorQue(this.IdCategoriaPai.Value, 1, string.Format(CategoriaMensagem.Id_Categoria_Pai_Invalido, this.IdCategoriaPai.Value));
+                this.NotificarSeMenorQue(this.IdCategoriaPai.Value, 1, CategoriaMensagem.Id_Categoria_Pai_Invalido);
                 this.NotificarSeIguais(this.IdCategoriaPai.Value, this.IdCategoria, CategoriaMensagem.Id_Categoria_Pai_Id_Categoria_Nao_Podem_Ser_Iguais);
             }
-
-            return !this.Invalido;
         }
     }
 }

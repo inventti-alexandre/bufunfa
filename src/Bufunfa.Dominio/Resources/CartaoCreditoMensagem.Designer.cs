@@ -115,6 +115,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existem outras informações relacionadas a esse cartão de crédito, por isso não é possível excluí-lo..
+        /// </summary>
+        public static string Cartao_Excluir_Erro_FK {
+            get {
+                return ResourceManager.GetString("Cartao_Excluir_Erro_FK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O cartão que se deseja excluir, não pertence ao usuário autenticado..
         /// </summary>
         public static string Cartao_Excluir_Nao_Pertence_Usuario {
@@ -151,7 +160,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do cartão informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID do cartão de crédito informado é inválido..
         /// </summary>
         public static string Id_Cartao_Invalido {
             get {
@@ -160,7 +169,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O cartão de ID {0} não existe..
+        ///   Looks up a localized string similar to O cartão de crédito com o ID informado não existe..
         /// </summary>
         public static string Id_Cartao_Nao_Existe {
             get {

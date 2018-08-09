@@ -47,20 +47,20 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.DataInicio = dataInicio;
             this.DataFim = dataFim;
             this.IdUsuario = idUsuario;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdPeriodo, 0, string.Format(PeriodoMensagem.Id_Periodo_Invalido, this.IdPeriodo))
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdPeriodo, 0, PeriodoMensagem.Id_Periodo_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, PeriodoMensagem.Nome_Obrigatorio_Nao_Informado)
                 .NotificarSeMaiorOuIgualA(this.DataInicio, this.DataFim, PeriodoMensagem.Data_Periodo_Invalidas);
 
             if (!string.IsNullOrEmpty(this.Nome))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 50, PeriodoMensagem.Nome_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

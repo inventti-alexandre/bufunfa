@@ -28,18 +28,20 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados
             {
                 var mensagemException = dbEx.GetBaseException().Message;
 
-                if (mensagemException.Contains("add or update")) // insert ou update
-                {
-                    this.NotificarSeVerdadeiro(mensagemException.Contains("REFERENCES `categoria`"), CategoriaMensagem.Id_Categoria_Nao_Existe);
+                //if (mensagemException.Contains("add or update")) // insert ou update
+                //{
+                //    this.NotificarSeVerdadeiro(mensagemException.Contains("REFERENCES `categoria`"), CategoriaMensagem.Id_Categoria_Nao_Existe);
 
-                }
-                else if (mensagemException.Contains("delete")) // delete
+                //}
+                if (mensagemException.Contains("delete")) // delete
                 {
                     this.NotificarSeVerdadeiro(mensagemException.Contains("REFERENCES `conta`"), ContaMensagem.Conta_Excluir_Erro_FK);
+                    this.NotificarSeVerdadeiro(mensagemException.Contains("REFERENCES `cartaocredito`"), CartaoCreditoMensagem.Cartao_Excluir_Erro_FK);
+                    this.NotificarSeVerdadeiro(mensagemException.Contains("REFERENCES `categoria`"), CategoriaMensagem.Categoria_Excluir_Erro_FK);
                 }
                 else
                 {
-                    this.AdicionarNotificacao($"Não é possível realizar o commit: {mensagemException}");
+                    this.AdicionarNotificacao($"Não é possível salvar as alterações no banco de dados: {mensagemException}");
                 }
             }
         }

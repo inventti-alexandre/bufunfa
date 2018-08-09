@@ -61,7 +61,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da pessoa informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da pessoa informado é inválido..
         /// </summary>
         public static string Id_Pessoa_Invalido {
             get {
@@ -70,7 +70,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A pessoa de ID {0} não existe..
+        ///   Looks up a localized string similar to A pessoa com o ID informado não existe..
         /// </summary>
         public static string Id_Pessoa_Nao_Existe {
             get {

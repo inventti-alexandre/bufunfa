@@ -40,7 +40,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public Periodo(CadastrarPeriodoEntrada cadastrarEntrada)
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario  = cadastrarEntrada.IdUsuario;
@@ -51,7 +51,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarPeriodoEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdPeriodo != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdPeriodo != this.Id)
                 return;
 
             this.Nome       = alterarEntrada.Nome;

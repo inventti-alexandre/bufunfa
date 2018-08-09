@@ -33,6 +33,11 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         Task<bool> VerificarExistenciaPorNomeTipo(int idUsuario, string nome, string tipo, int? idCategoria = null);
 
         /// <summary>
+        /// Verifica a existência de uma categoria a partir do seu ID.
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int idUsuario, int idCategoria);
+
+        /// <summary>
         /// Insere uma nova categoria
         /// </summary>
         Task Inserir(Categoria categoria);

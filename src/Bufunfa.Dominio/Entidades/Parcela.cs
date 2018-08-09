@@ -80,7 +80,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public Parcela(CadastrarParcelaEntrada cadastrarEntrada)
             : this()
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdAgendamento = cadastrarEntrada.IdAgendamento;
@@ -92,7 +92,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarParcelaEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdParcela != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdParcela != this.Id)
                 return;
 
             this.Data       = alterarEntrada.Data;
@@ -102,7 +102,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Descartar(DescartarParcelaEntrada descartarEntrada)
         {
-            if (!descartarEntrada.Valido() || descartarEntrada.IdParcela != this.Id)
+            if (descartarEntrada.Invalido || descartarEntrada.IdParcela != this.Id)
                 return;
 
             this.Descartada     = true;
@@ -111,7 +111,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Lancar(LancarParcelaEntrada lancarEntrada)
         {
-            if (!lancarEntrada.Valido() || lancarEntrada.IdParcela != this.Id)
+            if (lancarEntrada.Invalido || lancarEntrada.IdParcela != this.Id)
                 return;
 
             this.Lancada    = true;

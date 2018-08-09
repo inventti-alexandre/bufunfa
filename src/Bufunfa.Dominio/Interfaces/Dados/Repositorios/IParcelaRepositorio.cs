@@ -44,5 +44,10 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Deleta várias parcelas
         /// </summary>
         void Deletar(IEnumerable<Parcela> parcelas);
+
+        /// <summary>
+        /// Verifica a existência de uma parcela a partir do seu ID
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int idUsuario, int idParcela);
     }
 }

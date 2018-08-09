@@ -70,24 +70,6 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da categoria do lançamento informado ({0}) é inválido..
-        /// </summary>
-        public static string Id_Categoria_Invalido {
-            get {
-                return ResourceManager.GetString("Id_Categoria_Invalido", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O ID da conta do lançamento informado ({0}) é inválido..
-        /// </summary>
-        public static string Id_Conta_Invalido {
-            get {
-                return ResourceManager.GetString("Id_Conta_Invalido", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to O ID do lançamento informado é inválido..
         /// </summary>
         public static string Id_Lancamento_Invalido {
@@ -102,24 +84,6 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         public static string Id_Lancamento_Nao_Existe {
             get {
                 return ResourceManager.GetString("Id_Lancamento_Nao_Existe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O ID da parcela do lançamento informado ({0}) é inválido..
-        /// </summary>
-        public static string Id_Parcela_Invalido {
-            get {
-                return ResourceManager.GetString("Id_Parcela_Invalido", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O ID da pessoa do lançamento informado ({0}) é inválido..
-        /// </summary>
-        public static string Id_Pessoa_Invalido {
-            get {
-                return ResourceManager.GetString("Id_Pessoa_Invalido", resourceCulture);
             }
         }
         

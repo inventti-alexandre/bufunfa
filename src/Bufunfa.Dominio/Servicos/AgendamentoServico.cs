@@ -14,16 +14,32 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
     public class AgendamentoServico : Notificavel, IAgendamentoServico
     {
         private readonly IAgendamentoRepositorio _agendamentoRepositorio;
+        private readonly ICategoriaRepositorio _categoriaRepositorio;
+        private readonly ICartaoCreditoRepositorio _cartaoCreditoRepositorio;
+        private readonly IContaRepositorio _contaRepositorio;
         private readonly IParcelaRepositorio _parcelaRepositorio;
+        private readonly IPessoaRepositorio _pessoaRepositorio;
         private readonly ILancamentoRepositorio _lancamentoRepositorio;
         private readonly IUow _uow;
 
-        public AgendamentoServico(IAgendamentoRepositorio agendamentoRepositorio, IParcelaRepositorio parcelaRepositorio, ILancamentoRepositorio lancamentoRepositorio, IUow uow)
+        public AgendamentoServico(
+            IAgendamentoRepositorio agendamentoRepositorio,
+            ICartaoCreditoRepositorio cartaoCreditoRepositorio,
+            IContaRepositorio contaRepositorio,
+            ICategoriaRepositorio categoriaRepositorio,
+            IPessoaRepositorio pessoaRepositorio,
+            IParcelaRepositorio parcelaRepositorio,
+            ILancamentoRepositorio lancamentoRepositorio,
+            IUow uow)
         {
-            _agendamentoRepositorio = agendamentoRepositorio;
-            _parcelaRepositorio     = parcelaRepositorio;
-            _lancamentoRepositorio  = lancamentoRepositorio;
-            _uow                    = uow;
+            _agendamentoRepositorio   = agendamentoRepositorio;
+            _cartaoCreditoRepositorio = cartaoCreditoRepositorio;
+            _contaRepositorio         = contaRepositorio;
+            _parcelaRepositorio       = parcelaRepositorio;
+            _pessoaRepositorio        = pessoaRepositorio;
+            _lancamentoRepositorio    = lancamentoRepositorio;
+            _categoriaRepositorio     = categoriaRepositorio;
+            _uow                      = uow;
         }
 
         public async Task<ISaida> ObterAgendamentoPorId(int idAgendamento, int idUsuario)
@@ -64,6 +80,22 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
+            // Verifica se a categoria existe a partir do ID informado.
+            this.NotificarSeFalso(await _categoriaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdCategoria), CategoriaMensagem.Id_Categoria_Nao_Existe);
+
+            // Verifica se a conta ou cartão de crédito existem a partir do ID informado.
+            if (cadastroEntrada.IdConta.HasValue)
+                this.NotificarSeFalso(await _contaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdConta.Value), ContaMensagem.Id_Conta_Nao_Existe);
+            else
+                this.NotificarSeFalso(await _cartaoCreditoRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdCartaoCredito.Value), CartaoCreditoMensagem.Id_Cartao_Nao_Existe);
+
+            // Verifica se a pessoa existe a partir do ID informado.
+            if (cadastroEntrada.IdPessoa.HasValue)
+                this.NotificarSeFalso(await _pessoaRepositorio.VerificarExistenciaPorId(cadastroEntrada.IdUsuario, cadastroEntrada.IdPessoa.Value), PessoaMensagem.Id_Pessoa_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             var agendamento = new Agendamento(cadastroEntrada);
 
             await _agendamentoRepositorio.Inserir(agendamento);
@@ -91,6 +123,23 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             // Verifica se o agendamento pertece ao usuário informado.
             this.NotificarSeDiferentes(agendamento.IdUsuario, alterarEntrada.IdUsuario, AgendamentoMensagem.Agendamento_Alterar_Nao_Pertence_Usuario);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se a categoria existe a partir do ID informado.
+            if (agendamento.IdCategoria != alterarEntrada.IdCategoria)
+                this.NotificarSeFalso(await _categoriaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdCategoria), CategoriaMensagem.Id_Categoria_Nao_Existe);
+
+            // Verifica se a conta ou cartão de crédito existem a partir do ID informado.
+            if (agendamento.IdConta != alterarEntrada.IdConta && alterarEntrada.IdConta.HasValue)
+                this.NotificarSeFalso(await _contaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdConta.Value), ContaMensagem.Id_Conta_Nao_Existe);
+            else if (alterarEntrada.IdCartaoCredito.HasValue && agendamento.IdCartaoCredito != alterarEntrada.IdCartaoCredito)
+                this.NotificarSeFalso(await _cartaoCreditoRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdCartaoCredito.Value), CartaoCreditoMensagem.Id_Cartao_Nao_Existe);
+
+            // Verifica se a pessoa existe a partir do ID informado.
+            if (agendamento.IdPessoa != alterarEntrada.IdPessoa && alterarEntrada.IdPessoa.HasValue)
+                this.NotificarSeFalso(await _pessoaRepositorio.VerificarExistenciaPorId(alterarEntrada.IdUsuario, alterarEntrada.IdPessoa.Value), PessoaMensagem.Id_Pessoa_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

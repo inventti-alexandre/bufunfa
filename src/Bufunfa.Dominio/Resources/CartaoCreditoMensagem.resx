@@ -135,6 +135,9 @@
   <data name="Cartao_Excluido_Com_Sucesso" xml:space="preserve">
     <value>Cartão excluído com sucesso.</value>
   </data>
+  <data name="Cartao_Excluir_Erro_FK" xml:space="preserve">
+    <value>Existem outras informações relacionadas a esse cartão de crédito, por isso não é possível excluí-lo.</value>
+  </data>
   <data name="Cartao_Excluir_Nao_Pertence_Usuario" xml:space="preserve">
     <value>O cartão que se deseja excluir, não pertence ao usuário autenticado.</value>
   </data>
@@ -148,10 +151,10 @@
     <value>O dia do vencimento da fatura do cartão é inválido.</value>
   </data>
   <data name="Id_Cartao_Invalido" xml:space="preserve">
-    <value>O ID do cartão informado ({0}) é inválido.</value>
+    <value>O ID do cartão de crédito informado é inválido.</value>
   </data>
   <data name="Id_Cartao_Nao_Existe" xml:space="preserve">
-    <value>O cartão de ID {0} não existe.</value>
+    <value>O cartão de crédito com o ID informado não existe.</value>
   </data>
   <data name="Nenhum_Cartao_Encontrado" xml:space="preserve">
     <value>Nenhum cartão do usuário foi encontrado.</value>

@@ -115,6 +115,15 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existem outras informações relacionadas a essa categoria, por isso não é possível excluí-la..
+        /// </summary>
+        public static string Categoria_Excluir_Erro_FK {
+            get {
+                return ResourceManager.GetString("Categoria_Excluir_Erro_FK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A categoria que se deseja excluir, não pertence ao usuário autenticado..
         /// </summary>
         public static string Categoria_Excluir_Nao_Pertence_Usuario {
@@ -133,7 +142,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A categoria pai de ID {0} não existe..
+        ///   Looks up a localized string similar to A categoria pai com o ID informado não existe..
         /// </summary>
         public static string Categoria_Pai_Nao_Existe {
             get {
@@ -160,7 +169,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da categoria informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da categoria informado é inválido..
         /// </summary>
         public static string Id_Categoria_Invalido {
             get {
@@ -187,7 +196,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID da categoria pai informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID da categoria pai informado é inválido..
         /// </summary>
         public static string Id_Categoria_Pai_Invalido {
             get {
@@ -223,7 +232,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O tipo da categoria informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O tipo da categoria informado é inválido..
         /// </summary>
         public static string Tipo_Invalido {
             get {
@@ -232,7 +241,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O tipo da categoria informado não pode ser diferente do tipo da categoria pai &quot;{0}&quot;..
+        ///   Looks up a localized string similar to O tipo da categoria informado não pode ser diferente do tipo da categoria pai..
         /// </summary>
         public static string Tipo_Nao_Pode_Ser_Diferente_Tipo_Categoria_Pai {
             get {

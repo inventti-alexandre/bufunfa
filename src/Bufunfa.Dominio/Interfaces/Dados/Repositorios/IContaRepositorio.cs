@@ -39,5 +39,10 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Verifica se um determinado usuário possui uma conta com o nome informado
         /// </summary>
         Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idConta = null);
+
+        /// <summary>
+        /// Verifica a existência de uma conta a partir do seu ID
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int idUsuario, int idConta);
     }
 }

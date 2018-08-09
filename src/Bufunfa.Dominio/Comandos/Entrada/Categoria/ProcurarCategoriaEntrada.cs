@@ -21,22 +21,22 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
         public ProcurarCategoriaEntrada(int idUsuario)
         {
             this.IdUsuario = idUsuario;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
-            this.NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario));
+            this.NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (!string.IsNullOrEmpty(this.Nome))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 100, CategoriaMensagem.Nome_Tamanho_Maximo_Excedido);
 
             if (!string.IsNullOrEmpty(this.Tipo))
-                this.NotificarSeVerdadeiro(this.Tipo != "D" && this.Tipo != "C", string.Format(CategoriaMensagem.Tipo_Invalido, this.Tipo));
+                this.NotificarSeVerdadeiro(this.Tipo != "D" && this.Tipo != "C", CategoriaMensagem.Tipo_Invalido);
 
             if (this.IdCategoriaPai.HasValue)
-                this.NotificarSeMenorQue(this.IdCategoriaPai.Value, 1, string.Format(CategoriaMensagem.Id_Categoria_Pai_Invalido, this.IdCategoriaPai.Value));
-
-            return !this.Invalido;
+                this.NotificarSeMenorQue(this.IdCategoriaPai.Value, 1, CategoriaMensagem.Id_Categoria_Pai_Invalido);
         }
     }
 }

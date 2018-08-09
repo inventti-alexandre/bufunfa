@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Id_Pessoa_Invalido" xml:space="preserve">
-    <value>O ID da pessoa informado ({0}) é inválido.</value>
+    <value>O ID da pessoa informado é inválido.</value>
   </data>
   <data name="Id_Pessoa_Nao_Existe" xml:space="preserve">
-    <value>A pessoa de ID {0} não existe.</value>
+    <value>A pessoa com o ID informado não existe.</value>
   </data>
   <data name="Nenhuma_pessoa_encontrada" xml:space="preserve">
     <value>Nenhuma pessoa do usuário foi encontrado.</value>

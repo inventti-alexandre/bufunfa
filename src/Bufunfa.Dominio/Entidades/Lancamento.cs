@@ -97,7 +97,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarLancamentoEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdLancamento != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdLancamento != this.Id)
                 return;
 
             this.IdConta = alterarEntrada.IdConta;

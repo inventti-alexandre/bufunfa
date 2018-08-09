@@ -167,7 +167,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
         public Agendamento(CadastrarAgendamentoEntrada cadastrarEntrada)
             : this()
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario           = cadastrarEntrada.IdUsuario;
@@ -182,7 +182,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarAgendamentoEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdAgendamento != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdAgendamento != this.Id)
                 return;
 
             this.IdCategoria         = alterarEntrada.IdCategoria;

@@ -24,19 +24,15 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
                 paginaIndex,
                 paginaTamanho)
         {
-            
+            this.Validar();
         }
 
-        public override bool Valido()
+        private void Validar()
         {
-            base.Valido();
-
             this.NotificarSeNulo(typeof(Pessoa).GetProperty(this.OrdenarPor), string.Format(Mensagem.Paginacao_OrdernarPor_Propriedade_Nao_Existe, this.OrdenarPor));
 
             if (!string.IsNullOrEmpty(this.Nome))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 200, PessoaMensagem.Nome_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public Pessoa(CadastrarPessoaEntrada cadastrarEntrada)
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario = cadastrarEntrada.IdUsuario;
@@ -37,7 +37,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarPessoaEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdPessoa != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdPessoa != this.Id)
                 return;
 
             this.Nome = alterarEntrada.Nome;

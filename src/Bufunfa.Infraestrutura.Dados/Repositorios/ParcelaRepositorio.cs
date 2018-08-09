@@ -62,5 +62,10 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         {
             _efContext.Parcelas.RemoveRange(parcelas);
         }
+
+        public async Task<bool> VerificarExistenciaPorId(int idUsuario, int idParcela)
+        {
+            return await _efContext.Parcelas.AnyAsync(x => x.Id == idParcela);
+        }
     }
 }

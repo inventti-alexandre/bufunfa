@@ -142,7 +142,7 @@
     <value>A categoria não pertence ao usuário autenticado.</value>
   </data>
   <data name="Id_Categoria_Invalido" xml:space="preserve">
-    <value>O ID da categoria informado ({0}) é inválido.</value>
+    <value>O ID da categoria informado é inválido.</value>
   </data>
   <data name="Id_Categoria_Nao_Existe" xml:space="preserve">
     <value>A categoria com o ID informado não existe.</value>
@@ -160,16 +160,16 @@
     <value>O tipo da categoria  é obrigatório e não foi informado.</value>
   </data>
   <data name="Id_Categoria_Pai_Invalido" xml:space="preserve">
-    <value>O ID da categoria pai informado ({0}) é inválido.</value>
+    <value>O ID da categoria pai informado é inválido.</value>
   </data>
   <data name="Tipo_Invalido" xml:space="preserve">
-    <value>O tipo da categoria informado ({0}) é inválido.</value>
+    <value>O tipo da categoria informado é inválido.</value>
   </data>
   <data name="Categoria_Com_Mesmo_Nome_Tipo" xml:space="preserve">
     <value>Você já possui uma categoria cadastrada com o mesmo nome e tipo.</value>
   </data>
   <data name="Categoria_Pai_Nao_Existe" xml:space="preserve">
-    <value>A categoria pai de ID {0} não existe.</value>
+    <value>A categoria pai com o ID informado não existe.</value>
   </data>
   <data name="Categoria_Pai_Nao_Pode_Ser_Excluida" xml:space="preserve">
     <value>A categoria possui categorias filhas. Antes de excluí-la, é preciso excluir primeiramente todas as suas categorias filhas.</value>
@@ -178,6 +178,9 @@
     <value>O ID da categoria pai não pode ser igual ao ID da categoria.</value>
   </data>
   <data name="Tipo_Nao_Pode_Ser_Diferente_Tipo_Categoria_Pai" xml:space="preserve">
-    <value>O tipo da categoria informado não pode ser diferente do tipo da categoria pai "{0}".</value>
+    <value>O tipo da categoria informado não pode ser diferente do tipo da categoria pai.</value>
+  </data>
+  <data name="Categoria_Excluir_Erro_FK" xml:space="preserve">
+    <value>Existem outras informações relacionadas a essa categoria, por isso não é possível excluí-la.</value>
   </data>
 </root>

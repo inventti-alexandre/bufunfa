@@ -58,5 +58,10 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
         {
             _efContext.CartoesCredito.Remove(cartao);
         }
+
+        public async Task<bool> VerificarExistenciaPorId(int idUsuario, int idCartaoCredito)
+        {
+            return await _efContext.CartoesCredito.AnyAsync(x => x.IdUsuario == idUsuario && x.Id == idCartaoCredito);
+        }
     }
 }

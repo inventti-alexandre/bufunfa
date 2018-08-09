@@ -16,17 +16,17 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         private readonly ICartaoCreditoRepositorio _cartaoCreditoRepositorio;
         private readonly IUow _uow;
 
-        public CartaoCreditoServico(ICartaoCreditoRepositorio cartaoCreditoRepositorio, IUow uow)
+        public CartaoCreditoServico(
+            ICartaoCreditoRepositorio cartaoCreditoRepositorio,
+            IUow uow)
         {
             _cartaoCreditoRepositorio = cartaoCreditoRepositorio;
-            _uow = uow;
+            _uow                      = uow;
         }
-
-        // TODO: Continuar refatoração daqui.
 
         public async Task<ISaida> ObterCartaoCreditoPorId(int idCartao, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idCartao, 0, string.Format(CartaoCreditoMensagem.Id_Cartao_Invalido, idCartao));
+            this.NotificarSeMenorOuIgualA(idCartao, 0, CartaoCreditoMensagem.Id_Cartao_Invalido);
             this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
@@ -35,7 +35,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             var cartao = await _cartaoCreditoRepositorio.ObterPorId(idCartao);
 
             // Verifica se o cartão existe
-            this.NotificarSeNulo(cartao, string.Format(CartaoCreditoMensagem.Id_Cartao_Nao_Existe, idCartao));
+            this.NotificarSeNulo(cartao, CartaoCreditoMensagem.Id_Cartao_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -43,10 +43,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o cartão pertece ao usuário informado.
             this.NotificarSeDiferentes(cartao.IdUsuario, idUsuario, CartaoCreditoMensagem.Cartao_Nao_Pertence_Usuario);
 
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
-            return new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Encontrado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Encontrado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
         }
 
         public async Task<ISaida> ObterCartoesCreditoPorUsuario(int idUsuario)
@@ -66,7 +65,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> CadastrarCartaoCredito(CadastrarCartaoCreditoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se o usuário já possui algum cartão com o nome informado
@@ -81,19 +80,21 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Cadastrado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Cadastrado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
         }
 
         public async Task<ISaida> AlterarCartaoCredito(AlterarCartaoCreditoEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var cartao = await _cartaoCreditoRepositorio.ObterPorId(alterarEntrada.IdCartaoCredito, true);
 
             // Verifica se o cartão existe
-            this.NotificarSeNulo(cartao, string.Format(CartaoCreditoMensagem.Id_Cartao_Nao_Existe, alterarEntrada.IdCartaoCredito));
+            this.NotificarSeNulo(cartao, CartaoCreditoMensagem.Id_Cartao_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -116,12 +117,14 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Alterado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Alterado_Com_Sucesso }, new CartaoCreditoSaida(cartao));
         }
 
         public async Task<ISaida> ExcluirCartaoCredito(int idCartao, int idUsuario)
         {
-            this.NotificarSeMenorOuIgualA(idCartao, 0, string.Format(CartaoCreditoMensagem.Id_Cartao_Invalido, idCartao));
+            this.NotificarSeMenorOuIgualA(idCartao, 0, CartaoCreditoMensagem.Id_Cartao_Invalido);
             this.NotificarSeMenorOuIgualA(idUsuario, 0, Mensagem.Id_Usuario_Invalido);
 
             if (this.Invalido)
@@ -138,10 +141,6 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
             // Verifica se o cartão pertece ao usuário informado.
             this.NotificarSeDiferentes(cartao.IdUsuario, idUsuario, CartaoCreditoMensagem.Cartao_Excluir_Nao_Pertence_Usuario);
 
-            //TODO: Verificar se possui parcelas
-            //TODO: Verificar se possui faturas
-            //TODO: Verificar se possui agendamentos
-
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
@@ -149,7 +148,9 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
 
             await _uow.Commit();
 
-            return new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Excluido_Com_Sucesso }, new CartaoCreditoSaida(cartao));
+            return _uow.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { CartaoCreditoMensagem.Cartao_Excluido_Com_Sucesso }, new CartaoCreditoSaida(cartao));
         }
     }
 }

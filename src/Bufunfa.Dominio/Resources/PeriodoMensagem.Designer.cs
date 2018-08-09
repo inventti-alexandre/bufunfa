@@ -97,7 +97,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ID do período informado ({0}) é inválido..
+        ///   Looks up a localized string similar to O ID do período informado é inválido..
         /// </summary>
         public static string Id_Periodo_Invalido {
             get {
@@ -106,7 +106,7 @@ namespace JNogueira.Bufunfa.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O período de ID {0} não existe..
+        ///   Looks up a localized string similar to O período com o ID informado não existe..
         /// </summary>
         public static string Id_Periodo_Nao_Existe {
             get {

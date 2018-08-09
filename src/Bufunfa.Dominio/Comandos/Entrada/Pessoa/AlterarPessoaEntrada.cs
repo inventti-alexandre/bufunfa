@@ -32,19 +32,19 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.IdPessoa  = idPessoa;
             this.Nome      = nome;
             this.IdUsuario = idUsuario;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdPessoa, 0, string.Format(PessoaMensagem.Id_Pessoa_Invalido, this.IdPessoa))
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
+                .NotificarSeMenorOuIgualA(this.IdPessoa, 0, PessoaMensagem.Id_Pessoa_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, PessoaMensagem.Nome_Obrigatorio_Nao_Informado);
 
             if (!string.IsNullOrEmpty(this.Nome))
                 this.NotificarSePossuirTamanhoSuperiorA(this.Nome, 200, PessoaMensagem.Nome_Tamanho_Maximo_Excedido);
-
-            return !this.Invalido;
         }
     }
 }

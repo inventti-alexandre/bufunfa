@@ -124,10 +124,10 @@
     <value>A data início do período é maior ou igual a data fim.</value>
   </data>
   <data name="Id_Periodo_Invalido" xml:space="preserve">
-    <value>O ID do período informado ({0}) é inválido.</value>
+    <value>O ID do período informado é inválido.</value>
   </data>
   <data name="Id_Periodo_Nao_Existe" xml:space="preserve">
-    <value>O período de ID {0} não existe.</value>
+    <value>O período com o ID informado não existe.</value>
   </data>
   <data name="Nenhum_periodo_encontrado" xml:space="preserve">
     <value>Nenhum período do usuário foi encontrado.</value>

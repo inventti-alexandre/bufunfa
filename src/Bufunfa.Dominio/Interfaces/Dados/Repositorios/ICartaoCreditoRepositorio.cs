@@ -39,5 +39,10 @@ namespace JNogueira.Bufunfa.Dominio.Interfaces.Dados
         /// Verifica se um determinado usuário possui um cartão com o nome informado
         /// </summary>
         Task<bool> VerificarExistenciaPorNome(int idUsuario, string nome, int? idCartaoCredito = null);
+
+        /// <summary>
+        /// Verifica a existência de um cartão de crédito a partir do seu ID
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int idUsuario, int idCartaoCredito);
     }
 }

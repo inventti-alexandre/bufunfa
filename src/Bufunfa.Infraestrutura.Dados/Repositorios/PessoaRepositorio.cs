@@ -73,6 +73,11 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                 : await _efContext.Contas.AnyAsync(x => x.IdUsuario == idUsuario && x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        public async Task<bool> VerificarExistenciaPorId(int idUsuario, int idPessoa)
+        {
+            return await _efContext.Pessoas.AnyAsync(x => x.IdUsuario == idUsuario && x.Id == idPessoa);
+        }
+
         public async Task Inserir(Pessoa pessoa)
         {
             await _efContext.AddAsync(pessoa);

@@ -48,13 +48,15 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
             this.NomeArquivo     = nomeArquivo;
             this.ConteudoArquivo = conteudoArquivo;
             this.MimeTypeArquivo = mimeTypeArquivo;
+
+            this.Validar();
         }
 
-        public bool Valido()
+        private void Validar()
         {
             this
-                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, string.Format(Mensagem.Id_Usuario_Invalido, this.IdUsuario))
-                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, string.Format(LancamentoMensagem.Id_Lancamento_Invalido, this.IdLancamento))
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, Mensagem.Id_Usuario_Invalido)
+                .NotificarSeMenorOuIgualA(this.IdLancamento, 0, LancamentoMensagem.Id_Lancamento_Invalido)
                 .NotificarSeNuloOuVazio(this.Descricao, AnexoMensagem.Descricao_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.NomeArquivo, AnexoMensagem.Nome_Arquivo_Obrigatorio_Nao_Informado)
                 .NotificarSeIguais(this.ConteudoArquivo.Length, 0, AnexoMensagem.Arquivo_Conteudo_Nao_Informado);
@@ -67,8 +69,6 @@ namespace JNogueira.Bufunfa.Dominio.Comandos.Entrada
 
             if (this.ConteudoArquivo != null)
                 this.NotificarSeVerdadeiro((decimal)(this.ConteudoArquivo.Length / 1024) > (5 * 1024), string.Format(AnexoMensagem.Arquivo_Tamanho_Nao_Permitido, Math.Round((decimal)(this.ConteudoArquivo.Length / 1024) / 1024, 1)));
-
-            return !this.Invalido;
         }
     }
 }
