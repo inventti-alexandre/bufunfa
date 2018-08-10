@@ -107,8 +107,48 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Mensagens = new[] { LancamentoMensagem.Lancamento_Alterado_Com_Sucesso },
                 Retorno = new
                 {
-                    Id = 1,
-                    Nome = "Supermecado Carone"
+                    Id = 4,
+                    IdParcela = (decimal?)null,
+                    Data = DateTime.Now,
+                    Valor = (decimal)23.34,
+                    Observacao = "Observação",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta corrente Santander",
+                        Tipo = (int)TipoConta.ContaCorrente,
+                        ValorSaldoInicial = (decimal?)(-1542.12),
+                        NomeInstituicao = "Banco Santander S/A",
+                        NumeroAgencia = "3345",
+                        Numero = "01005539-0"
+                    },
+                    Pessoa = (object)null,
+                    Categoria = new
+                    {
+                        Id = 1,
+                        Nome = "Restaurante",
+                        Tipo = TipoCategoria.Debito,
+                        Caminho = "DÉBITO » Alimentação » Restaurante",
+                        CategoriaPai = new
+                        {
+                            Id = 1,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Restaurante",
+                            Tipo = TipoCategoria.Debito
+                        },
+                        CategoriasFilha = new object[]
+                        {
+                            new
+                            {
+                                Id = 4,
+                                Nome = "Selfservice",
+                                Tipo = TipoCategoria.Debito,
+                                Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                CategoriasFilha = new object[] {}
+                            }
+                        }
+                    },
+                    Anexos = (object)null
                 }
             };
         }
@@ -141,8 +181,48 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
                 Mensagens = new[] { LancamentoMensagem.Lancamento_Encontrado_Com_Sucesso },
                 Retorno = new
                 {
-                    Id = 1,
-                    Nome = "Supermecado Carone"
+                    Id = 4,
+                    IdParcela = (decimal?)null,
+                    Data = DateTime.Now,
+                    Valor = (decimal)23.34,
+                    Observacao = "Observação",
+                    Conta = new
+                    {
+                        Id = 1,
+                        Nome = "Conta corrente Santander",
+                        Tipo = (int)TipoConta.ContaCorrente,
+                        ValorSaldoInicial = (decimal?)(-1542.12),
+                        NomeInstituicao = "Banco Santander S/A",
+                        NumeroAgencia = "3345",
+                        Numero = "01005539-0"
+                    },
+                    Pessoa = (object)null,
+                    Categoria = new
+                    {
+                        Id = 1,
+                        Nome = "Restaurante",
+                        Tipo = TipoCategoria.Debito,
+                        Caminho = "DÉBITO » Alimentação » Restaurante",
+                        CategoriaPai = new
+                        {
+                            Id = 1,
+                            IdCategoriaPai = (int?)null,
+                            Nome = "Restaurante",
+                            Tipo = TipoCategoria.Debito
+                        },
+                        CategoriasFilha = new object[]
+                        {
+                            new
+                            {
+                                Id = 4,
+                                Nome = "Selfservice",
+                                Tipo = TipoCategoria.Debito,
+                                Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                CategoriasFilha = new object[] {}
+                            }
+                        }
+                    },
+                    Anexos = (object)null
                 }
             };
         }
@@ -174,18 +254,48 @@ namespace JNogueira.Bufunfa.Api.Swagger.Exemplos
             return new ProcurarSaida(new[] {
                         new
                         {
-                            Id = 1,
-                            Nome = "Supermecado Carone"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Padaria Pão Chick"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Nome = "Farmácia Pague Menos"
+                            Id = 4,
+                            IdParcela = (decimal?)null,
+                            Data = DateTime.Now,
+                            Valor = (decimal)23.34,
+                            Observacao = "Observação",
+                            Conta = new
+                            {
+                                Id = 1,
+                                Nome = "Conta corrente Santander",
+                                Tipo = (int)TipoConta.ContaCorrente,
+                                ValorSaldoInicial = (decimal?)(-1542.12),
+                                NomeInstituicao = "Banco Santander S/A",
+                                NumeroAgencia = "3345",
+                                Numero = "01005539-0"
+                            },
+                            Pessoa = (object)null,
+                            Categoria = new
+                            {
+                                Id = 1,
+                                Nome = "Restaurante",
+                                Tipo = TipoCategoria.Debito,
+                                Caminho = "DÉBITO » Alimentação » Restaurante",
+                                CategoriaPai = new
+                                {
+                                    Id = 1,
+                                    IdCategoriaPai = (int?)null,
+                                    Nome = "Restaurante",
+                                    Tipo = TipoCategoria.Debito
+                                },
+                                CategoriasFilha = new object[]
+                                {
+                                    new
+                                    {
+                                        Id = 4,
+                                        Nome = "Selfservice",
+                                        Tipo = TipoCategoria.Debito,
+                                        Caminho = "DÉBITO » Alimentação » Restaurante » Selfservice",
+                                        CategoriasFilha = new object[] {}
+                                    }
+                                }
+                            },
+                            Anexos = (object)null
                         }
                     }, "Nome", "ASC", 3, 1, 1, 3)
             {

@@ -24,6 +24,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             var query = _efContext.Lancamentos
                 .Include(x => x.Conta)
                 .Include(x => x.Categoria)
+                    .ThenInclude(x => x.CategoriaPai)
                 .Include(x => x.Pessoa)
                 .Include(x => x.Anexos)
                 .AsQueryable();
@@ -39,6 +40,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
             var query = _efContext.Lancamentos
                 .Include(x => x.Conta)
                 .Include(x => x.Categoria)
+                    .ThenInclude(x => x.CategoriaPai)
                 .Include(x => x.Pessoa)
                 .Include(x => x.Anexos)
                 .AsNoTracking()
@@ -89,6 +91,7 @@ namespace JNogueira.Bufunfa.Infraestrutura.Dados.Repositorios
                    .Lancamentos
                    .Include(x => x.Conta)
                    .Include(x => x.Categoria)
+                        .ThenInclude(x => x.CategoriaPai)
                    .Include(x => x.Pessoa)
                    .Include(x => x.Anexos)
                    .AsNoTracking()

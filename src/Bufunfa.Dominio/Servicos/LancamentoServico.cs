@@ -190,7 +190,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> CadastrarAnexo(CadastrarAnexoEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             var lancamento = await _lancamentoRepositorio.ObterPorId(cadastroEntrada.IdLancamento);

@@ -43,7 +43,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public Anexo(CadastrarAnexoEntrada cadastrarEntrada, string idGoogleDrive)
         {
-            if (cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdLancamento  = cadastrarEntrada.IdLancamento;

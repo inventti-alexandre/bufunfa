@@ -85,7 +85,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public Categoria(CadastrarCategoriaEntrada cadastrarEntrada)
         {
-            if (!cadastrarEntrada.Valido())
+            if (cadastrarEntrada.Invalido)
                 return;
 
             this.IdUsuario      = cadastrarEntrada.IdUsuario;
@@ -96,7 +96,7 @@ namespace JNogueira.Bufunfa.Dominio.Entidades
 
         public void Alterar(AlterarCategoriaEntrada alterarEntrada)
         {
-            if (!alterarEntrada.Valido() || alterarEntrada.IdCategoria != this.Id)
+            if (alterarEntrada.Invalido || alterarEntrada.IdCategoria != this.Id)
                 return;
 
             this.Nome           = alterarEntrada.Nome;

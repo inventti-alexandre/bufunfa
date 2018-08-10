@@ -66,7 +66,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> CadastrarConta(CadastrarContaEntrada cadastroEntrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
-            if (!cadastroEntrada.Valido())
+            if (cadastroEntrada.Invalido)
                 return new Saida(false, cadastroEntrada.Mensagens, null);
 
             // Verifica se o usuário já possui alguma conta com o nome informado
@@ -89,7 +89,7 @@ namespace JNogueira.Bufunfa.Dominio.Servicos
         public async Task<ISaida> AlterarConta(AlterarContaEntrada alterarEntrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
-            if (!alterarEntrada.Valido())
+            if (alterarEntrada.Invalido)
                 return new Saida(false, alterarEntrada.Mensagens, null);
 
             var conta = await _contaRepositorio.ObterPorId(alterarEntrada.IdConta, true);
